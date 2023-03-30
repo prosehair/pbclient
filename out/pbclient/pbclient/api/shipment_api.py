@@ -430,7 +430,7 @@ class ShipmentApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def reprint_shipment(self, shipment_id : Annotated[StrictStr, Field(..., description="Required. The shipment ID that was issued when shipment label was generated.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Optional[Carrier] = None, **kwargs) -> Shipment:  # noqa: E501
+    def reprint_shipment(self, shipment_id : Annotated[StrictStr, Field(..., description="Required. The shipment ID that was issued when shipment label was generated.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="Conditional. The carrier. This is required if the carrier is not USPS")] = None, **kwargs) -> Shipment:  # noqa: E501
         """reprintShipment  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -443,7 +443,7 @@ class ShipmentApi(object):
         :type shipment_id: str
         :param x_pb_unified_error_structure: Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.
         :type x_pb_unified_error_structure: bool
-        :param carrier: 
+        :param carrier: Conditional. The carrier. This is required if the carrier is not USPS
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -464,7 +464,7 @@ class ShipmentApi(object):
         return self.reprint_shipment_with_http_info(shipment_id, x_pb_unified_error_structure, carrier, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def reprint_shipment_with_http_info(self, shipment_id : Annotated[StrictStr, Field(..., description="Required. The shipment ID that was issued when shipment label was generated.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Optional[Carrier] = None, **kwargs):  # noqa: E501
+    def reprint_shipment_with_http_info(self, shipment_id : Annotated[StrictStr, Field(..., description="Required. The shipment ID that was issued when shipment label was generated.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="Conditional. The carrier. This is required if the carrier is not USPS")] = None, **kwargs):  # noqa: E501
         """reprintShipment  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -477,7 +477,7 @@ class ShipmentApi(object):
         :type shipment_id: str
         :param x_pb_unified_error_structure: Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.
         :type x_pb_unified_error_structure: bool
-        :param carrier: 
+        :param carrier: Conditional. The carrier. This is required if the carrier is not USPS
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -542,13 +542,13 @@ class ShipmentApi(object):
 
         # process the query parameters
         _query_params = []
+        if _params.get('carrier') is not None:  # noqa: E501
+            _query_params.append(('carrier', _params['carrier']))
+
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
         if _params['x_pb_unified_error_structure']:
             _header_params['X-PB-UnifiedErrorStructure'] = _params['x_pb_unified_error_structure']
-
-        if _params['carrier']:
-            _header_params['carrier'] = _params['carrier']
 
         # process the form parameters
         _form_params = []
@@ -584,7 +584,7 @@ class ShipmentApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def retry_shipment(self, original_transaction_id : StrictStr, x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Optional[Carrier] = None, **kwargs) -> Shipment:  # noqa: E501
+    def retry_shipment(self, original_transaction_id : StrictStr, x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="Conditional. The carrier. This is required if the carrier is not USPS")] = None, **kwargs) -> Shipment:  # noqa: E501
         """retryShipment  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -597,7 +597,7 @@ class ShipmentApi(object):
         :type original_transaction_id: str
         :param x_pb_unified_error_structure: Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.
         :type x_pb_unified_error_structure: bool
-        :param carrier: 
+        :param carrier: Conditional. The carrier. This is required if the carrier is not USPS
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -618,7 +618,7 @@ class ShipmentApi(object):
         return self.retry_shipment_with_http_info(original_transaction_id, x_pb_unified_error_structure, carrier, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def retry_shipment_with_http_info(self, original_transaction_id : StrictStr, x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Optional[Carrier] = None, **kwargs):  # noqa: E501
+    def retry_shipment_with_http_info(self, original_transaction_id : StrictStr, x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="Conditional. The carrier. This is required if the carrier is not USPS")] = None, **kwargs):  # noqa: E501
         """retryShipment  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -631,7 +631,7 @@ class ShipmentApi(object):
         :type original_transaction_id: str
         :param x_pb_unified_error_structure: Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.
         :type x_pb_unified_error_structure: bool
-        :param carrier: 
+        :param carrier: Conditional. The carrier. This is required if the carrier is not USPS
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -696,13 +696,13 @@ class ShipmentApi(object):
         if _params.get('original_transaction_id') is not None:  # noqa: E501
             _query_params.append(('originalTransactionId', _params['original_transaction_id']))
 
+        if _params.get('carrier') is not None:  # noqa: E501
+            _query_params.append(('carrier', _params['carrier']))
+
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
         if _params['x_pb_unified_error_structure']:
             _header_params['X-PB-UnifiedErrorStructure'] = _params['x_pb_unified_error_structure']
-
-        if _params['carrier']:
-            _header_params['carrier'] = _params['carrier']
 
         # process the form parameters
         _form_params = []

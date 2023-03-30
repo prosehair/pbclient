@@ -211,7 +211,7 @@ with pbclient.ApiClient(configuration) as api_client:
     api_instance = pbclient.ShipmentApi(api_client)
     shipment_id = 'shipment_id_example' # str | Required. The shipment ID that was issued when shipment label was generated.
     x_pb_unified_error_structure = True # bool | Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs. (optional) (default to True)
-    carrier = pbclient.Carrier() # Carrier |  (optional)
+    carrier = pbclient.Carrier() # Carrier | Conditional. The carrier. This is required if the carrier is not USPS (optional)
 
     try:
         # reprintShipment
@@ -228,7 +228,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **shipment_id** | **str**| Required. The shipment ID that was issued when shipment label was generated. | 
  **x_pb_unified_error_structure** | **bool**| Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs. | [optional] [default to True]
- **carrier** | [**Carrier**](.md)|  | [optional] 
+ **carrier** | [**Carrier**](.md)| Conditional. The carrier. This is required if the carrier is not USPS | [optional] 
 
 ### Return type
 
@@ -285,7 +285,7 @@ with pbclient.ApiClient(configuration) as api_client:
     api_instance = pbclient.ShipmentApi(api_client)
     original_transaction_id = '12344' # str | 
     x_pb_unified_error_structure = True # bool | Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs. (optional) (default to True)
-    carrier = pbclient.Carrier() # Carrier |  (optional)
+    carrier = pbclient.Carrier() # Carrier | Conditional. The carrier. This is required if the carrier is not USPS (optional)
 
     try:
         # retryShipment
@@ -302,7 +302,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **original_transaction_id** | **str**|  | 
  **x_pb_unified_error_structure** | **bool**| Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs. | [optional] [default to True]
- **carrier** | [**Carrier**](.md)|  | [optional] 
+ **carrier** | [**Carrier**](.md)| Conditional. The carrier. This is required if the carrier is not USPS | [optional] 
 
 ### Return type
 

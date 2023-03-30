@@ -680,13 +680,21 @@ paths:
       operationId: retryShipment
       parameters:
         - $ref: '#/components/parameters/UnifiedErrorStructure'
-        - $ref: '#/components/parameters/Carrier'
         - name: originalTransactionId
           required: true
           in: query
           example: '12344'
           schema:
             type: string
+        - name: carrier
+          description: >-
+            Conditional. The carrier. This is required if the carrier is not
+            USPS
+          required: false
+          in: query
+          example: USPS
+          schema:
+            $ref: '#/components/schemas/Carrier'
       responses:
         '200':
           description: OK
@@ -712,7 +720,6 @@ paths:
       operationId: reprintShipment
       parameters:
         - $ref: '#/components/parameters/UnifiedErrorStructure'
-        - $ref: '#/components/parameters/Carrier'
         - name: shipmentId
           in: path
           description: >-
@@ -721,6 +728,15 @@ paths:
           required: true
           schema:
             type: string
+        - name: carrier
+          description: >-
+            Conditional. The carrier. This is required if the carrier is not
+            USPS
+          required: false
+          in: query
+          example: USPS
+          schema:
+            $ref: '#/components/schemas/Carrier'
       responses:
         '200':
           description: OK
