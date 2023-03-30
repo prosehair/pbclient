@@ -1,0 +1,4895 @@
+openapi: 3.0.0
+info:
+  description: Shipping API Sample.
+  version: 1.0.0
+  title: Shipping API
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: support@pb.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: 'https://api-sandbox.pitneybowes.com'
+    description: >-
+      The sandbox environment is a free test environment that is intended for
+      all your development and testing work.
+  - url: 'https://api.pitneybowes.com'
+    description: >-
+      Production uses real money and prints labels used for real shipments.
+      Never use the production environment for testing.
+tags:
+  - name: Authentication
+    description: >-
+      Each request to the PB Shipping APIs requires authentication via an OAuth token.
+      This API call generates the OAuth token based on the Base64-encoded value of the API key
+      and secret associated with your PB Shipping APIs developer account.
+      The token expires after 10 hours, after which you must create a new one.
+  - name: Carrier Info
+    description: >-
+      These operations retrieve carrier information, including carrier rules.
+      For more details visit [Carrier Info
+      Page](https://shipping.pitneybowes.com/carrier-info.html)
+  - name: Rate Parcels
+    description: >-
+      Use this operation to rate a parcel before you print and purchase a
+      shipment label. You can rate a parcel for multiple services and multiple
+      parcel types with a single API request. For more details visit [Rate a
+      Parcel](https://shipping.pitneybowes.com/api/post-rates.html)
+  - name: Shipment
+    description: 'Use these operations to create, retry, and void shipment labels.'
+  - name: Manifests
+    description: >-
+      A manifest combines all trackable packages into a single form that is
+      scanned by the carrier as an acceptance of all the packages. For
+      Additional info try
+      [link](https://shipping.pitneybowes.com/manifests.html)
+  - name: Transaction Reports
+    description: This operation retrieves all transactions for a specified period of time.
+  - name: Pickup
+    description: >-
+      The Pickups API allow merchants to schedule package pickups from
+      commercial and residential locations and, when needed, to cancel scheduled
+      pickups.
+  - name: Address Validation
+    description: >-
+      Address Validation APIs. For more Information visit [Address
+      Validation](https://shipping.pitneybowes.com/address-validation.html)
+  - name: Parcel Protection
+    description: >-
+      The Parcel Protection APIs allow a merchant to request a Pitney Bowes
+      [Parcel
+      Protection](https://www.pitneybowes.com/us/ecommerce-delivery-services/parcel-protection.html)
+      quote and to request coverage for a shipment, including a shipment created
+      outside the PB Shipping APIs. Merchants can request quotes for shipments
+      with all major U.S. carriers. and for both domestic (U.S.) and
+      international shipments. International shipments must originate within the
+      U.S.
+  - name: Tracking
+    description: >-
+      Shipment labels that are printed using the PB Shipping APIs are
+      automatically tracked. This operation retrieves package status for a
+      label.
+  - name: Cross-Border Quotes
+    description: >-
+      This operation provides an estimate of the duties, taxes, and
+      transportation costs for the items in a buyer's online shopping basket. To
+      look for futher info please follow link [Cross-Border
+      Quotes](https://shipping.pitneybowes.com/api/post-quotes.html)
+  - name: Container
+    description: >-
+      This operation prints a label for the shipment of containerized parcels
+      destined for a Pitney Bowes warehouse facility from the client location.
+paths:
+  /oauth/token:
+    post:
+      tags:
+        - Authentication
+      summary: OAuth Authentication
+      description: >-
+        This API call generates the OAuth token based on the Base64-encoded value of the API key
+        and secret associated with your PB Shipping APIs developer account. The token expires after 10 hours,
+        after which you must create a new one.
+      operationId: oauthToken
+      parameters:
+        - in: header
+          name: Content-Type
+          example: application/x-www-form-urlencoded
+          schema:
+            type: string
+            default: application/x-www-form-urlencoded
+          description: This mentions the content type getting passed in body of request.
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: >-
+            Use Basic authentication to pass the Base64-encoded value of your developer account’s API key and secret.
+            Encode the key and secret in the following format. Be sure to include the colon between the key and secret:
+            <API_key>:<API_secret>
+            Pass the encoded value using Basic authentication:
+            Basic <encoded-value>
+      requestBody:
+        description: Grant type
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                grant_type:
+                  type: string
+                  default: client_credentials
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthToken'
+  /shippingservices/v1/information/rules/rating-services:
+    get:
+      tags:
+        - Carrier Info
+      summary: Retrieves the rules governing the carrier's services.
+      description: >-
+        This operation retrieves the rules governing the carrier's services,
+        including the available parcel types and the limits on weights and
+        dimensions. **This API currently returns rules only for USPS** . Find
+        more information at [Get Carrier
+        Rules](https://shipping.pitneybowes.com/api/get-carrier-rules.html)
+      security:
+        - oAuth2ClientCredentials: []
+      operationId: getCarrierServiceRules
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - in: query
+          name: carrier
+          schema:
+            $ref: '#/components/schemas/Carrier'
+          required: true
+          example: USPS
+          description: 'The carrier name. **Currently this must be set to: USPS** '
+        - in: query
+          name: originCountryCode
+          schema:
+            $ref: '#/components/schemas/ISOCountryCode'
+          example: US
+          required: true
+          description: >-
+            The [two-character ISO country
+            code](https://www.iso.org/obp/ui/#search) for the country where the
+            shipment originates.
+        - in: query
+          name: destinationCountryCode
+          example: IN
+          schema:
+            $ref: '#/components/schemas/ISOCountryCode'
+          required: true
+          description: >-
+            The [two-character ISO country
+            code](https://www.iso.org/obp/ui/#search) for the country of the
+            shipment's destination address.
+        - in: query
+          name: rateTypeId
+          schema:
+            type: string
+          required: false
+          description: >-
+            The type of rate requested, such as COMMERCIAL_BASE. If a rate type
+            is not specified, all eligible rate types are returned.
+        - in: query
+          name: futureShipmentDate
+          schema:
+            type: string
+            format: datetime
+          required: false
+          description: >-
+            If the shipment is for a future date, and if a rate change is
+            expected before the shipment date, use this field to ensure you get
+            the correct rates and correct rate rules. Note that a rate change
+            can affect the structure of the rate rules as well as the actual
+            rates.Specify this value in UTC/GMT, not in local time. Formats
+            allowed are 
+
+
+            * **YYYY-MM-DD** 
+
+
+            * **YYYY-MM-DD HH:mm:ss**
+
+            * **YYYY-MM-DD HH:mm:ss.SSS**
+        - in: query
+          name: returnShipment
+          schema:
+            type: string
+            format: date-time
+          required: false
+          description: >-
+            If set to true, provides only services applicable for return
+            shipment.
+        - in: query
+          name: compactResponse
+          schema:
+            type: boolean
+          required: false
+          description: >-
+            If set to true, returns only summary, without special service
+            details.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarrierRule'
+              example:
+                - serviceId: EM
+                  brandedName: Priority Mail Express
+                  parcelTypeRules:
+                    - parcelType: LGENV
+                      brandedName: Large Envelope
+                      rateTypeId: <rate_type>
+                      rateTypeBrandedName: <rate_type_branded_name>
+                      trackable: TRACKABLE
+                      specialServiceRules:
+                        - specialServiceId: COD
+                          brandedName: Collect on Delivery
+                          categoryId: COD
+                          categoryName: Collect on Delivery
+                          trackable: false
+                          inputParameterRules:
+                            - name: INPUT_VALUE
+                              brandedName: COD Amount
+                              required: true
+                              minValue: 1
+                              maxValue: 1000
+                          prerequisiteRules:
+                            - specialServiceId: Sig
+                              minInputValue: 0
+                          incompatibleSpecialServices:
+                            - Ins
+                            - InsRD
+                            - CODRD
+                            - ADSIG
+                            - ADSIGRD
+                      weightRules:
+                        - required: true
+                          unitOfMeasurement: OZ
+                          minWeight: 0.01
+                          maxWeight: 1120
+                      dimensionRules:
+                        - required: false
+                          unitOfMeasurement: IN
+                          minParcelDimensions:
+                            length: 0.001
+                            width: 0.001
+                            height: 0.001
+                            unitOfMeasurement: IN
+                          maxParcelDimensions:
+                            length: 15
+                            width: 0.75
+                            height: 12
+                            unitOfMeasurement: IN
+                          minLengthPlusGirth: 0
+                          maxLengthPlusGirth: 108
+                      suggestedTrackableSpecialServiceId: Sig
+        default:
+          description: >-
+            For a list of all PB Shipping APIs error codes, please see [Error
+            Codes](https://shipping.pitneybowes.com/reference/error-codes.html)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+              example:
+                errors:
+                  errorCode: '1000002'
+                  errorDescription: 'Invalid value for Accept-Language in http header, ex: en-US.'
+                  additionalInfo: null
+                  parameters:
+                    - Accept-Language
+  /shippingservices/v1/carrier/license-agreements:
+    get:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Carrier Info
+      summary: This operation retrieves a carrier's license agreement.
+      description: >-
+        This operation retrieves a carrier's license agreement. The operation is
+        used in the [Carrier Registration
+        Tutorial](https://shipping.pitneybowes.com/carrier-registration.html).
+      operationId: getCarrierLicenseAgreement
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - in: query
+          name: carrier
+          schema:
+            $ref: '#/components/schemas/Carrier'
+          required: true
+          description: 'The carrier name. Currently this must be set to: UPS'
+        - in: query
+          name: originCountryCode
+          schema:
+            $ref: '#/components/schemas/ISOCountryCode'
+          example: US
+          required: true
+          description: >-
+            The two-character ISO country code for the country where the
+            shipment originates.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  licenseText:
+                    type: string
+              example:
+                licenseText: <text>
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /shippingservices/v1/countries:
+    get:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Carrier Info
+      summary: >-
+        This operation returns a list of supported destination countries to
+        which the carrier offers international shipping services.
+      operationId: getCarrierSupportedDestination
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - in: query
+          name: carrier
+          schema:
+            $ref: '#/components/schemas/Carrier'
+          example: usps
+          required: true
+          description: 'The carrier name. Currently this must be set to: USPS'
+        - in: query
+          name: originCountryCode
+          schema:
+            $ref: '#/components/schemas/ISOCountryCode'
+          example: US
+          required: true
+          description: >-
+            The two-character ISO country code for the country where the
+            shipment originates.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                properties:
+                  countryCode:
+                    type: string
+                  countryName:
+                    type: string
+              example:
+                - countryCode: AC
+                  countryName: Ascension
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /shippingservices/v1/rates:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Rate Parcels
+      summary: >-
+        Use this operation to rate a parcel before you print and purchase a
+        shipment label. You can rate a parcel for multiple services and multiple
+        parcel types with a single API request.
+      operationId: rateParcel
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - in: header
+          name: X-PB-Shipper-Rate-Plan
+          schema:
+            type: string
+          required: false
+          description: >-
+            USPS Only. Shipper rate plan, if applicable. For more information,
+            see [this
+            FAQ](https://shipping.pitneybowes.com/faqs/rates.html#rate-plans-faq)
+        - in: header
+          name: X-PB-Integrator-CarrierId
+          schema:
+            type: string
+          required: false
+          description: 'USPS Only. Negotiated services rate, if applicable.'
+        - in: header
+          name: X-PB-Shipper-Carrier-AccountId
+          schema:
+            type: string
+          required: false
+          description: >-
+            UPS (United Parcel Service) Only. The unique identifier returned in
+            the shipperCarrierAccountId field by the [Register an Existing
+            Carrier
+            Account](https://shipping.pitneybowes.com/api/post-carrier-accounts-register.html)
+            API.
+        - in: query
+          name: includeDeliveryCommitment
+          schema:
+            type: boolean
+          required: false
+          description: 'When set to true, returns estimated transit time in days.'
+        - in: query
+          name: carrier
+          schema:
+            type: string
+          required: false
+          description: Cross-Border only. Required for PB Cross-Border. Set this to PBI.
+      requestBody:
+        description: Shipment request for Rates
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Shipment'
+            example:
+              fromAddress:
+                company: Supplier
+                name: J. Smith
+                phone: 303-555-1213
+                email: js@example.com
+                residential: false
+                addressLines:
+                  - 4750 Walnut Street
+                cityTown: Boulder
+                stateProvince: CO
+                postalCode: '80301'
+                countryCode: US
+              toAddress:
+                company: Shop
+                name: J. Jones
+                phone: 203-000-1234
+                email: jjones@example.com
+                residential: false
+                addressLines:
+                  - 771 Orange St
+                cityTown: New Haven
+                stateProvince: CT
+                postalCode: '06511'
+                countryCode: US
+              parcel:
+                weight:
+                  weight: 1
+                  unitOfMeasurement: OZ
+                dimension:
+                  length: 5
+                  width: 0.25
+                  height: 4
+                  unitOfMeasurement: IN
+                  irregularParcelGirth: 1
+              rates:
+                - carrier: USPS
+                  parcelType: PKG
+                  inductionPostalCode: 06484
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /shippingservices/v1/shipments:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Shipment
+      summary: This operation creates a shipment and purchases a shipment label.
+      description: >-
+        The API returns the label as either a Base64 string or a link to a PDF.
+        For more information visit [Create Shipment
+        Documents](https://shipping.pitneybowes.com/api/post-shipments.html).
+        Following are samples of different carriers -
+
+
+        * [Create a USPS (U.S. Postal Service)
+        Label](https://shipping.pitneybowes.com/api/post-shipments-usps.html)
+
+
+        * [Create a USPS PMOD
+        Label](https://shipping.pitneybowes.com/api/post-shipments-pmod.html)
+
+        * [Create a USPS Scan-Based Return
+        Label](https://shipping.pitneybowes.com/api/post-shipments-returns.html)
+
+        * [Create a Pure Post Return
+        Label](https://shipping.pitneybowes.com/api/post-shipments-pure-post-return.html)
+
+        * [Create a Newgistics
+        Label](https://shipping.pitneybowes.com/api/post-shipments-newgistics.html)
+
+        * [Create a PB Presort
+        Label](https://shipping.pitneybowes.com/api/post-shipments-presort.html)
+
+        * [Create a PB Cross-Border
+        Shipment](https://shipping.pitneybowes.com/api/post-shipments-cbds.html)
+
+        * [Create a UPS (United Parcel Service)
+        Label](https://shipping.pitneybowes.com/api/post-shipments-ups.html)
+      operationId: createShipmentLabel
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: X-PB-TransactionId
+          in: header
+          description: >-
+            Required. A unique identifier for the transaction, up to 25
+            characters.
+          required: true
+          example: uniquevalue
+          schema:
+            type: string
+        - name: X-PB-Integrator-CarrierId
+          in: header
+          description: 'USPS Only. Negotiated services rate, if applicable.'
+          required: false
+          schema:
+            type: string
+        - name: X-PB-Shipper-Rate-Plan
+          in: header
+          description: >-
+            USPS Only. Shipper rate plan, if applicable. For more information,
+            see [this
+            FAQ](https://shipping.pitneybowes.com/faqs/rates.html#rate-plans-faq).
+          required: false
+          schema:
+            type: string
+        - name: X-PB-ShipmentGroupId
+          in: header
+          description: ' **[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**.The job number that represents the agreement between the merchant and PB Presort. This was provided by Pitney Bowes during [merchant onboarding for PB Presort](https://shipping.pitneybowes.com/carriers/pb-presort.html).'
+          required: false
+          schema:
+            type: string
+        - name: X-PB-Shipper-Carrier-AccountId
+          in: header
+          description: >-
+            **[Required parameter for PBPresort
+            service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**.
+            The merchant's Mailer ID (MID), as provided by Pitney Bowes during
+            merchant onboarding for PB Presort.
+          required: false
+          schema:
+            type: string
+        - name: includeDeliveryCommitment
+          in: query
+          description: >-
+            If set to true, returns estimated transit times in days. Only for
+            USPS Create Shipment. See also [Pitney Bowes Delivery
+            Guarantee](https://shipping.pitneybowes.com/faqs/delivery-guarantee.html)
+            [Do all USPS services return transit
+            times?](https://shipping.pitneybowes.com/faqs/shipments.html#transit-times-faq)
+          required: false
+          schema:
+            type: string
+      requestBody:
+        description: request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Shipment'
+            example:
+              fromAddress:
+                company: Pitney Bowes Inc.
+                name: Paul Wright
+                phone: 203-555-1430
+                email: john.publica@pb.com
+                residential: false
+                addressLines:
+                  - 27 Waterview Drive
+                cityTown: Shelton
+                stateProvince: CT
+                postalCode: 06484
+                countryCode: US
+              toAddress:
+                company: ABC Company
+                name: Rufous Sirius Canid
+                phone: 323 555-1212
+                email: rs.canid@gmail.com
+                residential: true
+                addressLines:
+                  - 631 S Main St
+                cityTown: Greenville
+                stateProvince: SC
+                postalCode: '29601'
+                countryCode: US
+              parcel:
+                weight:
+                  unitOfMeasurement: OZ
+                  weight: 38
+                dimension:
+                  unitOfMeasurement: IN
+                  length: 6
+                  width: 6
+                  height: 6
+              rates:
+                - carrier: USPS
+                  serviceId: PM
+                  parcelType: PKG
+                  specialServices:
+                    - specialServiceId: DelCon
+                      inputParameters:
+                        - name: INPUT_VALUE
+                          value: '0'
+                  inductionPostalCode: 06484
+              documents:
+                  schema:
+                    $ref: '#/components/schemas/CustomerData'
+                  contentType: URL
+                  size: DOC_4X6
+                  fileFormat: PDF
+                  printDialogOption: NO_PRINT_DIALOG
+              shipmentOptions:
+                - name: SHIPPER_ID
+                  value: '3000090171'
+                - name: ADD_TO_MANIFEST
+                  value: 'true'
+                - name: HIDE_TOTAL_CARRIER_CHARGE
+                  value: 'true'
+                - name: PRINT_CUSTOM_MESSAGE_1
+                  value: custom message for label
+                - name: SHIPPING_LABEL_RECEIPT
+                  value: NO_OPTIONS
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    get:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Shipment
+      summary: retryShipment
+      operationId: retryShipment
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - $ref: '#/components/parameters/Carrier'
+        - name: originalTransactionId
+          required: true
+          in: query
+          example: '12344'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        '201':
+          description: OK
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  '/shippingservices/v1/shipments/{shipmentId}':
+    get:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Shipment
+      summary: reprintShipment
+      operationId: reprintShipment
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - $ref: '#/components/parameters/Carrier'
+        - name: shipmentId
+          in: path
+          description: >-
+            Required. The shipment ID that was issued when shipment label was
+            generated.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    delete:
+      tags:
+        - Shipment
+      summary: cancelShipment
+      security:
+        - oAuth2ClientCredentials: []
+      operationId: cancelShipment
+      parameters:
+        - name: X-PB-TransactionId
+          in: header
+          description: >-
+            Required. A unique identifier for the transaction, up to 25
+            characters.
+          required: true
+          schema:
+            type: string
+        - name: X-PB-UnifiedErrorStructure
+          in: header
+          description: >-
+            Recommended. Set this to true to use the standard error object if an
+            error occurs.
+          required: false
+          schema:
+            type: string
+            default: true
+        - name: X-PB-Shipper-Carrier-AccountId
+          in: header
+          description: >-
+            UPS Only. The unique identifier returned in the
+            shipperCarrierAccountId field by the [Register an Existing Carrier
+            Account
+            API.(https://shipping.pitneybowes.com/api/post-carrier-accounts-register.html)
+          required: false
+          schema:
+            type: string
+        - name: cancelInitiator
+          description: >-
+            Indicates that this refund request is initiated by the shipper. Set
+            this to: SHIPPER
+          required: false
+          in: query
+          example: SHIPPER
+          schema:
+            type: string
+        - name: carrier
+          description: >-
+            Conditional. The carrier. This is required if the carrier is not
+            USPS
+          required: false
+          in: query
+          example: USPS
+          schema:
+            $ref: '#/components/schemas/Carrier'
+        - name: shipmentId
+          in: path
+          description: shipmentId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelShipment'
+        '201':
+          description: OK
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /shippingservices/v1/manifests:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Manifests
+      summary: This operation creates an end-of-day manifest
+      operationId: createManifest
+      description: >-
+        This operation creates an end-of-day manifest that either combines all
+        parcels into a single form or electronically closes the day, depending
+        on the carrier. Use the instructions appropriate to the carrier.
+
+        * Create a [USPS SCAN
+        Form](https://shipping.pitneybowes.com/api/post-manifests-scan.html)
+
+
+        * Create a [Newgistics
+        Closeout](https://shipping.pitneybowes.com/api/post-manifests-newgistics.html)
+
+        * Create a [PB Presort Pickup
+        Slip](https://shipping.pitneybowes.com/api/post-manifests-presort.html)
+
+        * Create a [Manifest for PMOD
+        Shipments](https://shipping.pitneybowes.com/api/post-manifests-pmod.html)
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: X-PB-TransactionId
+          in: header
+          description: >-
+            Required. A unique identifier for the transaction, up to 25
+            characters.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: manifest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Manifest'
+            example:
+              carrier: usps
+              parcelTrackingNumbers:
+                - '9405509898644518132830'
+              submissionDate: '2020-07-08'
+              fromAddress:
+                company: Pitney Bowes Inc.
+                name: sender_fname
+                phone: '2032032033'
+                email: sender@email.com
+                residential: true
+                addressLines:
+                  - 27 Waterview Drive
+                cityTown: Shelton
+                stateProvince: CT
+                postalCode: 06484
+                countryCode: US
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manifest'
+              example:
+                carrier: usps
+                submissionDate: '2017-05-31'
+                fromAddress:
+                  addressLines:
+                    - 27 Waterview Dr
+                  cityTown: Shelton
+                  stateProvince: CT
+                  postalCode: 06484
+                  countryCode: US
+                  company: Pitney Bowes Inc.
+                  name: John Public
+                  phone: 203-555-1430
+                  email: john.publica@example.com
+                  residential: false
+                inductionPostalCode: 06484
+                parcelTrackingNumbers:
+                  - '9405509898641490245732'
+                  - '9405809898644002256241'
+                  - '9405809898710929474111'
+                manifestId: '9475709899581000182251'
+                manifestTrackingNumber: '9475709899581000182251'
+                documents:
+                  - type: MANIFEST
+                    contentType: URL
+                    contents: 'https://.../scanform/7fc8950380d7437287692d0d3a8ddb8b.pdf'
+                parameters:
+                  - name: SHIPPER_ID
+                    value: '9024324564'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    get:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Manifests
+      summary: retryManifest
+      operationId: retryManifest
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: originalTransactionId
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manifest'
+              example:
+                carrier: USPS
+                submissionDate: '2017-07-12 00:00:00.0'
+                fromAddress:
+                  ...: null
+                parcelTrackingNumbers:
+                  - '9405509898641490869341'
+                manifestId: '9475709899581000147106'
+                manifestTrackingNumber: '9475709899581000147106'
+                documents:
+                  - type: MANIFEST
+                    contentType: URL
+                    contents: >-
+                      https://.../usps/872060188/scanform/5c080c0ccd6b4d5aa5dfbf1957f12ce8.pdf
+        '201':
+          description: OK
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  '/shippingservices/v1/manifests/{manifestId}':
+    get:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Manifests
+      summary: reprintManifest
+      operationId: reprintManifest
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: manifestId
+          in: path
+          description: manifestId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manifest'
+              example:
+                carrier: USPS
+                submissionDate: '2017-08-03 00:00:00.0'
+                fromAddress: {}
+                parcelTrackingNumbers:
+                  - '9405509898641491052445'
+                  - '9405509898641491052513'
+                  - '9405509898641491052520'
+                manifestId: '9475709899581000196258'
+                manifestTrackingNumber: '9475709899581000196258'
+                documents:
+                  - type: MANIFEST
+                    contentType: URL
+                    contents: >-
+                      https://.../usps/872060188/scanform/c860208d886e4fa581b29063c4e7b3de.pdf
+        '201':
+          description: OK
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /shippingservices/v1/addresses/verify:
+    post:
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: minimalAddressValidation
+          in: query
+          description: >-
+            When set to true, the complete address (delivery line and last line)
+            is validated but only the last line (city, state, and postal code)
+            would be changed by the validation check.
+          required: false
+          schema:
+            type: boolean
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Address Validation
+      summary: Address validation
+      description: >-
+        Address validation verifies and cleanses postal addresses within the
+        United States to help ensure packages are rated accurately and shipments
+        arrive at their final destinations on time.
+      operationId: verifyAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+        description: Address object that needs to be validated.
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        '405':
+          description: Invalid input
+  /shippingservices/v1/addresses/verify-suggest:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Address Validation
+      summary: Address Suggestion
+      description: >-
+        This operation returns suggested addresses. Use this if the [Address
+        Validation
+        API](https://shipping.pitneybowes.com/api/post-address-verify.html) call
+        has returned an error.
+      operationId: verifyAndSuggestAddress
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: returnSuggestions
+          in: query
+          description: 'To return suggested addresses, set this to true.'
+          required: true
+          schema:
+            type: string
+            default: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressVerifySuggest'
+        description: Address object that needs to be validated.
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressSuggestionResponse'
+        '405':
+          description: Invalid input
+  '/v4/ledger/developers/{developerId}/transactions/reports':
+    get:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Transaction Reports
+      summary: >-
+        This operation retrieves all transactions for a specified period of
+        time.
+      operationId: getTransactionReport
+      parameters:
+        - name: developerId
+          in: path
+          description: developerId
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: fromDate
+          in: query
+          description: fromDate
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: shipDetails
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            format: int32
+            enum:
+              - 0
+              - 1
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+        - name: printStatus
+          in: query
+          description: printStatus
+          required: false
+          schema:
+            type: string
+            enum:
+              - SBR
+              - SBRPrinted
+              - SBRCharged
+        - name: toDate
+          in: query
+          description: toDate
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: transactionType
+          in: query
+          description: transactionType
+          required: false
+          schema:
+            type: string
+            enum:
+              - POSTAGE FUND
+              - POSTAGE PRINT
+              - POSTAGE REFUND
+              - APV-POSTAGE ALL
+              - APV-POSTAGE OVERPAID
+              - APV-POSTAGE UNDERPAID
+        - name: merchantId
+          in: query
+          description: >-
+            The value of the postalReportingNumber element in the [merchant
+            object](https://shipping.pitneybowes.com/reference/resource-objects.html).
+            This value is also the merchant's Shipper ID.
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: >-
+            Defines a property to sort on and the sort order. Sort order can be
+            ascending (asc) or descending (desc). Use the following form-
+
+
+            * **sort=<property_name>,<sort_direction>** For example-
+
+            **sort=transactionId,desc** 
+          required: false
+          schema:
+            type: string
+        - name: parcelTrackingNumber
+          in: query
+          description: Parcel tracking number of the shipment.
+          required: false
+          schema:
+            type: string
+        - name: transactionId
+          in: header
+          description: >-
+            The unique string that identifies all the transactions associated
+            with a given shipment. The string comprises the developer ID and the
+            shipment's X-PB-TransactionId, separated by an underscore (_). For
+            example-
+
+
+            * **transactionId=44397664_ad5aa07-ad7414-a78a-c22b3**
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageRealTransactionDetailReport'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /shippingservices/v1/pickups/schedule:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Pickup
+      summary: Address validation
+      description: >-
+        This operation schedules a USPS package pickup from a residential or
+        commercial location and provides a pickup confirmation number.
+      operationId: getPickupschedule
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: X-PB-TransactionId
+          in: header
+          description: 'A unique identifier for the transaction, up to 25 characters'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchedulePickup'
+        description: Schedule Pickup request.
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchedulePickupResponse'
+        '405':
+          description: Invalid input
+  '/shippingservices/v1/pickups/{pickupId}/cancel':
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Pickup
+      summary: Cancel Pickup
+      description: >-
+        This operation schedules a USPS package pickup from a residential or
+        commercial location and provides a pickup confirmation number.
+      operationId: cancelPickup
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: X-PB-TransactionId
+          in: header
+          description: 'A unique identifier for the transaction, up to 25 characters'
+          required: true
+          schema:
+            type: string
+        - name: pickupId
+          in: path
+          description: 'A unique identifier for the transaction, up to 25 characters'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+  '/shippingservices/v1/tracking/{trackingNumber}':
+    get:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Tracking
+      summary: getTrackingDetails
+      operationId: getTrackingDetails
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: trackingNumber
+          in: path
+          description: The tracking number for the shipment.
+          required: true
+          schema:
+            type: string
+        - name: packageIdentifierType
+          in: query
+          description: packageIdentifierType
+          required: true
+          schema:
+            type: string
+            default: TrackingNumber
+        - name: carrier
+          in: query
+          description: carrier
+          required: true
+          schema:
+            $ref: '#/components/schemas/Carrier'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackingResponse'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/track/events:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Tracking
+      summary: getTrackingDetails
+      operationId: addTrackingEvents
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+      requestBody:
+        description: add track event
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTrackingEvents'
+            example:
+              carrier: NEWGISTICS
+              references:
+                - referenceType: package
+                  referenceValue: 1Z00
+                  events:
+                    - eventCode: DPB
+                      carrierEventCode: DOAC
+                      eventDate: '2020-04-18'
+                      eventTime: '12:48:10'
+                      eventTimeOffset: '-06:00'
+                      eventCity: Decatur
+                      eventStateOrProvince: IL
+                      postalCode: '62521'
+                      country: US
+                - referenceType: package
+                  referenceValue: 3Z30
+                  events:
+                    - eventCode: DPB
+                      carrierEventCode: DOAC
+                      eventDate: '2020-04-18'
+                      eventTime: '12:50:00'
+                      eventTimeOffset: '-06:00'
+                      eventCity: Decatur
+                      eventStateOrProvince: IL
+                      postalCode: '62521'
+                      country: US
+      responses:
+        '200':
+          description: Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+              example:
+                status: success
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /shippingservices/v1/parcel-protection/quote:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Parcel Protection
+      summary: Parcel Protection Quote
+      description: >-
+        This API provides a quote for covering a shipment through Pitney Bowes
+        [Parcel
+        Protection](https://www.pitneybowes.com/us/ecommerce-delivery-services/parcel-protection.html).
+      operationId: getParcelProtectionQuote
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: X-PB-TransactionId
+          in: header
+          description: >-
+            Required. A unique identifier for the transaction, up to 25
+            characters.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: manifest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParcelProtectionQuoteRequest'
+            example:
+              shipmentInfo:
+                carrier: USPS
+                serviceId: PM
+                insuranceCoverageValue: 1000
+                insuranceCoverageValueCurrency: USD
+                parcelInfo:
+                  commodityList:
+                    - categoryPath: electronics
+                      itemCode: SKU1084
+                      name: Laptop
+                      url: 'https://example.com/computers/laptop/1084'
+                shipperInfo:
+                  shipperID: '9024324564'
+                  address:
+                    addressLines:
+                      - 545 Market St
+                    cityTown: San Francisco
+                    stateProvince: CA
+                    postalCode: 94105-2847
+                    countryCode: US
+                consigneeInfo:
+                  address:
+                    addressLines:
+                      - 284 W Fulton
+                    cityTown: Garden City
+                    stateProvince: KS
+                    postalCode: '67846'
+                    countryCode: US
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParcelProtectionQuoteResponse'
+              example:
+                parcelProtectionFees: 7.5
+                parcelProtectionFeesCurrencyCode: USD
+                parcelProtectionFeesBreakup:
+                  basePremium: 7.25
+                  technologyFee: 0.25
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /shippingservices/v1/parcel-protection/create:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Parcel Protection
+      summary: Parcel Protection Coverage
+      description: >-
+        This API lets merchants request Pitney Bowes [Parcel
+        Protection](https://shipping.pitneybowes.com/faqs/parcel-protection.html)
+        coverage for shipments. Merchants can request coverage for shipments
+        created with the Shipping APIs as well as for shipments created with
+        other platforms.
+      operationId: getParcelProtectionCoverage
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: X-PB-TransactionId
+          in: header
+          description: >-
+            Required. A unique identifier for the transaction, up to 25
+            characters.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: manifest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParcelProtectionCreateRequest'
+            example:
+              shipmentInfo:
+                trackingNumber: '940509898641491871138'
+                carrier: USPS
+                serviceId: PM
+                insuranceCoverageValue: 1000
+                insuranceCoverageValueCurrency: USD
+                parcelInfo:
+                  commodityList:
+                    - categoryPath: electronics
+                      itemCode: SKU1084
+                      name: Laptop
+                      url: 'https://example.com/computers/laptop/1084'
+                shipperInfo:
+                  shipperID: '9024324564'
+                  address:
+                    addressLines:
+                      - 545 Market St
+                    cityTown: San Francisco
+                    stateProvince: CA
+                    postalCode: 94105-2847
+                    countryCode: US
+                  companyName: Supplies
+                  givenName: John
+                  middleName: James
+                  familyName: Smith
+                  email: john@example.com
+                  phoneNumbers:
+                    - number: '1234567890'
+                      type: business phone
+                consigneeInfo:
+                  address:
+                    addressLines:
+                      - 284 W Fulton
+                    cityTown: Garden City
+                    stateProvince: KS
+                    postalCode: '67846'
+                    countryCode: US
+                  companyName: Shop
+                  givenName: Mary
+                  middleName: Anne
+                  familyName: Jones
+                  email: mary@example.com
+                  phoneNumbers:
+                    - number: '6205551234'
+                      type: business phone
+                    - number: '6205554321'
+                      type: fax
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParcelProtectionCreateResponse'
+              example:
+                transactionID: 44397664_ABCD1234_28d6fb80-6b92-4e69-b5bb-6656a00ce435
+                parcelProtectionReferenceID: IPPOL0000000012345678
+                parcelProtectionDate: '2019-05-20 15:00:25.279+0000'
+                parcelProtectionFees: 7.5
+                parcelProtectionFeesCurrencyCode: USD
+                parcelProtectionFeesBreakup:
+                  basePremium: 7.25
+                  technologyFee: 0.25
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /shippingservices/v1/parcel-protection/void:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Parcel Protection
+      summary: Parcel Protection Coverage
+      description: >-
+        This API lets merchants request Pitney Bowes [Parcel
+        Protection](https://shipping.pitneybowes.com/faqs/parcel-protection.html)
+        coverage for shipments. Merchants can request coverage for shipments
+        created with the Shipping APIs as well as for shipments created with
+        other platforms.
+      operationId: cancelParcelProtection
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: X-PB-TransactionId
+          in: header
+          description: >-
+            Required. A unique identifier for the transaction, up to 25
+            characters.
+          required: true
+          schema:
+            type: string
+        - name: parcelProtectionReferenceId
+          in: query
+          description: >-
+            Required. The identifier for the PB Parcel Protection policy that is
+            being voided.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: manifest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoidParcelProtectionRequest'
+            example:
+              shipperID: '9024324564'
+              parcelProtectionAccountID: IPACT2345678
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoidParcelProtectionResponse'
+              example:
+                status: Void_Success
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  '/shippingservices/v1/parcel-protection/{developerId}/policies':
+    get:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Parcel Protection
+      summary: Parcel Protection Reports
+      description: >-
+        This operation retrieves the policy status and other information on the
+        Parcel Protection policies you have purchased for your shipments.
+        Further Details
+        https://shipping.pitneybowes.com/api/get-parcel-protection-reports.html
+      operationId: getParcelProtectionReports
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: X-PB-TransactionId
+          in: header
+          description: >-
+            Required. A unique identifier for the transaction, up to 25
+            characters.
+          required: true
+          schema:
+            type: string
+        - name: developerId
+          in: path
+          description: Required. Your Pitney Bowes developer ID.
+          required: true
+          schema:
+            type: string
+        - name: policyCreatedFromDate
+          in: query
+          description: >-
+            The beginning of the date range. Specify this value in UTC using the
+            ISO 8601 standard. You must include both date and time, and you must
+            end the time with Z to indicate a zero offset.
+          required: true
+          schema:
+            type: string
+        - name: policyCreatedToDate
+          in: query
+          description: >-
+            The end of the date range. Specify this value in UTC using the ISO
+            8601 standard. You must include both date and time, and you must end
+            the time with Z to indicate a zero offset.
+          required: false
+          schema:
+            type: string
+        - name: policyReferenceId
+          in: query
+          description: 'The unique identifier for the PB Parcel Protection policy.].'
+          required: false
+          schema:
+            type: string
+        - name: parcelTrackingNumber
+          in: query
+          description: >-
+            The parcel tracking number of the shipment that the policy applies
+            to.
+          required: false
+          schema:
+            type: string
+        - name: merchantId
+          in: query
+          description: >-
+            The merchant's Shipper ID. This is the value of the
+            postalReportingNumber element in the Merchant Object.
+          required: false
+          schema:
+            type: string
+        - name: policyStatus
+          in: query
+          description: Whether the policy is active or voided.
+          required: false
+          schema:
+            type: string
+        - name: size
+          in: query
+          description: The number of transactions to return per page in the result set.
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: >-
+            The index number of the page to return. Page index numbering starts
+            at 0. Specifying page=0 returns the first page of the result set.
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: >-
+            Defines a property to sort on and the sort order. Sort order can be
+            ascending (asc) or descending (desc).
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParcelProtectionPolicyResponse'
+              example:
+                content:
+                  - transactionId: 44397664_ABC123_1e142741-c3a1-4b51-bfe5-15c6c39e70b4
+                    developerId: '44397664'
+                    subscriptionAccNo: '23456789'
+                    clientTransactionId: 44397664_ABC123
+                    policyDetails:
+                      policyId: IPPOL000000123456789
+                      policyDate: '2019-11-01 18:32:44.101+0000'
+                      policyStatus: ACTIVE
+                      claimStatus: null
+                      claimStatusUpdateDate: null
+                      valueOfGoods: 1000
+                      insuranceValue: 1000
+                      premiumValue: 7.5
+                      basePremium: 7.25
+                      technologyFee: 0.25
+                      currencyCode: USD
+                      mailClass: PM
+                      mailClassOption: PKG
+                    shipmentDetails:
+                      shipmentDate: null
+                      shipmentTransactionId: null
+                      shipmentId: null
+                      parcelTrackingNumber: '9405809898647123456789'
+                      carrier: USPS
+                      amount: null
+                      packageLength: null
+                      packageWidth: null
+                      packageHeight: null
+                      weight: null
+                      zone: null
+                    shipperInfo:
+                      shipperID: '9024324564'
+                      firstName: John
+                      middleName: James
+                      lastName: Smith
+                      company: null
+                      email: john@example.com
+                      phoneNumber1: '1234567890'
+                      phoneNumber2: null
+                      faxNumber: null
+                      address:
+                        street1: 545 Market St
+                        street2: ''
+                        street3: ''
+                        city: San Francisco
+                        region: CA
+                        country: US
+                        postalCode: 94105-2847
+                    consigneeInfo:
+                      shipperID: myBuyer0048
+                      firstName: Mary
+                      middleName: Anne
+                      lastName: Jones
+                      company: null
+                      email: mary@example.com
+                      phoneNumber1: '6205551234'
+                      phoneNumber2: '6205554321'
+                      faxNumber: null
+                      address:
+                        street1: 284 W Fulton
+                        street2: ''
+                        street3: ''
+                        city: Garden City
+                        region: KS
+                        country: US
+                        postalCode: '67846'
+                    createdAt: '2019-11-01 18:37:56.356+0000'
+                    updatedAt: '2019-11-01 18:37:56.356+0000'
+                  - ...: null
+                last: false
+                totalElements: 61
+                totalPages: 4
+                first: true
+                numberOfElements: 20
+                sort:
+                  - direction: DESC
+                    property: policyDetails.policyDate
+                    ignoreCase: false
+                    nullHandling: NATIVE
+                    descending: true
+                    ascending: false
+                size: 20
+                number: 0
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /shippingservices/v1/crossborder/checkout/quotes:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Cross-Border Quotes
+      summary: Cross-Border Quotes
+      description: >-
+        This operation provides an estimate of the duties, taxes, and
+        transportation costs for the items in a buyer's online shopping basket.
+        The API calculates how many separate parcels are required to ship the
+        items and estimates costs. The API checks each item's eligibility to
+        clear customs and returns the quote for eligible items. To look for
+        futher info please look into [Cross-Border
+        Quotes](https://shipping.pitneybowes.com/api/post-quotes.html#)
+      operationId: getCrossBorderQuotes
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrossBorderQuotesRequest'
+            example:
+              quoteCurrency: USD
+              basketCurrency: USD
+              fromAddress:
+                name: John Smith
+                residential: false
+                company: Supplies
+                addressLines:
+                  - 545 Market St
+                cityTown: San Francisco
+                stateProvince: CA
+                postalCode: '94105'
+                countryCode: US
+                email: john@example.com
+                phone: 415-555-0000
+              toAddress:
+                name: Jan Jones
+                residential: true
+                addressLines:
+                  - 2168 King St N
+                cityTown: Waterloo
+                stateProvince: 'ON'
+                postalCode: N2J 4G8
+                countryCode: CA
+                email: jan@example.com
+                phone: 519-555-0000
+              basketItems:
+                - brand: ''
+                  categories:
+                    - categoryCode: UNKNOWN
+                      descriptions:
+                        - locale: en
+                          name: Dress
+                          parentsNames:
+                            - Clothing
+                            - Women
+                      parentCategoryCode: '6543'
+                      url: www.example.com
+                  description: Red Embroidered
+                  eccn: EAR99
+                  hazmats:
+                    - hazmat
+                    - ormd
+                  hSTariffCode: '4203100001'
+                  hSTariffCodeCountry: AU
+                  identifiers:
+                    - number: '123456'
+                      source: isbn
+                  imageUrls:
+                    - www.example.com
+                  itemDimension:
+                    length: 11
+                    height: 8.5
+                    width: 5
+                    unitOfMeasurement: IN
+                  itemId: G_123456
+                  manufacturer: ''
+                  originCountryCode: CN
+                  pricing:
+                    price: 20
+                    codPrice:
+                      - price: 20
+                        cod: CA
+                        includesDuty: false
+                        includesTaxes: false
+                    dutiableValue: 20
+                  quantity: 2
+                  unitPrice: 19.99
+                  unitWeight:
+                    weight: 5
+                    unitOfMeasurement: lb
+                  url: 'http://www.example.com/products/160921_030'
+              rates:
+                - carrier: PBI
+                  serviceId: PBXPS
+              shipmentOptions:
+                - name: SHIPPER_ID
+                  value: '9024324564'
+                - name: CLIENT_ID
+                  value: '789123'
+                - name: CARRIER_FACILITY_ID
+                  value: US_ELOVATIONS_KY
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrossBorderQuotesResponse'
+              example:
+                quote:
+                  - quoteCurrency: USD
+                    quoteLines:
+                      - lineId: '1'
+                        itemId: G_123456
+                        quoteLineId: '1'
+                        quantity: 2
+                        unitRates:
+                          unitPrice: 19.99
+                          totalTaxAmount: 3.12
+                          totalDutyAmount: 4
+                          serviceId: PBXPS
+                          baseCharge: 23.62
+                          deliveryCommitment:
+                            minEstimatedNumberOfDays: 3
+                            maxEstimatedNumberOfDays: 6
+                          totalCarrierCharge: 30.74
+                        lineRates:
+                          linePrice: 39.98
+                          totalTaxAmount: 6.24
+                          totalDutyAmount: 8
+                          serviceId: PBXPS
+                          baseCharge: 47.24
+                          deliveryCommitment:
+                            minEstimatedNumberOfDays: 3
+                            maxEstimatedNumberOfDays: 6
+                          totalCarrierCharge: 61.48
+                    totalPrice: 39.98
+                    totalRates:
+                      serviceId: PBXPS
+                      baseCharge: 47.24
+                      deliveryCommitment:
+                        minEstimatedNumberOfDays: 3
+                        maxEstimatedNumberOfDays: 6
+                      totalCarrierCharge: 61.48
+                      totalDutyAmount: 8
+                      totalTaxAmount: 6.24
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrossBorderQuotesErrors'
+  /shippingservices/v1/carrier-facility:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Carrier Info
+      summary: Find Carrier Facilities
+      description: >-
+        This operation locates Post Offices and other facilities for a given
+        carrier. You can use this operation, for example, to locate all USPS
+        Post Offices near to a given postal code.If you use the Standard Return
+        API and if you use the option to print a QR code, use this API to locate
+        facilities where the buyer can print the label from the QR code.
+      operationId: getCarrierFacilities
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarrierFacilityRequest'
+            example:
+              address:
+                addressLines:
+                  - 6525 Greenway Dr
+                cityTown: Roanoke
+                stateProvince: VA
+                countryCode: US
+              carrier: USPS
+              carrierFacilityOptions:
+                - name: FACILITY_TYPE_SERVICE
+                  value: LABEL_BROKER_RETAIL
+                - name: FACILITY_TYPE
+                  value: POST_OFFICE
+                - name: FACILITY_WITHIN_RADIUS
+                  value: '10'
+                - name: NUMBER_OF_FACILITIES
+                  value: '5'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarrierFacilityResponse'
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CrossBorderQuotesErrors'
+  /shippingservices/v1/container-manifest:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Container
+      summary: Create Container Manifest Label
+      description: >-
+        This operation prints a label for the shipment of containerized parcels
+        destined for a Pitney Bowes warehouse facility from the client location.
+      operationId: getContainerizedParcelsLabels
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: X-PB-TransactionId
+          in: header
+          description: >-
+            Required. A unique identifier for the transaction, up to 25
+            characters.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: manifest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Manifest'
+            example:
+              carrier: Newgistics
+              containerType: Carton
+              parcelTrackingNumbers:
+                - '9205500000000000000000'
+                - '9206600000000000000000'
+              documents:
+                - resolution: DPI_203
+                  size: DOC_4X4
+                  fileFormat: PDF
+              parameters:
+                - name: CLIENT_CONTAINER_ID
+                  value: AB12345678
+                - name: SHIPMENT_REFERENCE_NUMBER
+                  value: CD12345678
+                - name: CLIENT_FACILITY_ID
+                  value: '7777'
+                - name: CARRIER_GATEWAY_FACILITY_ID
+                  value: '1234'
+                - name: CARRIER_FACILITY_ID
+                  value: '4321'
+                - name: PRINT_CUSTOM_MESSAGE_1
+                  value: 'Container: AB12345678, Shipment: CD12345678'
+                - name: current_container
+                  value: '1'
+                - name: total_container_count
+                  value: '2'
+                - name: client_Id
+                  value: NGST
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ContainerManifestResponse'
+      deprecated: false
+  /shippingservices/v1/crossborder/hs-classification/items:
+    post:
+      security:
+        - oAuth2ClientCredentials: []
+      tags:
+        - Cross-Border Quotes
+      summary: Predicts the HS Code for a parcel
+      description: >-
+        This operation predicts the HS Code for a parcel being shipped
+        internationally and gives the level of confidence in the prediction.
+      operationId: PredictedHSCode
+      parameters:
+        - $ref: '#/components/parameters/UnifiedErrorStructure'
+        - name: X-PB-TransactionId
+          in: header
+          description: >-
+            Required. A unique identifier for the transaction, up to 25
+            characters.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: manifest
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Manifest'
+            example:
+              carrier: Newgistics
+              containerType: Carton
+              parcelTrackingNumbers:
+                - '9205500000000000000000'
+                - '9206600000000000000000'
+              documents:
+                - resolution: DPI_203
+                  size: DOC_4X4
+                  fileFormat: PDF
+              parameters:
+                - name: CLIENT_CONTAINER_ID
+                  value: AB12345678
+                - name: SHIPMENT_REFERENCE_NUMBER
+                  value: CD12345678
+                - name: CLIENT_FACILITY_ID
+                  value: '7777'
+                - name: CARRIER_GATEWAY_FACILITY_ID
+                  value: '1234'
+                - name: CARRIER_FACILITY_ID
+                  value: '4321'
+                - name: PRINT_CUSTOM_MESSAGE_1
+                  value: 'Container: AB12345678, Shipment: CD12345678'
+                - name: current_container
+                  value: '1'
+                - name: total_container_count
+                  value: '2'
+                - name: client_Id
+                  value: NGST
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ParcelProtectionPolicyResponse'
+      deprecated: false
+externalDocs:
+  description: Find out more about Shipping API
+  url: 'https://shipping.pitneybowes.com/reference/api-resources.html'
+components:
+  parameters:
+    AcceptLanguage:
+      name: Accept-Language
+      example: '''en-US'''
+      in: header
+      schema:
+        type: string
+        default: '''en-US'''
+      required: true
+      description: >-
+        This HTTP header advertises which languages the client is able to
+        understand, and which locale variant is preferred.
+    ContentType:
+      in: header
+      name: Content-Type
+      example: application/json
+      schema:
+        type: string
+        default: application/json
+      required: true
+      description: This mentions the content type getting passed in body of request.
+    UnifiedErrorStructure:
+      in: header
+      name: X-PB-UnifiedErrorStructure
+      example: 'true'
+      schema:
+        type: boolean
+        default: 'true'
+      required: false
+      description: >-
+        Set this to true to use the standard [error
+        object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object)
+        if an error occurs.
+    Carrier:
+      in: header
+      name: carrier
+      example: USPS
+      schema:
+        $ref: '#/components/schemas/Carrier'
+      description: ''
+  securitySchemes:
+    oAuth2ClientCredentials:
+      type: oauth2
+      description: 'See http://developers.gettyimages.com/api/docs/v3/oauth2.html'
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://api-sandbox.pitneybowes.com/oauth/token'
+          scopes: {}
+  schemas:
+    ContainerManifestResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            pbContainerId:
+              type: string
+            labelData:
+              type: string
+    Services:
+      type: string
+      description: >-
+        The abbreviated name of the carrier-specific service. For abbreviations,
+        see the Services table on the [carrier's reference
+        page](https://shipping.pitneybowes.com/reference/carrier-services.html).
+
+
+
+        EM - Priority Mail Express | PM - Priority Mail | FCM - First-Class Mail
+        | PRCLSEL - Parcel Select | STDPOST - Standard Post | LIB - Library Mail
+        | MEDIA - Media Mail | PMOD - Priority Mail Open and Distribute | EMI -
+        Priority Mail Express International | PMI - Priority Mail International
+        | FCMI - First-Class Mail International | FCPIS - First-Class Package
+        International Service. For overseas tracking,  [Do the APIs support
+        E-USPS
+        DELCON?](https://shipping.pitneybowes.com/faqs/shipments.html#usps-e-delcon-faq)
+      enum:
+        - EM
+        - PM
+        - FCM
+        - PRCLSEL
+        - STDPOST
+        - LIB
+        - MEDIA
+        - PMOD
+        - EMI
+        - PMI
+        - FCMI
+        - FCPIS
+        - BPM
+        - PSLW
+        - STANDARD
+        - PBXPS
+        - PBXUS
+        - PBXPE
+        - NDA_AM
+        - NDA
+        - NDA_SVR
+        - 2DA_AM
+        - 2DA
+        - 3DA
+        - GRD
+        - HOM
+        - NDA_AM_FREIGHT
+        - NDA_FREIGHT
+        - 2DA_FREIGHT
+        - 3DA_FREIGHT
+        - SP_PRE_STD
+        - SP_PRCLSEL
+        - SP_MEDIA
+        - SP_PRE_PRINT
+        - XPP
+        - EXP
+        - XPD
+        - STD
+        - EXS
+        - EXP_FREIGHT
+        - XPD_FREIGHT
+    UnitOfWeight:
+      type: string
+      enum:
+        - GM
+        - OZ
+        - LB
+        - KG
+    UnitOfDimension:
+      type: string
+      enum:
+        - CM
+        - IN
+    SpecialServiceCodes:
+      type: string
+      description: >
+        * Ins - Insured Mail. 
+
+        * RR - Return receipt. 
+
+        * Sig - Item is trackable if special service is requested.
+
+        * ADSIG - Adult signature required.
+
+        * Cert - Certified mail.
+
+        * DelCon - Delivery confirmation.
+
+        * ERR - Electronic return receipt.
+
+        * RRm - Return receipt for merchandise.
+
+        * Reg - Registered mail.
+
+        * RegIns - Registered mail with insurance.
+
+        * SH - Special handling - fragile.
+
+        * CertRD - Certified mail with restricted delivery.
+
+        * COD - Collect on delivery.
+
+        * CODRD - Collect on delivery with restricted delivery.
+
+        * InsRD - Insurance with restricted delivery.
+
+        * RegRD - Registered mail with restricted delivery.
+
+        * RegCOD - Registered mail with COD.
+
+        * SigRD - Signature required with restricted delivery.
+
+        * ADSIGRD - Adult signature required with restricted delivery.
+
+        * RegInsRD - Registered mail with insurance and restricted delivery.
+
+        * CERTAD - Certified mail with adult signature.
+
+        * CERTADRD - Certified mail with adult signature and restricted
+        delivery.
+
+        * hazmat - Hazardous materials.
+
+        * liveanimal - Live animal surcharge.
+
+        * liveanimal_poultry - Live Animal-Day Old Poultry Surcharge
+
+        * holiday - Holiday Delivery- For Priority Mail Express Service Only
+
+        * sunday - Sunday delivery.
+
+        * sunday_holiday - Sunday and holiday delivery.
+
+        * PO_to_Addressee - PO to addressee
+
+        * noWeekend - Do not deliver on weekend
+
+        * TenThirty - Delivery by 10:30 AM
+
+        * PMOD_OPTIONS - PMOD options
+
+        * NOTIFICATIONS - Notifications.
+      enum:
+        - ADSIG
+        - ADSIGRD
+        - Cert
+        - CERTAD
+        - CERTADRD
+        - CertRD
+        - COD
+        - CODRD
+        - DelCon
+        - ERR
+        - hazmat
+        - holiday
+        - InsRD
+        - liveanimal
+        - liveanimal - poultry
+        - PMOD_OPTIONS
+        - Reg
+        - RegCOD
+        - RegIns
+        - RegInsRD
+        - RegRD
+        - RR
+        - RRM
+        - SH
+        - SIG
+        - SigRD
+        - sunday
+        - sunday - holiday
+        - NOTIFICATIONS
+        - PBXPS
+        - PBXUS
+        - PBXPE
+        - ANCILLARY_ENDORSEMENT
+        - ADD_HDL
+        - ALCOHOL
+        - CARRIER_LEAVE_IF_NO_RES
+        - DIRECT_SIG
+        - APPOINTMENT
+        - DATE
+        - EVENING
+        - GCOD
+        - PAL
+        - PAL_PLUS
+        - SAT_DELIVERY
+        - SAT_PICKUP
+        - HOLD
+        - NO_SIG
+        - PRL
+        - ADULT_SIG
+        - CARBON
+        - COD_CASHIER
+        - COD_CHECK
+        - DIRECT
+        - DRY_ICE
+        - INS
+        - SHP_RELEASE
+        - VERBAL
+    Trackable:
+      type: string
+      default: TRACKABLE
+      description: >
+        * TRACKABLE - Item is trackable by default.
+
+        * NON_TRACKABLE - Item is not trackable.
+
+        * REQUIRES_TRACKABLE_SPECIAL_SERVICE - Item is trackable if special
+        service is requested.
+      enum:
+        - TRACKABLE
+        - NON_TRACKABLE
+        - REQUIRES_TRACKABLE_SPECIAL_SERVICE
+    Carrier:
+      type: string
+      default: USPS
+      description: >
+        USPS - US Postal Service | PBPRESORT - Pitney Powes Presort Services |  
+        NEWGISTICS - Newgistics.
+      enum:
+        - USPS
+        - PBPRESORT
+        - NEWGISTICS
+        - PBI
+        - FEDEX
+        - UPS
+    ISOCountryCode:
+      type: string
+      default: US
+      enum:
+        - AF
+        - AX
+        - AL
+        - DZ
+        - AS
+        - AD
+        - AO
+        - AI
+        - AQ
+        - AG
+        - AR
+        - AM
+        - AW
+        - AU
+        - AT
+        - AZ
+        - BS
+        - BH
+        - BD
+        - BB
+        - BY
+        - BE
+        - BZ
+        - BJ
+        - BM
+        - BT
+        - BO
+        - BQ
+        - BA
+        - BW
+        - BV
+        - BR
+        - IO
+        - BN
+        - BG
+        - BF
+        - BI
+        - KH
+        - CM
+        - CA
+        - CV
+        - KY
+        - CF
+        - TD
+        - CL
+        - CN
+        - CX
+        - CC
+        - CO
+        - KM
+        - CG
+        - CD
+        - CK
+        - CR
+        - CI
+        - HR
+        - CU
+        - CW
+        - CY
+        - CZ
+        - DK
+        - DJ
+        - DM
+        - DO
+        - EC
+        - EG
+        - SV
+        - GQ
+        - ER
+        - EE
+        - ET
+        - FK
+        - FO
+        - FJ
+        - FI
+        - FR
+        - GF
+        - PF
+        - TF
+        - GA
+        - GM
+        - GE
+        - DE
+        - GH
+        - GI
+        - GR
+        - GL
+        - GD
+        - GP
+        - GU
+        - GT
+        - GG
+        - GN
+        - GW
+        - GY
+        - HT
+        - HM
+        - VA
+        - HN
+        - HK
+        - HU
+        - IS
+        - IN
+        - ID
+        - IR
+        - IQ
+        - IE
+        - IM
+        - IL
+        - IT
+        - JM
+        - JP
+        - JE
+        - JO
+        - KZ
+        - KE
+        - KI
+        - KP
+        - KR
+        - KW
+        - KG
+        - LA
+        - LV
+        - LB
+        - LS
+        - LR
+        - LY
+        - LI
+        - LT
+        - LU
+        - MO
+        - MK
+        - MG
+        - MW
+        - MY
+        - MV
+        - ML
+        - MT
+        - MH
+        - MQ
+        - MR
+        - MU
+        - YT
+        - MX
+        - FM
+        - MD
+        - MC
+        - MN
+        - ME
+        - MS
+        - MA
+        - MZ
+        - MM
+        - NA
+        - NR
+        - NP
+        - NL
+        - NC
+        - NZ
+        - NI
+        - NE
+        - NG
+        - NU
+        - NF
+        - MP
+        - 'NO'
+        - OM
+        - PK
+        - PW
+        - PS
+        - PA
+        - PG
+        - PY
+        - PE
+        - PH
+        - PN
+        - PL
+        - PT
+        - PR
+        - QA
+        - RE
+        - RO
+        - RU
+        - RW
+        - BL
+        - SH
+        - KN
+        - LC
+        - MF
+        - PM
+        - VC
+        - WS
+        - SM
+        - ST
+        - SA
+        - SN
+        - RS
+        - SC
+        - SL
+        - SG
+        - SX
+        - SK
+        - SI
+        - SB
+        - SO
+        - ZA
+        - GS
+        - SS
+        - ES
+        - LK
+        - SD
+        - SR
+        - SJ
+        - SZ
+        - SE
+        - CH
+        - SY
+        - TW
+        - TJ
+        - TZ
+        - TH
+        - TL
+        - TG
+        - TK
+        - TO
+        - TT
+        - TN
+        - TR
+        - TM
+        - TC
+        - TV
+        - UG
+        - UA
+        - AE
+        - GB
+        - US
+        - UM
+        - UY
+        - UZ
+        - VU
+        - VE
+        - VN
+        - VG
+        - VI
+        - WF
+        - EH
+        - YE
+        - ZM
+        - ZW
+    ParcelType:
+      type: string
+      description: |
+        * LETTER -  Letter. Generates a First-Class label with IMB barcode. 
+        * FRE - Flat rate envelope.
+        * LGENV - Legal flat rate envelope.
+        * LGLFRENV - Padded flat rate envelope.
+        * PFRENV - Small flat rate box.
+        * SFRB - Medium flat rate box.
+        * FRB - Large Flat rate box.
+        * LFRB - DVD box.
+        * DVDBOX - DVDBOX.
+        * VIDEOBOX - Video box.
+        * MLFRB - Military flat raqte box.
+        * RBA - Regional rate box, type A
+        * RBB -  Regional rate box, type B.
+        * PKG - Package (not eligible for special package rate).
+        * LP - Large package.
+        * FLAT - USPS Flat or Large Envelope.
+        * EMMTB - Extended Managed Mail Tray Box.
+        * FTB - Full tray box.
+        * HTB - Half tray box.
+        * SACK - Sack.
+        * FTTB - Flat tub tray.
+        * SOFTPACK - Soft Pack Envelope.
+        * MIX - PMOD Enclosed Package Type.
+        * LTR - Letter for stamp API call.
+      enum:
+        - FLAT
+        - LETTER
+        - FRE
+        - LGENV
+        - LGLFRENV
+        - PFRENV
+        - FRB
+        - LFRB
+        - DVDBOX
+        - VIDEOBOX
+        - MLFRB
+        - RBA
+        - RBB
+        - LP
+        - SACK
+        - SOFTPACK
+        - MIX
+        - LTR
+        - NMLETTER
+        - NMLTR
+        - IRRPKG
+        - SFRB
+        - EMMTB
+        - FTB
+        - FTTB
+        - HTB
+        - PACK
+        - BOX
+        - SMALL_EXP_BOX
+        - MED_EXP_BOX
+        - LG_EXP_BOX
+        - EXTRA_LG_EXP_BOX
+        - TUBE
+        - 25KG
+        - 10KG
+        - PKG
+    ServicesParameterRule:
+      properties:
+        name:
+          type: string
+        brandedName:
+          type: string
+        required:
+          type: boolean
+        minValue:
+          type: number
+        maxValue:
+          type: number
+        freeValue:
+          type: number
+        format:
+          type: string
+        description:
+          type: string
+    CarrierFacilityResponse:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        carrierFacilityOptions:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+        carrierFacilitySuggestions:
+          type: array
+          items:
+            type: object
+            properties:
+              address:
+                $ref: '#/components/schemas/Address'
+              carrierFacilityAttributes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    value:
+                      type: string
+              facilityHours:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    day:
+                      type: string
+                    facilityTimings:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          closesAt:
+                            type: string
+                          opensAt:
+                            type: string
+              facilityParking:
+                type: string
+    AddressVerifySuggest:
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+    PrerequisiteRules:
+      properties:
+        specialServiceCodes:
+          $ref: '#/components/schemas/SpecialServiceCodes'
+        minInputValue:
+          type: number
+    SpecialServicesRule:
+      properties:
+        specialServiceId:
+          $ref: '#/components/schemas/SpecialServiceCodes'
+        brandedName:
+          type: string
+        categoryId:
+          type: string
+        categoryName:
+          type: string
+        trackable:
+          type: boolean
+        inputParameterRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicesParameterRule'
+        prerequisiteRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrerequisiteRules'
+        incompatibleSpecialServices:
+          $ref: '#/components/schemas/SpecialServiceCodes'
+    WeightRules:
+      properties:
+        required:
+          type: boolean
+        unitOfMeasurement:
+          type: string
+        minWeight:
+          type: number
+        maxWeight:
+          type: number
+    DimensionRules:
+      type: object
+      properties:
+        required:
+          type: boolean
+        unitOfMeasurement:
+          type: string
+        minParcelDimensions:
+          type: object
+          properties:
+            length:
+              type: number
+            width:
+              type: number
+            height:
+              type: number
+            unitOfMeasurement:
+              type: string
+        maxParcelDimensions:
+          type: object
+          properties:
+            length:
+              type: integer
+            width:
+              type: number
+            height:
+              type: integer
+            unitOfMeasurement:
+              type: string
+        minLengthPlusGirth:
+          type: integer
+        maxLengthPlusGirth:
+          type: integer
+    ParcelTypeRules:
+      properties:
+        parcelType:
+          $ref: '#/components/schemas/ParcelType'
+        brandedName:
+          type: string
+        rateTypeId:
+          type: string
+        rateTypeBrandedName:
+          type: string
+        trackable:
+          $ref: '#/components/schemas/Trackable'
+        specialServicesRule:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecialServicesRule'
+        weightRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/WeightRules'
+        dimensionRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/DimensionRules'
+        suggestedTrackableSpecialServiceId:
+          $ref: '#/components/schemas/SpecialServiceCodes'
+    CarrierRule:
+      properties:
+        serviceId:
+          $ref: '#/components/schemas/Services'
+        brandedName:
+          type: string
+        parcelTypeRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParcelTypeRules'
+        parameters:
+          type: array
+          items:
+            type: string
+    OAuthToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+        tokenType:
+          type: string
+        issuedAt:
+          type: string
+        expiresIn:
+          type: string
+        clientID:
+          type: string
+        org:
+          type: string
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        additionalInfo:
+          type: string
+          description: additionalInfo
+        errorCode:
+          type: string
+          description: errorCode
+        message:
+          type: string
+          description: message
+        moreInfo:
+          type: string
+          description: moreInfo
+        parameters:
+          type: array
+          description: parameters
+          items:
+            type: string
+      title: Error Message
+      description: Error messages sent back to the caller
+    Address:
+      type: object
+      required:
+        - countryCode
+      properties:
+        addressLines:
+          type: array
+          items:
+            type: string
+        carrierRoute:
+          type: string
+        cityTown:
+          type: string
+        company:
+          type: string
+        countryCode:
+          type: string
+          description: 2-character country code (ISO-3166-1 alpha-2)
+        deliveryPoint:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+        postalCode:
+          type: string
+        residential:
+          type: boolean
+        stateProvince:
+          type: string
+        status:
+          type: string
+          enum:
+            - PARSED
+            - VALIDATED_CHANGED
+            - VALIDATED_AND_NOT_CHANGED
+            - NOT_CHANGED
+        taxId:
+          type: string
+        taxIdType:
+          type: string
+          enum:
+            - EIN
+            - GST
+            - VAT
+            - RFC
+            - EORI
+      title: Address
+    ParcelWeight:
+      type: object
+      properties:
+        weight:
+          type: number
+        unitOfMeasurement:
+          $ref: '#/components/schemas/UnitOfWeight'
+    Shipment:
+      type: object
+      required:
+        - fromAddress
+        - parcel
+        - rates
+        - toAddress
+      properties:
+        additionalAddresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalAddress'
+        altReturnAddress:
+          $ref: '#/components/schemas/Address'
+        carrierPayments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarrierPayment'
+        customs:
+          $ref: '#/components/schemas/Customs'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+        fromAddress:
+          $ref: '#/components/schemas/Address'
+        hazmatDetails:
+          $ref: '#/components/schemas/HazmatDetails'
+        parcel:
+          $ref: '#/components/schemas/Parcel'
+        parcelTrackingNumber:
+          type: string
+        rates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rate'
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        shipmentId:
+          type: string
+        shipmentOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        shipmentType:
+          type: string
+          enum:
+            - OUTBOUND
+            - RETURN
+        soldToAddress:
+          $ref: '#/components/schemas/Address'
+        toAddress:
+          $ref: '#/components/schemas/Address'
+      title: Shipment
+    Parameter:
+      type: object
+      required:
+        - name
+        - value
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+          description: 'can be empty/blank, but not null'
+      title: Parameter
+    Tax:
+      type: object
+      properties:
+        displayName:
+          type: string
+        name:
+          type: string
+        taxAmount:
+          type: number
+        taxRate:
+          type: number
+      title: Tax
+    Rate:
+      type: object
+      required:
+        - carrier
+        - parcelType
+      properties:
+        alternateBaseCharge:
+          type: number
+        alternateTotalCharge:
+          type: number
+        baseCharge:
+          type: number
+        baseChargeTaxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax'
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        currencyCode:
+          type: string
+          description: ISO-4217
+        deliveryCommitment:
+          $ref: '#/components/schemas/DeliveryCommitment'
+        destinationZone:
+          type: number
+        dimensionalWeight:
+          $ref: '#/components/schemas/ParcelWeight'
+        discounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Discount'
+        inductionPostalCode:
+          type: string
+        parcelType:
+          $ref: '#/components/schemas/ParcelType'
+        rateTypeId:
+          type: string
+        serviceId:
+          $ref: '#/components/schemas/Services'
+        specialServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecialService'
+        surcharges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Surcharge'
+        totalCarrierCharge:
+          type: number
+        totalTaxAmount:
+          type: number
+      title: Rate
+    Parcel:
+      type: object
+      properties:
+        dimension:
+          $ref: '#/components/schemas/ParcelDimension'
+        weight:
+          $ref: '#/components/schemas/ParcelWeight'
+        valueOfGoods:
+          type: number
+        currencyCode:
+          type: string
+          description: >-
+            Currency code as per [IOS
+            4217](https://en.wikipedia.org/wiki/ISO_4217)
+    ParcelDimension:
+      type: object
+      properties:
+        length:
+          type: number
+        height:
+          type: number
+        width:
+          type: number
+        unitOfMeasurement:
+          $ref: '#/components/schemas/UnitOfDimension'
+        irregularParcelGirth:
+          type: number
+    DocTabItem:
+      type: object
+      properties:
+        displayName:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+      title: DocTabItem
+    DocumentPage:
+      type: object
+      properties:
+        contents:
+          type: string
+          description: base64
+      title: DocumentPage
+    CustomerData:
+      type: object
+      properties:
+        labelDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+    Document:
+      type: object
+      required:
+        - type
+      properties:
+        contentType:
+          type: string
+          enum:
+            - URL
+            - BASE64
+        contents:
+          type: string
+        customerData:
+          $ref: '#/components/schemas/CustomerData'
+        docTab:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocTabItem'
+        fileFormat:
+          type: string
+          enum:
+            - PDF
+            - PNG
+            - GIF
+            - ZPL
+            - ZPL2
+        pages:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentPage'
+        printDialogOption:
+          type: string
+          enum:
+            - NO_PRINT_DIALOG
+            - EMBED_PRINT_DIALOG
+        resolution:
+          type: string
+          enum:
+            - DPI_300
+            - DPI_203
+            - DPI_150
+        size:
+          type: string
+          enum:
+            - DOC_2X7
+            - DOC_4X1
+            - DOC_4X3
+            - DOC_4X6
+            - DOC_4X8
+            - DOC_6X4
+            - DOC_8X11
+            - DOC_9X4
+            - DOC_4X5
+            - DOC_8_5X5_5
+        type:
+          type: string
+      title: Document
+    Surcharge:
+      type: object
+      properties:
+        fee:
+          type: number
+        name:
+          type: string
+      title: Surcharge
+    Customs:
+      type: object
+      properties:
+        customsInfo:
+          $ref: '#/components/schemas/CustomsInfo'
+        customsItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomsItem'
+      title: Customs
+    CustomsInfo:
+      type: object
+      required:
+        - currencyCode
+      properties:
+        EELPFC:
+          type: string
+        blanketEndDate:
+          type: string
+          description: 'format: YYYY-MM-DD'
+        blanketStartDate:
+          type: string
+          description: 'format: YYYY-MM-DD'
+        certificateNumber:
+          type: string
+        comments:
+          type: string
+        currencyCode:
+          type: string
+          description: ISO-4217
+        customsDeclaredValue:
+          type: number
+        declarationStatement:
+          type: string
+        freightCharge:
+          type: number
+        fromCustomsReference:
+          type: string
+        handlingCosts:
+          type: number
+        importerCustomsReference:
+          type: string
+        insuredAmount:
+          type: number
+        insuredNumber:
+          type: string
+        invoiceNumber:
+          type: string
+        licenseNumber:
+          type: string
+        otherCharge:
+          type: number
+        otherDescription:
+          type: string
+        otherType:
+          type: string
+          enum:
+            - COMMISSIONS
+            - DISCOUNTS
+            - HANDLING_FEES
+            - OTHER
+            - ROYALTIES_AND_LICENSE_FEES
+            - TAXES
+        packingCosts:
+          type: number
+        producerSpecification:
+          type: string
+          enum:
+            - MULTIPLE_SPECIFIED
+            - SAME
+            - SINGLE_SPECIFIED
+            - UNKNOWN
+            - AVAILABLE_UPON_REQUEST
+        reasonForExport:
+          type: string
+          enum:
+            - GIFT
+            - COMMERCIAL_SAMPLE
+            - MERCHANDISE
+            - DOCUMENTS
+            - RETURNED_GOODS
+            - SOLD
+            - NOT_SOLD
+            - OTHER
+            - DANGEROUS_GOOD
+            - HUMANITARIAN_GOODS
+        reasonForExportExplanation:
+          type: string
+        sdrValue:
+          type: number
+        shippingDocumentType:
+          type: string
+          enum:
+            - NAFTA
+            - COO
+        signatureContact:
+          $ref: '#/components/schemas/Address'
+        termsOfSale:
+          type: string
+      title: CustomsInfo
+    CustomsItem:
+      type: object
+      required:
+        - description
+        - originCountryCode
+        - quantity
+        - unitPrice
+        - unitWeight
+      properties:
+        description:
+          type: string
+        hSTariffCode:
+          type: string
+        netCostMethod:
+          type: string
+          enum:
+            - NO_NET_COST
+            - NET_COST
+        originCountryCode:
+          type: string
+        originStateProvince:
+          type: string
+        preferenceCriterion:
+          type: string
+          enum:
+            - A
+            - B
+            - C
+            - D
+            - E
+            - F
+        producerAddress:
+          $ref: '#/components/schemas/Address'
+        producerDetermination:
+          type: string
+          enum:
+            - NO_1
+            - NO_2
+            - NO_3
+            - PD_YES
+        producerId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        quantityUOM:
+          type: string
+        unitPrice:
+          type: number
+        unitWeight:
+          $ref: '#/components/schemas/ParcelWeight'
+      title: CustomsItem
+    AdditionalAddress:
+      type: object
+      required:
+        - address
+        - addressType
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        addressType:
+          type: string
+          enum:
+            - HOLD
+            - BROKER
+            - THIRD_PARTY
+            - PICKUP
+            - EXPORTER
+      title: AdditionalAddress
+    CarrierPayment:
+      type: object
+      required:
+        - party
+        - typeOfCharge
+      properties:
+        accountNumber:
+          type: string
+        countryCode:
+          type: string
+        party:
+          type: string
+          enum:
+            - BILL_RECEIVER
+            - BILL_SENDER
+            - BILL_THIRD_PARTY
+            - BILL_RECEIVER_CONTRACT
+        postalCode:
+          type: string
+        typeOfCharge:
+          type: string
+          enum:
+            - TRANSPORTATION_CHARGES
+            - DUTIES_AND_TAXES
+            - ALL_CHARGES
+      title: CarrierPayment
+    HazmatDetails:
+      type: object
+      properties:
+        batteryDetails:
+          $ref: '#/components/schemas/BatteryDetails'
+        commodityType:
+          type: string
+        containerCount:
+          type: integer
+          format: int32
+        containerDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerDetails'
+        emergencyContactNumber:
+          type: string
+        hazmatDocumentType:
+          type: string
+        identicalContainers:
+          type: boolean
+        offeror:
+          type: string
+        packagingOption:
+          type: string
+        signatory:
+          $ref: '#/components/schemas/Signatory'
+      title: HazmatDetails
+    BatteryDetails:
+      type: object
+      properties:
+        batteryMaterial:
+          type: string
+        batteryPackaging:
+          type: string
+        regulatory:
+          type: string
+      title: BatteryDetails
+    ContainerDetails:
+      type: object
+      properties:
+        commodityInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommodityInfo'
+        containerType:
+          type: string
+        packagingType:
+          type: string
+      title: ContainerDetails
+    Signatory:
+      type: object
+      properties:
+        name:
+          type: string
+        place:
+          type: string
+        title:
+          type: string
+      title: Signatory
+    DeliveryCommitment:
+      type: object
+      properties:
+        additionalDetails:
+          type: string
+        estimatedDeliveryDateTime:
+          type: string
+        guarantee:
+          type: string
+        maxEstimatedNumberOfDays:
+          type: string
+        minEstimatedNumberOfDays:
+          type: string
+      title: DeliveryCommitment
+    Discount:
+      type: object
+      properties:
+        discountAmount:
+          type: number
+        name:
+          type: string
+      title: Discount
+    SpecialService:
+      type: object
+      required:
+        - specialServiceId
+      properties:
+        fee:
+          type: number
+        inputParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        specialServiceId:
+          type: string
+      title: SpecialService
+    CommodityInfo:
+      type: object
+      properties:
+        cargoAirCraft:
+          type: boolean
+        hazardClass:
+          type: string
+        infectiousSubstanceContact:
+          $ref: '#/components/schemas/InfectiousSubstanceContact'
+        innerReceptaclesQuantity:
+          type: integer
+          format: int32
+        innerReceptaclesQuantityUOM:
+          type: string
+        packagingGroup:
+          type: string
+        packagingInstructions:
+          type: string
+        percentage:
+          type: number
+        properShippingName:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        quantityUOM:
+          type: string
+        radioActivityDetail:
+          $ref: '#/components/schemas/RadioActivityDetail'
+        radioNuclideDetail:
+          $ref: '#/components/schemas/RadioNuclideDetail'
+        reportableQuantity:
+          type: boolean
+        technicalName:
+          type: string
+        unId:
+          type: string
+      title: CommodityInfo
+    InfectiousSubstanceContact:
+      type: object
+      properties:
+        companyName:
+          type: string
+        contactId:
+          type: string
+        emailAddress:
+          type: string
+        personName:
+          type: string
+        phoneNumber:
+          type: string
+      title: InfectiousSubstanceContact
+    RadioActivityDetail:
+      type: object
+      properties:
+        criticalitySafetyIndex:
+          type: number
+        radioActiveParcelDimension:
+          $ref: '#/components/schemas/RadioActiveParcelDimension'
+        surfaceReading:
+          type: number
+        transportIndex:
+          type: number
+      title: RadioActivityDetail
+    RadioNuclideDetail:
+      type: object
+      properties:
+        chemicalForm:
+          type: string
+        expectedPackageReportableQuantity:
+          type: boolean
+        physicalForm:
+          type: string
+        radioNuclide:
+          type: string
+        radioNuclideActivityUOM:
+          type: string
+        radioNuclideActivityValue:
+          type: number
+      title: RadioNuclideDetail
+    RadioActiveParcelDimension:
+      type: object
+      properties:
+        UOM:
+          type: string
+          description: unit of measurement
+          enum:
+            - CM
+            - IN
+        height:
+          type: number
+        length:
+          type: number
+        width:
+          type: number
+      title: RadioActiveParcelDimension
+    CancelShipment:
+      type: object
+      properties:
+        cancelInitiator:
+          type: string
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        errorMessages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Errors'
+        parcelTrackingNumber:
+          type: string
+        status:
+          type: string
+        totalCarrierCharge:
+          type: number
+      title: CancelShipment
+    Manifest:
+      type: object
+      properties:
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+        fromAddress:
+          $ref: '#/components/schemas/Address'
+        inductionPostalCode:
+          type: string
+        manifestId:
+          type: string
+        manifestTrackingNumber:
+          type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        parcelTrackingNumbers:
+          type: array
+          items:
+            type: string
+        submissionDate:
+          type: string
+          format: datetime
+      required:
+        - carrier
+        - submissionDate
+      title: Manifest
+    RealTransactionDetailReport:
+      properties:
+        adjustmentReason:
+          type: string
+        creditCardFee:
+          type: number
+          format: double
+        customMessage1:
+          type: string
+        customMessage2:
+          type: string
+        description:
+          type: string
+        destinationAddress:
+          type: string
+        destinationCountry:
+          type: string
+        destinationZip:
+          type: string
+        developerId:
+          type: string
+        developerName:
+          type: string
+        developerPostagePaymentAccountBalance:
+          type: number
+          format: double
+        developerPostagePaymentMethod:
+          type: string
+        developerRateAmount:
+          type: number
+          format: double
+        developerRatePlan:
+          type: string
+        dimensionalWeightOz:
+          type: number
+          format: double
+        externalId:
+          type: string
+        internationalCountryPriceGroup:
+          type: string
+        labelFee:
+          type: string
+        mailClass:
+          type: string
+        merchantId:
+          type: string
+        merchantName:
+          type: string
+        merchantPostageAccountPaymentMethod:
+          type: string
+        merchantRate:
+          type: number
+          format: double
+        merchantRatePlan:
+          type: string
+        meterNumber:
+          type: string
+        originZip:
+          type: string
+        originationAddress:
+          type: string
+        packageHeightInInches:
+          type: number
+          format: double
+        packageLengthInInches:
+          type: number
+          format: double
+        packageType:
+          type: string
+        packageTypeIndicator:
+          type: string
+        packageWidthInInches:
+          type: number
+          format: double
+        parcelTrackingNumber:
+          type: string
+        postageDepositAmount:
+          type: number
+          format: double
+        printStatus:
+          type: string
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+        refundDenialReason:
+          type: string
+        refundRequestor:
+          type: string
+        refundStatus:
+          type: string
+        shipmentId:
+          type: string
+        shipperPostagePaymentAccountBalance:
+          type: number
+          format: double
+        specialServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecialService'
+        status:
+          type: string
+        transactionDateTime:
+          type: string
+          format: date-time
+        transactionId:
+          type: string
+        transactionType:
+          type: string
+        valueOfGoods:
+          type: number
+          format: double
+        weightInOunces:
+          type: integer
+          format: int32
+        zone:
+          type: string
+    PageRealTransactionDetailReport:
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/RealTransactionDetailReport'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        searchCriteria:
+          $ref: '#/components/schemas/SearchCriteria'
+    SearchCriteria:
+      properties:
+        developerId:
+          type: string
+        fromDate:
+          type: string
+        toDate:
+          type: string
+    TrackingAddress:
+      properties:
+        name:
+          type: string
+        address1:
+          type: string
+        address2:
+          type: string
+        address3:
+          type: string
+        city:
+          type: string
+        stateOrProvince:
+          type: string
+        postalCode:
+          type: integer
+        country:
+          type: string
+    TrackingResponse:
+      type: object
+      properties:
+        packageCount:
+          type: integer
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        trackingNumber:
+          type: string
+        referenceNumber:
+          type: string
+        status:
+          type: string
+          enum:
+            - In Transit
+            - Delivered
+            - Manifest
+        updatedDate:
+          type: string
+          format: date
+        updatedTime:
+          type: string
+          format: time
+        shipDate:
+          type: string
+          format: date
+        shipTime:
+          type: string
+          format: time
+        shipTimeOffset:
+          type: string
+        estimatedDeliveryDate:
+          type: string
+          format: date
+        estimatedDeliveryTime:
+          type: string
+          format: time
+        estimatedDeliveryTimeOffset:
+          type: string
+        deliveryDate:
+          type: string
+          format: date
+        deliveryTime:
+          type: string
+          format: time
+        deliveryTimeOffset:
+          type: string
+        deliveryLocation:
+          type: string
+        deliveryLocationDescription:
+          type: string
+        signedBy:
+          type: string
+        weight:
+          type: integer
+        weightOUM:
+          type: string
+          enum:
+            - LBS
+            - KGS
+        reattemptDate:
+          type: string
+          format: date
+        reattemptTime:
+          type: string
+          format: time
+        destinationAddress:
+          $ref: '#/components/schemas/TrackingAddress'
+        senderAddress:
+          $ref: '#/components/schemas/TrackingAddress'
+        scanDetailsList:
+          type: array
+          items:
+            type: object
+            properties:
+              eventDate:
+                type: string
+                format: date
+              eventTime:
+                type: string
+                format: time
+              eventCity:
+                type: string
+              eventStateOrProvince:
+                type: string
+              postalCode:
+                type: integer
+              country:
+                type: string
+              scanType:
+                type: string
+              scanDescription:
+                type: string
+              packageStatus:
+                type: string
+    SchedulePickup:
+      type: object
+      properties:
+        pickupAddress:
+          $ref: '#/components/schemas/Address'
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        pickupSummary:
+          type: array
+          items:
+            type: object
+            properties:
+              serviceId:
+                type: string
+              count:
+                type: integer
+              totalWeight:
+                type: object
+                properties:
+                  unitOfMeasurement:
+                    type: string
+                  weight:
+                    type: string
+                required:
+                  - unitOfMeasurement
+                  - weight
+        reference:
+          type: string
+        packageLocation:
+          type: string
+        specialInstructions:
+          type: string
+    SchedulePickupResponse:
+      type: object
+      properties:
+        pickupAddress:
+          $ref: '#/components/schemas/Address'
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        pickupSummary:
+          type: array
+          items:
+            type: object
+            properties:
+              serviceId:
+                type: string
+              count:
+                type: integer
+              totalWeight:
+                type: object
+                properties:
+                  unitOfMeasurement:
+                    type: string
+                  weight:
+                    type: string
+                required:
+                  - unitOfMeasurement
+                  - weight
+        reference:
+          type: string
+        packageLocation:
+          type: string
+        specialInstructions:
+          type: string
+        pickupDateTime:
+          type: string
+        pickupConfirmationNumber:
+          type: string
+        pickupId:
+          type: string
+    ParcelProtectionQuoteRequest:
+      type: object
+      properties:
+        parcelProtectionAccountID:
+          type: string
+        parcelProtectionProgramID:
+          type: string
+        shipmentInfo:
+          type: object
+          properties:
+            carrier:
+              $ref: '#/components/schemas/Carrier'
+            serviceId:
+              type: string
+            insuranceCoverageValue:
+              type: integer
+            insuranceCoverageValueCurrency:
+              type: string
+            parcelInfo:
+              type: object
+              properties:
+                commodityList:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      categoryPath:
+                        type: string
+                      itemCode:
+                        type: string
+                      name:
+                        type: string
+                      url:
+                        type: string
+                    required:
+                      - categoryPath
+                      - itemCode
+                      - name
+                      - url
+              required:
+                - commodityList
+            shipperInfo:
+              type: object
+              properties:
+                shipperID:
+                  type: string
+                address:
+                  type: object
+                  properties:
+                    addressLines:
+                      type: array
+                      items:
+                        type: string
+                    cityTown:
+                      type: string
+                    stateProvince:
+                      type: string
+                    postalCode:
+                      type: string
+                    countryCode:
+                      type: string
+                  required:
+                    - addressLines
+                    - cityTown
+                    - stateProvince
+                    - postalCode
+                    - countryCode
+              required:
+                - shipperID
+                - address
+            consigneeInfo:
+              type: object
+              properties:
+                address:
+                  type: object
+                  properties:
+                    addressLines:
+                      type: array
+                      items:
+                        type: string
+                    cityTown:
+                      type: string
+                    stateProvince:
+                      type: string
+                    postalCode:
+                      type: string
+                    countryCode:
+                      type: string
+                  required:
+                    - addressLines
+                    - cityTown
+                    - stateProvince
+                    - postalCode
+                    - countryCode
+              required:
+                - address
+          required:
+            - carrier
+            - serviceId
+            - insuranceCoverageValue
+            - insuranceCoverageValueCurrency
+            - parcelInfo
+            - shipperInfo
+            - consigneeInfo
+      required:
+        - shipmentInfo
+    ParcelProtectionQuoteResponse:
+      type: object
+      properties:
+        parcelProtectionFees:
+          type: number
+        parcelProtectionFeesCurrencyCode:
+          type: string
+        parcelProtectionFeesBreakup:
+          type: object
+          properties:
+            basePremium:
+              type: number
+            technologyFee:
+              type: number
+          required:
+            - basePremium
+            - technologyFee
+      required:
+        - parcelProtectionFees
+        - parcelProtectionFeesCurrencyCode
+        - parcelProtectionFeesBreakup
+    VoidParcelProtectionResponse:
+      type: object
+      properties:
+        status:
+          type: string
+    VoidParcelProtectionRequest:
+      type: object
+      properties:
+        shipperID:
+          type: string
+        parcelProtectionAccountID:
+          description: 'Parcel Protection account ID, if applicable.'
+          type: string
+    ParcelProtectionPolicyResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            type: object
+            properties:
+              transactionId:
+                type: string
+              developerId:
+                type: string
+              subscriptionAccNo:
+                type: string
+              clientTransactionId:
+                type: string
+              policyDetails:
+                type: object
+                properties:
+                  policyId:
+                    type: string
+                  policyDate:
+                    type: string
+                  policyStatus:
+                    type: string
+                  claimStatus:
+                    type: string
+                    nullable: true
+                  claimStatusUpdateDate:
+                    type: string
+                  valueOfGoods:
+                    type: number
+                  insuranceValue:
+                    type: number
+                  premiumValue:
+                    type: number
+                  basePremium:
+                    type: number
+                  technologyFee:
+                    type: number
+                  currencyCode:
+                    type: string
+                  mailClass:
+                    type: string
+                  mailClassOption:
+                    type: string
+              shipmentDetails:
+                type: object
+                properties:
+                  shipmentDate:
+                    type: string
+                  shipmentTransactionId:
+                    type: string
+                  shipmentId:
+                    type: string
+                  parcelTrackingNumber:
+                    type: string
+                  carrier:
+                    $ref: '#/components/schemas/Carrier'
+                  amount:
+                    type: string
+                  packageLength:
+                    type: string
+                  packageWidth:
+                    type: string
+                  packageHeight:
+                    type: string
+                  weight:
+                    type: string
+                  zone:
+                    type: string
+              shipperInfo:
+                type: object
+                properties:
+                  shipperID:
+                    type: string
+                  firstName:
+                    type: string
+                  middleName:
+                    type: string
+                  lastName:
+                    type: string
+                  company:
+                    type: string
+                  email:
+                    type: string
+                  phoneNumber1:
+                    type: string
+                  phoneNumber2:
+                    type: string
+                  faxNumber:
+                    type: string
+                  address:
+                    type: object
+                    properties:
+                      street1:
+                        type: string
+                      street2:
+                        type: string
+                      street3:
+                        type: string
+                      city:
+                        type: string
+                      region:
+                        type: string
+                      country:
+                        type: string
+                      postalCode:
+                        type: string
+              consigneeInfo:
+                type: object
+                properties:
+                  shipperID:
+                    type: string
+                  firstName:
+                    type: string
+                  middleName:
+                    type: string
+                  lastName:
+                    type: string
+                  company:
+                    type: string
+                  email:
+                    type: string
+                  phoneNumber1:
+                    type: string
+                  phoneNumber2:
+                    type: string
+                  faxNumber:
+                    type: string
+                  address:
+                    type: object
+                    properties:
+                      street1:
+                        type: string
+                      street2:
+                        type: string
+                      street3:
+                        type: string
+                      city:
+                        type: string
+                      region:
+                        type: string
+                      country:
+                        type: string
+                      postalCode:
+                        type: string
+              createdAt:
+                type: string
+              updatedAt:
+                type: string
+        last:
+          type: boolean
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        first:
+          type: boolean
+        numberOfElements:
+          type: integer
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              direction:
+                type: string
+              property:
+                type: string
+              ignoreCase:
+                type: boolean
+              nullHandling:
+                type: string
+              descending:
+                type: boolean
+              ascending:
+                type: boolean
+        size:
+          type: integer
+        number:
+          type: integer
+    ParcelProtectionCreateRequest:
+      type: object
+      properties:
+        parcelProtectionAccountID:
+          type: string
+        parcelProtectionProgramID:
+          type: string
+        shipmentInfo:
+          type: object
+          properties:
+            trackingNumber:
+              type: string
+            carrier:
+              $ref: '#/components/schemas/Carrier'
+            serviceId:
+              type: string
+            insuranceCoverageValue:
+              type: integer
+            insuranceCoverageValueCurrency:
+              type: string
+            parcelInfo:
+              type: object
+              properties:
+                commodityList:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      categoryPath:
+                        type: string
+                      itemCode:
+                        type: string
+                      name:
+                        type: string
+                      url:
+                        type: string
+            shipperInfo:
+              type: object
+              properties:
+                shipperID:
+                  type: string
+                address:
+                  type: object
+                  properties:
+                    addressLines:
+                      type: array
+                      items:
+                        type: string
+                    cityTown:
+                      type: string
+                    stateProvince:
+                      type: string
+                    postalCode:
+                      type: string
+                    countryCode:
+                      type: string
+                companyName:
+                  type: string
+                familyName:
+                  type: string
+                givenName:
+                  type: string
+                middleName:
+                  type: string
+                email:
+                  type: string
+                phoneNumbers:
+                  $ref: '#/components/schemas/PhoneNumbers'
+            consigneeInfo:
+              type: object
+              properties:
+                address:
+                  $ref: '#/components/schemas/Address'
+                companyName:
+                  type: string
+                familyName:
+                  type: string
+                givenName:
+                  type: string
+                middleName:
+                  type: string
+                email:
+                  type: string
+                phoneNumbers:
+                  $ref: '#/components/schemas/PhoneNumbers'
+    PhoneNumbers:
+      type: array
+      items:
+        type: object
+        properties:
+          number:
+            type: string
+          type:
+            type: string
+    ParcelProtectionCreateResponse:
+      type: object
+      properties:
+        transactionID:
+          type: string
+        parcelProtectionReferenceID:
+          type: string
+        parcelProtectionDate:
+          type: string
+        parcelProtectionFees:
+          type: number
+        parcelProtectionFeesCurrencyCode:
+          type: string
+        parcelProtectionFeesBreakup:
+          type: object
+          properties:
+            basePremium:
+              type: number
+            technologyFee:
+              type: number
+    AddressSuggestionResponse:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        suggestions:
+          type: object
+          properties:
+            suggestionType:
+              type: string
+            address:
+              type: array
+              items:
+                $ref: '#/components/schemas/Address'
+    CrossBorderQuotesRequest:
+      type: object
+      properties:
+        quoteCurrency:
+          description: >-
+            The currency to return the quote in. Use three uppercase letters,
+            per the ISO currency code (ISO 4217). For example- USD, CAD, or EUR
+          type: string
+        basketCurrency:
+          description: >-
+            The default currency of the basket. Use three uppercase letters, per
+            the ISO currency code (ISO 4217). For example- USD, CAD, or EUR
+          type: string
+        fromAddress:
+          $ref: '#/components/schemas/Address'
+        toAddress:
+          $ref: '#/components/schemas/Address'
+        basketItems:
+          description: The items in the buyer's shopping basket.
+          type: array
+          items:
+            type: object
+            properties:
+              itemId:
+                type: string
+              categories:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    categoryCode:
+                      type: string
+                    descriptions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          locale:
+                            type: string
+                          name:
+                            type: string
+                          parentsNames:
+                            type: array
+                            items:
+                              type: string
+                    parentCategoryCode:
+                      type: string
+                    url:
+                      type: string
+              description:
+                type: string
+              longDescription:
+                type: string
+              unitWeight:
+                type: object
+                properties:
+                  weight:
+                    type: integer
+                  unitOfMeasurement:
+                    type: string
+                required:
+                  - weight
+                  - unitOfMeasurement
+              itemDimension:
+                type: object
+                properties:
+                  length:
+                    type: integer
+                  height:
+                    type: number
+                  width:
+                    type: integer
+                  unitOfMeasurement:
+                    type: string
+              url:
+                type: string
+              quantity:
+                type: integer
+              unitPrice:
+                type: number
+              originCountryCode:
+                type: string
+              parentIdentifier:
+                type: string
+              childIdentifier:
+                type: string
+              kit:
+                type: string
+              kitIdentifier:
+                type: string
+              kitQuantity:
+                type: string
+              manufacturer:
+                type: string
+              brand:
+                type: string
+              eccn:
+                type: string
+              enabled:
+                type: boolean
+              pricing:
+                type: object
+                properties:
+                  price:
+                    type: integer
+                  codPrice:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        price:
+                          type: integer
+                        cod:
+                          type: string
+                        includesDuty:
+                          type: boolean
+                        includesTaxes:
+                          type: boolean
+                  dutiableValue:
+                    type: integer
+              hSTariffCode:
+                type: string
+              hSTariffCodeCountry:
+                type: string
+              identifiers:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    number:
+                      type: string
+                    source:
+                      type: string
+              imageUrls:
+                type: array
+                items:
+                  type: string
+              shipsAlone:
+                type: boolean
+              attributes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    name:
+                      type: string
+                    value:
+                      type: string
+              hazmats:
+                type: array
+                items:
+                  type: string
+        rates:
+          description: >-
+            Specifies the carrier, service, parcel, and other information. In a
+            response, this field also contains the service charges. Importatn-
+            In a request, the rates array can contain only one rates object.
+          type: array
+          items:
+            type: object
+            properties:
+              carrier:
+                $ref: '#/components/schemas/Carrier'
+              serviceId:
+                type: string
+        shipmentOptions:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+      required:
+        - toAddress
+        - rates
+        - quoteCurrency
+        - basketCurrency
+        - basketItems
+    CarrierFacilityRequest:
+      type: object
+      properties:
+        address:
+          type: object
+          properties:
+            addressLines:
+              type: array
+              items:
+                type: string
+            cityTown:
+              type: string
+            stateProvince:
+              type: string
+            countryCode:
+              type: string
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        carrierFacilityOptions:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+    CrossBorderQuotesResponse:
+      type: object
+      properties:
+        quote:
+          type: array
+          items:
+            type: object
+            properties:
+              quoteCurrency:
+                type: string
+              quoteLines:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    lineId:
+                      type: string
+                    itemId:
+                      type: string
+                    quoteLineId:
+                      type: string
+                    quantity:
+                      type: integer
+                    unitRates:
+                      type: object
+                      properties:
+                        unitPrice:
+                          type: number
+                        totalTaxAmount:
+                          type: number
+                        totalDutyAmount:
+                          type: integer
+                        serviceId:
+                          type: string
+                        baseCharge:
+                          type: number
+                        deliveryCommitment:
+                          type: object
+                          properties:
+                            minEstimatedNumberOfDays:
+                              type: integer
+                            maxEstimatedNumberOfDays:
+                              type: integer
+                        totalCarrierCharge:
+                          type: number
+                    lineRates:
+                      type: object
+                      properties:
+                        linePrice:
+                          type: number
+                        totalTaxAmount:
+                          type: number
+                        totalDutyAmount:
+                          type: integer
+                        serviceId:
+                          type: string
+                        baseCharge:
+                          type: number
+                        deliveryCommitment:
+                          type: object
+                          properties:
+                            minEstimatedNumberOfDays:
+                              type: integer
+                            maxEstimatedNumberOfDays:
+                              type: integer
+                        totalCarrierCharge:
+                          type: number
+              totalPrice:
+                type: number
+              totalRates:
+                type: object
+                properties:
+                  serviceId:
+                    type: string
+                  baseCharge:
+                    type: number
+                  deliveryCommitment:
+                    type: object
+                    properties:
+                      minEstimatedNumberOfDays:
+                        type: integer
+                      maxEstimatedNumberOfDays:
+                        type: integer
+                  totalCarrierCharge:
+                    type: number
+                  totalDutyAmount:
+                    type: integer
+                  totalTaxAmount:
+                    type: number
+    AddTrackingEvents:
+      type: object
+      properties:
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        references:
+          type: array
+          items:
+            type: object
+            properties:
+              referenceType:
+                type: string
+              referenceValue:
+                type: string
+              events:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    eventCode:
+                      type: string
+                    carrierEventCode:
+                      type: string
+                    eventDate:
+                      type: string
+                    eventTime:
+                      type: string
+                    eventTimeOffset:
+                      type: string
+                    eventCity:
+                      type: string
+                    eventStateOrProvince:
+                      type: string
+                    postalCode:
+                      type: string
+                    country:
+                      type: string
+    CrossBorderQuotesErrors:
+      type: object
+      properties:
+        quote:
+          type: array
+          items:
+            type: object
+            properties:
+              quoteCurrency:
+                type: string
+              quoteLines:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    lineId:
+                      type: string
+                    merchantComRefId:
+                      type: string
+                    quantity:
+                      type: integer
+                    unitErrors:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          error:
+                            type: integer
+                          message:
+                            type: string
+              errors:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        errorCode:
+                          type: string
+                        errorDescription:
+                          type: string
+                        additionalInfo:
+                          type: string
+                        parameters:
+                          type: array
+                          items:
+                            type: string
