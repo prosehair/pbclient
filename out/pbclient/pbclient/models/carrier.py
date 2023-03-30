@@ -36,4 +36,5 @@ class Carrier(str, Enum):
     PBI = 'PBI'
     FEDEX = 'FEDEX'
     UPS = 'UPS'
+    PBCS = 'PBCS'
 

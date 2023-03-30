@@ -2456,6 +2456,7 @@ components:
         - PBI
         - FEDEX
         - UPS
+        - PBCS
     ISOCountryCode:
       type: string
       default: US
