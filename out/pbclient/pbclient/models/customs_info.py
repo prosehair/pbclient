@@ -61,36 +61,32 @@ class CustomsInfo(BaseModel):
     def other_type_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('COMMISSIONS', 'DISCOUNTS', 'HANDLING_FEES', 'OTHER', 'ROYALTIES_AND_LICENSE_FEES', 'TAXES'):
-            raise ValueError("must validate the enum values ('COMMISSIONS', 'DISCOUNTS', 'HANDLING_FEES', 'OTHER', 'ROYALTIES_AND_LICENSE_FEES', 'TAXES')")
+            raise ValueError("must be one of enum values ('COMMISSIONS', 'DISCOUNTS', 'HANDLING_FEES', 'OTHER', 'ROYALTIES_AND_LICENSE_FEES', 'TAXES')")
         return v
 
     @validator('producer_specification')
     def producer_specification_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('MULTIPLE_SPECIFIED', 'SAME', 'SINGLE_SPECIFIED', 'UNKNOWN', 'AVAILABLE_UPON_REQUEST'):
-            raise ValueError("must validate the enum values ('MULTIPLE_SPECIFIED', 'SAME', 'SINGLE_SPECIFIED', 'UNKNOWN', 'AVAILABLE_UPON_REQUEST')")
+            raise ValueError("must be one of enum values ('MULTIPLE_SPECIFIED', 'SAME', 'SINGLE_SPECIFIED', 'UNKNOWN', 'AVAILABLE_UPON_REQUEST')")
         return v
 
     @validator('reason_for_export')
     def reason_for_export_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('GIFT', 'COMMERCIAL_SAMPLE', 'MERCHANDISE', 'DOCUMENTS', 'RETURNED_GOODS', 'SOLD', 'NOT_SOLD', 'OTHER', 'DANGEROUS_GOOD', 'HUMANITARIAN_GOODS'):
-            raise ValueError("must validate the enum values ('GIFT', 'COMMERCIAL_SAMPLE', 'MERCHANDISE', 'DOCUMENTS', 'RETURNED_GOODS', 'SOLD', 'NOT_SOLD', 'OTHER', 'DANGEROUS_GOOD', 'HUMANITARIAN_GOODS')")
+            raise ValueError("must be one of enum values ('GIFT', 'COMMERCIAL_SAMPLE', 'MERCHANDISE', 'DOCUMENTS', 'RETURNED_GOODS', 'SOLD', 'NOT_SOLD', 'OTHER', 'DANGEROUS_GOOD', 'HUMANITARIAN_GOODS')")
         return v
 
     @validator('shipping_document_type')
     def shipping_document_type_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('NAFTA', 'COO'):
-            raise ValueError("must validate the enum values ('NAFTA', 'COO')")
+            raise ValueError("must be one of enum values ('NAFTA', 'COO')")
         return v
 
     class Config:

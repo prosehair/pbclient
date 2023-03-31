@@ -37,13 +37,13 @@ class CarrierPayment(BaseModel):
     @validator('party')
     def party_validate_enum(cls, v):
         if v not in ('BILL_RECEIVER', 'BILL_SENDER', 'BILL_THIRD_PARTY', 'BILL_RECEIVER_CONTRACT'):
-            raise ValueError("must validate the enum values ('BILL_RECEIVER', 'BILL_SENDER', 'BILL_THIRD_PARTY', 'BILL_RECEIVER_CONTRACT')")
+            raise ValueError("must be one of enum values ('BILL_RECEIVER', 'BILL_SENDER', 'BILL_THIRD_PARTY', 'BILL_RECEIVER_CONTRACT')")
         return v
 
     @validator('type_of_charge')
     def type_of_charge_validate_enum(cls, v):
         if v not in ('TRANSPORTATION_CHARGES', 'DUTIES_AND_TAXES', 'ALL_CHARGES'):
-            raise ValueError("must validate the enum values ('TRANSPORTATION_CHARGES', 'DUTIES_AND_TAXES', 'ALL_CHARGES')")
+            raise ValueError("must be one of enum values ('TRANSPORTATION_CHARGES', 'DUTIES_AND_TAXES', 'ALL_CHARGES')")
         return v
 
     class Config:

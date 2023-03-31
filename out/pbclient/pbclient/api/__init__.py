@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 # flake8: noqa
 
 # import apis into api package
@@ -15,3 +13,4 @@ from pbclient.api.rate_parcels_api import RateParcelsApi
 from pbclient.api.shipment_api import ShipmentApi
 from pbclient.api.tracking_api import TrackingApi
 from pbclient.api.transaction_reports_api import TransactionReportsApi
+

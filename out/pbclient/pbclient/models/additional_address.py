@@ -35,7 +35,7 @@ class AdditionalAddress(BaseModel):
     @validator('address_type')
     def address_type_validate_enum(cls, v):
         if v not in ('HOLD', 'BROKER', 'THIRD_PARTY', 'PICKUP', 'EXPORTER'):
-            raise ValueError("must validate the enum values ('HOLD', 'BROKER', 'THIRD_PARTY', 'PICKUP', 'EXPORTER')")
+            raise ValueError("must be one of enum values ('HOLD', 'BROKER', 'THIRD_PARTY', 'PICKUP', 'EXPORTER')")
         return v
 
     class Config:

@@ -14,8 +14,6 @@
 """
 
 
-from __future__ import absolute_import
-
 # import models into model package
 from pbclient.models.add_tracking_events import AddTrackingEvents
 from pbclient.models.add_tracking_events200_response import AddTrackingEvents200Response

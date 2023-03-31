@@ -58,9 +58,8 @@ class Shipment(BaseModel):
     def shipment_type_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('OUTBOUND', 'RETURN'):
-            raise ValueError("must validate the enum values ('OUTBOUND', 'RETURN')")
+            raise ValueError("must be one of enum values ('OUTBOUND', 'RETURN')")
         return v
 
     class Config:

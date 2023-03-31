@@ -48,18 +48,16 @@ class Address(BaseModel):
     def status_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('PARSED', 'VALIDATED_CHANGED', 'VALIDATED_AND_NOT_CHANGED', 'NOT_CHANGED'):
-            raise ValueError("must validate the enum values ('PARSED', 'VALIDATED_CHANGED', 'VALIDATED_AND_NOT_CHANGED', 'NOT_CHANGED')")
+            raise ValueError("must be one of enum values ('PARSED', 'VALIDATED_CHANGED', 'VALIDATED_AND_NOT_CHANGED', 'NOT_CHANGED')")
         return v
 
     @validator('tax_id_type')
     def tax_id_type_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('EIN', 'GST', 'VAT', 'RFC', 'EORI'):
-            raise ValueError("must validate the enum values ('EIN', 'GST', 'VAT', 'RFC', 'EORI')")
+            raise ValueError("must be one of enum values ('EIN', 'GST', 'VAT', 'RFC', 'EORI')")
         return v
 
     class Config:

@@ -37,9 +37,8 @@ class RadioActiveParcelDimension(BaseModel):
     def uom_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('CM', 'IN'):
-            raise ValueError("must validate the enum values ('CM', 'IN')")
+            raise ValueError("must be one of enum values ('CM', 'IN')")
         return v
 
     class Config:

@@ -48,27 +48,24 @@ class CustomsItem(BaseModel):
     def net_cost_method_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('NO_NET_COST', 'NET_COST'):
-            raise ValueError("must validate the enum values ('NO_NET_COST', 'NET_COST')")
+            raise ValueError("must be one of enum values ('NO_NET_COST', 'NET_COST')")
         return v
 
     @validator('preference_criterion')
     def preference_criterion_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('A', 'B', 'C', 'D', 'E', 'F'):
-            raise ValueError("must validate the enum values ('A', 'B', 'C', 'D', 'E', 'F')")
+            raise ValueError("must be one of enum values ('A', 'B', 'C', 'D', 'E', 'F')")
         return v
 
     @validator('producer_determination')
     def producer_determination_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('NO_1', 'NO_2', 'NO_3', 'PD_YES'):
-            raise ValueError("must validate the enum values ('NO_1', 'NO_2', 'NO_3', 'PD_YES')")
+            raise ValueError("must be one of enum values ('NO_1', 'NO_2', 'NO_3', 'PD_YES')")
         return v
 
     class Config:

@@ -46,45 +46,40 @@ class Document(BaseModel):
     def content_type_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('URL', 'BASE64'):
-            raise ValueError("must validate the enum values ('URL', 'BASE64')")
+            raise ValueError("must be one of enum values ('URL', 'BASE64')")
         return v
 
     @validator('file_format')
     def file_format_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('PDF', 'PNG', 'GIF', 'ZPL', 'ZPL2'):
-            raise ValueError("must validate the enum values ('PDF', 'PNG', 'GIF', 'ZPL', 'ZPL2')")
+            raise ValueError("must be one of enum values ('PDF', 'PNG', 'GIF', 'ZPL', 'ZPL2')")
         return v
 
     @validator('print_dialog_option')
     def print_dialog_option_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('NO_PRINT_DIALOG', 'EMBED_PRINT_DIALOG'):
-            raise ValueError("must validate the enum values ('NO_PRINT_DIALOG', 'EMBED_PRINT_DIALOG')")
+            raise ValueError("must be one of enum values ('NO_PRINT_DIALOG', 'EMBED_PRINT_DIALOG')")
         return v
 
     @validator('resolution')
     def resolution_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('DPI_300', 'DPI_203', 'DPI_150'):
-            raise ValueError("must validate the enum values ('DPI_300', 'DPI_203', 'DPI_150')")
+            raise ValueError("must be one of enum values ('DPI_300', 'DPI_203', 'DPI_150')")
         return v
 
     @validator('size')
     def size_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('DOC_2X7', 'DOC_4X1', 'DOC_4X3', 'DOC_4X6', 'DOC_4X8', 'DOC_6X4', 'DOC_8X11', 'DOC_9X4', 'DOC_4X5', 'DOC_8_5X5_5'):
-            raise ValueError("must validate the enum values ('DOC_2X7', 'DOC_4X1', 'DOC_4X3', 'DOC_4X6', 'DOC_4X8', 'DOC_6X4', 'DOC_8X11', 'DOC_9X4', 'DOC_4X5', 'DOC_8_5X5_5')")
+            raise ValueError("must be one of enum values ('DOC_2X7', 'DOC_4X1', 'DOC_4X3', 'DOC_4X6', 'DOC_4X8', 'DOC_6X4', 'DOC_8X11', 'DOC_9X4', 'DOC_4X5', 'DOC_8_5X5_5')")
         return v
 
     class Config:

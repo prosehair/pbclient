@@ -62,18 +62,16 @@ class TrackingResponse(BaseModel):
     def status_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('In Transit', 'Delivered', 'Manifest'):
-            raise ValueError("must validate the enum values ('In Transit', 'Delivered', 'Manifest')")
+            raise ValueError("must be one of enum values ('In Transit', 'Delivered', 'Manifest')")
         return v
 
     @validator('weight_oum')
     def weight_oum_validate_enum(cls, v):
         if v is None:
             return v
-
         if v not in ('LBS', 'KGS'):
-            raise ValueError("must validate the enum values ('LBS', 'KGS')")
+            raise ValueError("must be one of enum values ('LBS', 'KGS')")
         return v
 
     class Config:
