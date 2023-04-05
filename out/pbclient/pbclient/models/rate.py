@@ -27,6 +27,7 @@ from pbclient.models.delivery_commitment import DeliveryCommitment
 from pbclient.models.discount import Discount
 from pbclient.models.parcel_type import ParcelType
 from pbclient.models.parcel_weight import ParcelWeight
+from pbclient.models.rate_destination_zone import RateDestinationZone
 from pbclient.models.services import Services
 from pbclient.models.special_service import SpecialService
 from pbclient.models.surcharge import Surcharge
@@ -43,7 +44,7 @@ class Rate(BaseModel):
     carrier: Carrier = ...
     currency_code: Optional[StrictStr] = Field(None, alias="currencyCode", description="ISO-4217")
     delivery_commitment: Optional[DeliveryCommitment] = Field(None, alias="deliveryCommitment")
-    destination_zone: Optional[StrictFloat] = Field(None, alias="destinationZone")
+    destination_zone: Optional[RateDestinationZone] = Field(None, alias="destinationZone")
     dimensional_weight: Optional[ParcelWeight] = Field(None, alias="dimensionalWeight")
     discounts: Optional[conlist(Discount)] = None
     induction_postal_code: Optional[StrictStr] = Field(None, alias="inductionPostalCode")
@@ -89,6 +90,9 @@ class Rate(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of delivery_commitment
         if self.delivery_commitment:
             _dict['deliveryCommitment'] = self.delivery_commitment.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of destination_zone
+        if self.destination_zone:
+            _dict['destinationZone'] = self.destination_zone.to_dict()
         # override the default output from pydantic by calling `to_dict()` of dimensional_weight
         if self.dimensional_weight:
             _dict['dimensionalWeight'] = self.dimensional_weight.to_dict()
@@ -132,7 +136,7 @@ class Rate(BaseModel):
             "carrier": obj.get("carrier"),
             "currency_code": obj.get("currencyCode"),
             "delivery_commitment": DeliveryCommitment.from_dict(obj.get("deliveryCommitment")) if obj.get("deliveryCommitment") is not None else None,
-            "destination_zone": obj.get("destinationZone"),
+            "destination_zone": RateDestinationZone.from_dict(obj.get("destinationZone")) if obj.get("destinationZone") is not None else None,
             "dimensional_weight": ParcelWeight.from_dict(obj.get("dimensionalWeight")) if obj.get("dimensionalWeight") is not None else None,
             "discounts": [Discount.from_dict(_item) for _item in obj.get("discounts")] if obj.get("discounts") is not None else None,
             "induction_postal_code": obj.get("inductionPostalCode"),

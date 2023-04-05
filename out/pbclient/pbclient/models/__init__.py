@@ -123,6 +123,7 @@ from pbclient.models.radio_active_parcel_dimension import RadioActiveParcelDimen
 from pbclient.models.radio_activity_detail import RadioActivityDetail
 from pbclient.models.radio_nuclide_detail import RadioNuclideDetail
 from pbclient.models.rate import Rate
+from pbclient.models.rate_destination_zone import RateDestinationZone
 from pbclient.models.real_transaction_detail_report import RealTransactionDetailReport
 from pbclient.models.schedule_pickup import SchedulePickup
 from pbclient.models.schedule_pickup_pickup_summary_inner import SchedulePickupPickupSummaryInner

@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **carrier** | [**Carrier**](Carrier.md) |  | 
 **currency_code** | **str** | ISO-4217 | [optional] 
 **delivery_commitment** | [**DeliveryCommitment**](DeliveryCommitment.md) |  | [optional] 
-**destination_zone** | **float** |  | [optional] 
+**destination_zone** | [**RateDestinationZone**](RateDestinationZone.md) |  | [optional] 
 **dimensional_weight** | [**ParcelWeight**](ParcelWeight.md) |  | [optional] 
 **discounts** | [**List[Discount]**](Discount.md) |  | [optional] 
 **induction_postal_code** | **str** |  | [optional] 

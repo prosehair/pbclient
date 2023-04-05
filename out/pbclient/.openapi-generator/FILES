@@ -119,6 +119,7 @@ docs/RadioActiveParcelDimension.md
 docs/RadioActivityDetail.md
 docs/RadioNuclideDetail.md
 docs/Rate.md
+docs/RateDestinationZone.md
 docs/RateParcelsApi.md
 docs/RealTransactionDetailReport.md
 docs/SchedulePickup.md
@@ -274,6 +275,7 @@ pbclient/models/radio_active_parcel_dimension.py
 pbclient/models/radio_activity_detail.py
 pbclient/models/radio_nuclide_detail.py
 pbclient/models/rate.py
+pbclient/models/rate_destination_zone.py
 pbclient/models/real_transaction_detail_report.py
 pbclient/models/schedule_pickup.py
 pbclient/models/schedule_pickup_pickup_summary_inner.py
@@ -305,4 +307,5 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
+test/test_rate_destination_zone.py
 tox.ini

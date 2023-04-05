@@ -3162,7 +3162,9 @@ components:
         deliveryCommitment:
           $ref: '#/components/schemas/DeliveryCommitment'
         destinationZone:
-          type: number
+          anyOf:
+            - type: number
+            - type: string
         dimensionalWeight:
           $ref: '#/components/schemas/ParcelWeight'
         discounts:

@@ -233,6 +233,7 @@ Class | Method | HTTP request | Description
  - [RadioActivityDetail](docs/RadioActivityDetail.md)
  - [RadioNuclideDetail](docs/RadioNuclideDetail.md)
  - [Rate](docs/Rate.md)
+ - [RateDestinationZone](docs/RateDestinationZone.md)
  - [RealTransactionDetailReport](docs/RealTransactionDetailReport.md)
  - [SchedulePickup](docs/SchedulePickup.md)
  - [SchedulePickupPickupSummaryInner](docs/SchedulePickupPickupSummaryInner.md)
