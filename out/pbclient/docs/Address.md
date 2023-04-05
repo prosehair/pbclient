@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **carrier_route** | **str** |  | [optional] 
 **city_town** | **str** |  | [optional] 
 **company** | **str** |  | [optional] 
-**country_code** | **str** | 2-character country code (ISO-3166-1 alpha-2) | 
+**country_code** | **str** | 2-character country code (ISO-3166-1 alpha-2) | [optional] 
 **delivery_point** | **str** |  | [optional] 
 **email** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 

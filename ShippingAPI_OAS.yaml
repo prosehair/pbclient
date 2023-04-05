@@ -3003,8 +3003,6 @@ components:
       description: Error messages sent back to the caller
     Address:
       type: object
-      required:
-        - countryCode
       properties:
         addressLines:
           type: array

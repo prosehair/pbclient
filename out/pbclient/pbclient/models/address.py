@@ -31,7 +31,7 @@ class Address(BaseModel):
     carrier_route: Optional[StrictStr] = Field(None, alias="carrierRoute")
     city_town: Optional[StrictStr] = Field(None, alias="cityTown")
     company: Optional[StrictStr] = None
-    country_code: StrictStr = Field(..., alias="countryCode", description="2-character country code (ISO-3166-1 alpha-2)")
+    country_code: Optional[StrictStr] = Field(None, alias="countryCode", description="2-character country code (ISO-3166-1 alpha-2)")
     delivery_point: Optional[StrictStr] = Field(None, alias="deliveryPoint")
     email: Optional[StrictStr] = None
     name: Optional[StrictStr] = None
