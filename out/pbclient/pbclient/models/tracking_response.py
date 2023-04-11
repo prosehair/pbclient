@@ -23,8 +23,8 @@ from datetime import date
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, validator
 from pbclient.models.carrier import Carrier
+from pbclient.models.event_object import EventObject
 from pbclient.models.tracking_address import TrackingAddress
-from pbclient.models.tracking_response_scan_details_list_inner import TrackingResponseScanDetailsListInner
 
 class TrackingResponse(BaseModel):
     """
@@ -55,23 +55,24 @@ class TrackingResponse(BaseModel):
     reattempt_time: Optional[StrictStr] = Field(None, alias="reattemptTime")
     destination_address: Optional[TrackingAddress] = Field(None, alias="destinationAddress")
     sender_address: Optional[TrackingAddress] = Field(None, alias="senderAddress")
-    scan_details_list: Optional[conlist(TrackingResponseScanDetailsListInner)] = Field(None, alias="scanDetailsList")
-    __properties = ["packageCount", "carrier", "trackingNumber", "referenceNumber", "status", "updatedDate", "updatedTime", "shipDate", "shipTime", "shipTimeOffset", "estimatedDeliveryDate", "estimatedDeliveryTime", "estimatedDeliveryTimeOffset", "deliveryDate", "deliveryTime", "deliveryTimeOffset", "deliveryLocation", "deliveryLocationDescription", "signedBy", "weight", "weightOUM", "reattemptDate", "reattemptTime", "destinationAddress", "senderAddress", "scanDetailsList"]
+    current_status: Optional[EventObject] = Field(None, alias="currentStatus")
+    scan_details_list: Optional[conlist(EventObject)] = Field(None, alias="scanDetailsList")
+    __properties = ["packageCount", "carrier", "trackingNumber", "referenceNumber", "status", "updatedDate", "updatedTime", "shipDate", "shipTime", "shipTimeOffset", "estimatedDeliveryDate", "estimatedDeliveryTime", "estimatedDeliveryTimeOffset", "deliveryDate", "deliveryTime", "deliveryTimeOffset", "deliveryLocation", "deliveryLocationDescription", "signedBy", "weight", "weightOUM", "reattemptDate", "reattemptTime", "destinationAddress", "senderAddress", "currentStatus", "scanDetailsList"]
 
     @validator('status')
     def status_validate_enum(cls, v):
         if v is None:
             return v
-        if v not in ('In Transit', 'Delivered', 'Manifest'):
-            raise ValueError("must be one of enum values ('In Transit', 'Delivered', 'Manifest')")
+        if v not in ('Acceptance', 'Delivered', 'DeliveryAttempt', 'Exception', 'InTransit', 'Manifest', 'OutForDelivery', 'PickedUp', 'PickupMissed', 'ReadyForPickup', 'ReturnToSender'):
+            raise ValueError("must be one of enum values ('Acceptance', 'Delivered', 'DeliveryAttempt', 'Exception', 'InTransit', 'Manifest', 'OutForDelivery', 'PickedUp', 'PickupMissed', 'ReadyForPickup', 'ReturnToSender')")
         return v
 
     @validator('weight_oum')
     def weight_oum_validate_enum(cls, v):
         if v is None:
             return v
-        if v not in ('LBS', 'KGS'):
-            raise ValueError("must be one of enum values ('LBS', 'KGS')")
+        if v not in ('lb', 'LBS', 'Pounds', 'KGS'):
+            raise ValueError("must be one of enum values ('lb', 'LBS', 'Pounds', 'KGS')")
         return v
 
     class Config:
@@ -103,6 +104,9 @@ class TrackingResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of sender_address
         if self.sender_address:
             _dict['senderAddress'] = self.sender_address.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of current_status
+        if self.current_status:
+            _dict['currentStatus'] = self.current_status.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in scan_details_list (list)
         _items = []
         if self.scan_details_list:
@@ -147,7 +151,8 @@ class TrackingResponse(BaseModel):
             "reattempt_time": obj.get("reattemptTime"),
             "destination_address": TrackingAddress.from_dict(obj.get("destinationAddress")) if obj.get("destinationAddress") is not None else None,
             "sender_address": TrackingAddress.from_dict(obj.get("senderAddress")) if obj.get("senderAddress") is not None else None,
-            "scan_details_list": [TrackingResponseScanDetailsListInner.from_dict(_item) for _item in obj.get("scanDetailsList")] if obj.get("scanDetailsList") is not None else None
+            "current_status": EventObject.from_dict(obj.get("currentStatus")) if obj.get("currentStatus") is not None else None,
+            "scan_details_list": [EventObject.from_dict(_item) for _item in obj.get("scanDetailsList")] if obj.get("scanDetailsList") is not None else None
         })
         return _obj
 

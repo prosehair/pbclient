@@ -29,7 +29,8 @@ Name | Type | Description | Notes
 **reattempt_time** | **str** |  | [optional] 
 **destination_address** | [**TrackingAddress**](TrackingAddress.md) |  | [optional] 
 **sender_address** | [**TrackingAddress**](TrackingAddress.md) |  | [optional] 
-**scan_details_list** | [**List[TrackingResponseScanDetailsListInner]**](TrackingResponseScanDetailsListInner.md) |  | [optional] 
+**current_status** | [**EventObject**](EventObject.md) |  | [optional] 
+**scan_details_list** | [**List[EventObject]**](EventObject.md) |  | [optional] 
 
 ## Example
 

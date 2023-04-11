@@ -3926,9 +3926,17 @@ components:
         status:
           type: string
           enum:
-            - In Transit
+            - Acceptance
             - Delivered
+            - DeliveryAttempt
+            - Exception
+            - InTransit
             - Manifest
+            - OutForDelivery
+            - PickedUp
+            - PickupMissed
+            - ReadyForPickup
+            - ReturnToSender
         updatedDate:
           type: string
           format: date
@@ -3970,7 +3978,9 @@ components:
         weightOUM:
           type: string
           enum:
+            - lb
             - LBS
+            - Pounds
             - KGS
         reattemptDate:
           type: string
@@ -3982,31 +3992,12 @@ components:
           $ref: '#/components/schemas/TrackingAddress'
         senderAddress:
           $ref: '#/components/schemas/TrackingAddress'
+        currentStatus:
+          $ref: '#/components/schemas/EventObject'
         scanDetailsList:
           type: array
           items:
-            type: object
-            properties:
-              eventDate:
-                type: string
-                format: date
-              eventTime:
-                type: string
-                format: time
-              eventCity:
-                type: string
-              eventStateOrProvince:
-                type: string
-              postalCode:
-                type: integer
-              country:
-                type: string
-              scanType:
-                type: string
-              scanDescription:
-                type: string
-              packageStatus:
-                type: string
+            $ref: '#/components/schemas/EventObject'
     SchedulePickup:
       type: object
       properties:
@@ -4910,3 +4901,48 @@ components:
                           type: array
                           items:
                             type: string
+    EventObject:
+      type: "object"
+      properties:
+        standardizedEventCode:
+          type: string
+        l1Code:
+          type: string
+        l1Description:
+          type: string
+        eventDate:
+          type: string
+          format: date
+        eventTime:
+          type: string
+          format: time
+        eventTimeOffset:
+          type: string
+        trackingUrl:
+          type: string
+        latitude:
+          type: string
+        longitude:
+          type: string
+        locationUnit:
+          type: string
+        eventLeg:
+          type: string
+        eventType:
+          type: string
+        scanType:
+          type: string
+        scanDescription:
+          type: string
+        packageStatus:
+          type: string
+        l2Description:
+          type: string
+        eventCity:
+          type: string
+        eventStateOrProvince:
+          type: string
+        postalCode:
+          type: integer
+        country:
+          type: string

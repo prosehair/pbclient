@@ -79,6 +79,7 @@ from pbclient.models.document import Document
 from pbclient.models.document_page import DocumentPage
 from pbclient.models.error import Error
 from pbclient.models.errors import Errors
+from pbclient.models.event_object import EventObject
 from pbclient.models.get_carrier_license_agreement200_response import GetCarrierLicenseAgreement200Response
 from pbclient.models.hazmat_details import HazmatDetails
 from pbclient.models.iso_country_code import ISOCountryCode
@@ -142,7 +143,6 @@ from pbclient.models.tax import Tax
 from pbclient.models.trackable import Trackable
 from pbclient.models.tracking_address import TrackingAddress
 from pbclient.models.tracking_response import TrackingResponse
-from pbclient.models.tracking_response_scan_details_list_inner import TrackingResponseScanDetailsListInner
 from pbclient.models.unit_of_dimension import UnitOfDimension
 from pbclient.models.unit_of_weight import UnitOfWeight
 from pbclient.models.void_parcel_protection_request import VoidParcelProtectionRequest

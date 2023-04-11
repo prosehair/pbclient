@@ -72,6 +72,7 @@ docs/Document.md
 docs/DocumentPage.md
 docs/Error.md
 docs/Errors.md
+docs/EventObject.md
 docs/GetCarrierLicenseAgreement200Response.md
 docs/HazmatDetails.md
 docs/ISOCountryCode.md
@@ -141,7 +142,6 @@ docs/Trackable.md
 docs/TrackingAddress.md
 docs/TrackingApi.md
 docs/TrackingResponse.md
-docs/TrackingResponseScanDetailsListInner.md
 docs/TransactionReportsApi.md
 docs/UnitOfDimension.md
 docs/UnitOfWeight.md
@@ -231,6 +231,7 @@ pbclient/models/document.py
 pbclient/models/document_page.py
 pbclient/models/error.py
 pbclient/models/errors.py
+pbclient/models/event_object.py
 pbclient/models/get_carrier_license_agreement200_response.py
 pbclient/models/hazmat_details.py
 pbclient/models/infectious_substance_contact.py
@@ -294,7 +295,6 @@ pbclient/models/tax.py
 pbclient/models/trackable.py
 pbclient/models/tracking_address.py
 pbclient/models/tracking_response.py
-pbclient/models/tracking_response_scan_details_list_inner.py
 pbclient/models/unit_of_dimension.py
 pbclient/models/unit_of_weight.py
 pbclient/models/void_parcel_protection_request.py
@@ -307,4 +307,5 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
+test/test_event_object.py
 tox.ini
