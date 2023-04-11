@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **address3** | **str** |  | [optional] 
 **city** | **str** |  | [optional] 
 **state_or_province** | **str** |  | [optional] 
-**postal_code** | **int** |  | [optional] 
+**postal_code** | **str** |  | [optional] 
 **country** | **str** |  | [optional] 
 
 ## Example

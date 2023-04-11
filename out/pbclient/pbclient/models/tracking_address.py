@@ -21,7 +21,7 @@ import json
 
 
 from typing import Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr
+from pydantic import BaseModel, Field, StrictStr
 
 class TrackingAddress(BaseModel):
     """
@@ -33,7 +33,7 @@ class TrackingAddress(BaseModel):
     address3: Optional[StrictStr] = None
     city: Optional[StrictStr] = None
     state_or_province: Optional[StrictStr] = Field(None, alias="stateOrProvince")
-    postal_code: Optional[StrictInt] = Field(None, alias="postalCode")
+    postal_code: Optional[StrictStr] = Field(None, alias="postalCode")
     country: Optional[StrictStr] = None
     __properties = ["name", "address1", "address2", "address3", "city", "stateOrProvince", "postalCode", "country"]
 

@@ -3909,7 +3909,7 @@ components:
         stateOrProvince:
           type: string
         postalCode:
-          type: integer
+          type: string
         country:
           type: string
     TrackingResponse:
@@ -4943,6 +4943,6 @@ components:
         eventStateOrProvince:
           type: string
         postalCode:
-          type: integer
+          type: string
         country:
           type: string

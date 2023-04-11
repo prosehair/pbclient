@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **l2_description** | **str** |  | [optional] 
 **event_city** | **str** |  | [optional] 
 **event_state_or_province** | **str** |  | [optional] 
-**postal_code** | **int** |  | [optional] 
+**postal_code** | **str** |  | [optional] 
 **country** | **str** |  | [optional] 
 
 ## Example

@@ -307,5 +307,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_event_object.py
 tox.ini

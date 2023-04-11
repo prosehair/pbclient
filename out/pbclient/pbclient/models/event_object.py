@@ -21,7 +21,7 @@ import json
 
 from datetime import date
 from typing import Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr
+from pydantic import BaseModel, Field, StrictStr
 
 class EventObject(BaseModel):
     """
@@ -45,7 +45,7 @@ class EventObject(BaseModel):
     l2_description: Optional[StrictStr] = Field(None, alias="l2Description")
     event_city: Optional[StrictStr] = Field(None, alias="eventCity")
     event_state_or_province: Optional[StrictStr] = Field(None, alias="eventStateOrProvince")
-    postal_code: Optional[StrictInt] = Field(None, alias="postalCode")
+    postal_code: Optional[StrictStr] = Field(None, alias="postalCode")
     country: Optional[StrictStr] = None
     __properties = ["standardizedEventCode", "l1Code", "l1Description", "eventDate", "eventTime", "eventTimeOffset", "trackingUrl", "latitude", "longitude", "locationUnit", "eventLeg", "eventType", "scanType", "scanDescription", "packageStatus", "l2Description", "eventCity", "eventStateOrProvince", "postalCode", "country"]
 
