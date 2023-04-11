@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 **delivery_location** | **str** |  | [optional] 
 **delivery_location_description** | **str** |  | [optional] 
 **signed_by** | **str** |  | [optional] 
-**weight** | **int** |  | [optional] 
+**weight** | **float** |  | [optional] 
 **weight_oum** | **str** |  | [optional] 
 **reattempt_date** | **date** |  | [optional] 
 **reattempt_time** | **str** |  | [optional] 
