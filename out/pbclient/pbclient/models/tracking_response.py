@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 from datetime import date
-from typing import List, Optional, Union
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist, validator
+from typing import List, Optional
+from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, validator
 from pbclient.models.carrier import Carrier
 from pbclient.models.event_object import EventObject
 from pbclient.models.tracking_address import TrackingAddress
@@ -49,7 +49,7 @@ class TrackingResponse(BaseModel):
     delivery_location: Optional[StrictStr] = Field(None, alias="deliveryLocation")
     delivery_location_description: Optional[StrictStr] = Field(None, alias="deliveryLocationDescription")
     signed_by: Optional[StrictStr] = Field(None, alias="signedBy")
-    weight: Optional[Union[StrictFloat, StrictInt]] = None
+    weight: Optional[StrictStr] = None
     weight_oum: Optional[StrictStr] = Field(None, alias="weightOUM")
     reattempt_date: Optional[date] = Field(None, alias="reattemptDate")
     reattempt_time: Optional[StrictStr] = Field(None, alias="reattemptTime")
