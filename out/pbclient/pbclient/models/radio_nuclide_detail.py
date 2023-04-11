@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictStr
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr
 
 class RadioNuclideDetail(BaseModel):
     """
@@ -32,7 +32,7 @@ class RadioNuclideDetail(BaseModel):
     physical_form: Optional[StrictStr] = Field(None, alias="physicalForm")
     radio_nuclide: Optional[StrictStr] = Field(None, alias="radioNuclide")
     radio_nuclide_activity_uom: Optional[StrictStr] = Field(None, alias="radioNuclideActivityUOM")
-    radio_nuclide_activity_value: Optional[StrictFloat] = Field(None, alias="radioNuclideActivityValue")
+    radio_nuclide_activity_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="radioNuclideActivityValue")
     __properties = ["chemicalForm", "expectedPackageReportableQuantity", "physicalForm", "radioNuclide", "radioNuclideActivityUOM", "radioNuclideActivityValue"]
 
     class Config:

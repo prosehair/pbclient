@@ -19,8 +19,8 @@ import json
 import pprint
 import re  # noqa: F401
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr, ValidationError, validator
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, ValidationError, validator
 from typing import Any, List
 from pydantic import StrictStr, Field
 
@@ -32,7 +32,7 @@ class RateDestinationZone(BaseModel):
     """
 
     # data type: float
-    anyof_schema_1_validator: Optional[StrictFloat] = None
+    anyof_schema_1_validator: Optional[Union[StrictFloat, StrictInt]] = None
     # data type: str
     anyof_schema_2_validator: Optional[StrictStr] = None
     actual_instance: Any

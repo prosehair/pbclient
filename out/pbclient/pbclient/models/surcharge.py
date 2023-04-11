@@ -20,14 +20,14 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, StrictFloat, StrictStr
+from typing import Optional, Union
+from pydantic import BaseModel, StrictFloat, StrictInt, StrictStr
 
 class Surcharge(BaseModel):
     """
     Surcharge
     """
-    fee: Optional[StrictFloat] = None
+    fee: Optional[Union[StrictFloat, StrictInt]] = None
     name: Optional[StrictStr] = None
     __properties = ["fee", "name"]
 

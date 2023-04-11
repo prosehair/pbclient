@@ -20,16 +20,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 
 class DimensionRulesMinParcelDimensions(BaseModel):
     """
     DimensionRulesMinParcelDimensions
     """
-    length: Optional[StrictFloat] = None
-    width: Optional[StrictFloat] = None
-    height: Optional[StrictFloat] = None
+    length: Optional[Union[StrictFloat, StrictInt]] = None
+    width: Optional[Union[StrictFloat, StrictInt]] = None
+    height: Optional[Union[StrictFloat, StrictInt]] = None
     unit_of_measurement: Optional[StrictStr] = Field(None, alias="unitOfMeasurement")
     __properties = ["length", "width", "height", "unitOfMeasurement"]
 

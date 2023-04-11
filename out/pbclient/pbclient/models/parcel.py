@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 from pbclient.models.parcel_dimension import ParcelDimension
 from pbclient.models.parcel_weight import ParcelWeight
 
@@ -31,7 +31,7 @@ class Parcel(BaseModel):
     """
     dimension: Optional[ParcelDimension] = None
     weight: Optional[ParcelWeight] = None
-    value_of_goods: Optional[StrictFloat] = Field(None, alias="valueOfGoods")
+    value_of_goods: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="valueOfGoods")
     currency_code: Optional[StrictStr] = Field(None, alias="currencyCode", description="Currency code as per [IOS 4217](https://en.wikipedia.org/wiki/ISO_4217)")
     __properties = ["dimension", "weight", "valueOfGoods", "currencyCode"]
 

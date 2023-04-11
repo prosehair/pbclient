@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 
 class ParcelProtectionPolicyResponseContentInnerPolicyDetails(BaseModel):
     """
@@ -32,11 +32,11 @@ class ParcelProtectionPolicyResponseContentInnerPolicyDetails(BaseModel):
     policy_status: Optional[StrictStr] = Field(None, alias="policyStatus")
     claim_status: Optional[StrictStr] = Field(None, alias="claimStatus")
     claim_status_update_date: Optional[StrictStr] = Field(None, alias="claimStatusUpdateDate")
-    value_of_goods: Optional[StrictFloat] = Field(None, alias="valueOfGoods")
-    insurance_value: Optional[StrictFloat] = Field(None, alias="insuranceValue")
-    premium_value: Optional[StrictFloat] = Field(None, alias="premiumValue")
-    base_premium: Optional[StrictFloat] = Field(None, alias="basePremium")
-    technology_fee: Optional[StrictFloat] = Field(None, alias="technologyFee")
+    value_of_goods: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="valueOfGoods")
+    insurance_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="insuranceValue")
+    premium_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="premiumValue")
+    base_premium: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="basePremium")
+    technology_fee: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="technologyFee")
     currency_code: Optional[StrictStr] = Field(None, alias="currencyCode")
     mail_class: Optional[StrictStr] = Field(None, alias="mailClass")
     mail_class_option: Optional[StrictStr] = Field(None, alias="mailClassOption")
@@ -66,7 +66,8 @@ class ParcelProtectionPolicyResponseContentInnerPolicyDetails(BaseModel):
                           },
                           exclude_none=True)
         # set to None if claim_status (nullable) is None
-        if self.claim_status is None:
+        # and __fields_set__ contains the field
+        if self.claim_status is None and "claim_status" in self.__fields_set__:
             _dict['claimStatus'] = None
 
         return _dict

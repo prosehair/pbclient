@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr, conlist
+from typing import List, Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
 from pbclient.models.carrier import Carrier
 from pbclient.models.errors import Errors
 
@@ -34,7 +34,7 @@ class CancelShipment(BaseModel):
     error_messages: Optional[conlist(Errors)] = Field(None, alias="errorMessages")
     parcel_tracking_number: Optional[StrictStr] = Field(None, alias="parcelTrackingNumber")
     status: Optional[StrictStr] = None
-    total_carrier_charge: Optional[StrictFloat] = Field(None, alias="totalCarrierCharge")
+    total_carrier_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="totalCarrierCharge")
     __properties = ["cancelInitiator", "carrier", "errorMessages", "parcelTrackingNumber", "status", "totalCarrierCharge"]
 
     class Config:

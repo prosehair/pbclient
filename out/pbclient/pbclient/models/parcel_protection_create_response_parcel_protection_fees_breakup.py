@@ -20,15 +20,15 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt
 
 class ParcelProtectionCreateResponseParcelProtectionFeesBreakup(BaseModel):
     """
     ParcelProtectionCreateResponseParcelProtectionFeesBreakup
     """
-    base_premium: Optional[StrictFloat] = Field(None, alias="basePremium")
-    technology_fee: Optional[StrictFloat] = Field(None, alias="technologyFee")
+    base_premium: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="basePremium")
+    technology_fee: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="technologyFee")
     __properties = ["basePremium", "technologyFee"]
 
     class Config:

@@ -20,15 +20,15 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt
 from pbclient.models.unit_of_weight import UnitOfWeight
 
 class ParcelWeight(BaseModel):
     """
     ParcelWeight
     """
-    weight: Optional[StrictFloat] = None
+    weight: Optional[Union[StrictFloat, StrictInt]] = None
     unit_of_measurement: Optional[UnitOfWeight] = Field(None, alias="unitOfMeasurement")
     __properties = ["weight", "unitOfMeasurement"]
 

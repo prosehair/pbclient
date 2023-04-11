@@ -20,7 +20,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import List, Optional, Union
 from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr, conlist
 from pbclient.models.cross_border_quotes_request_basket_items_inner_attributes_inner import CrossBorderQuotesRequestBasketItemsInnerAttributesInner
 from pbclient.models.cross_border_quotes_request_basket_items_inner_categories_inner import CrossBorderQuotesRequestBasketItemsInnerCategoriesInner
@@ -41,7 +41,7 @@ class CrossBorderQuotesRequestBasketItemsInner(BaseModel):
     item_dimension: Optional[CrossBorderQuotesRequestBasketItemsInnerItemDimension] = Field(None, alias="itemDimension")
     url: Optional[StrictStr] = None
     quantity: Optional[StrictInt] = None
-    unit_price: Optional[StrictFloat] = Field(None, alias="unitPrice")
+    unit_price: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="unitPrice")
     origin_country_code: Optional[StrictStr] = Field(None, alias="originCountryCode")
     parent_identifier: Optional[StrictStr] = Field(None, alias="parentIdentifier")
     child_identifier: Optional[StrictStr] = Field(None, alias="childIdentifier")

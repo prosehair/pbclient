@@ -20,7 +20,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
+from typing import Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 
 class DimensionRulesMaxParcelDimensions(BaseModel):
@@ -28,7 +28,7 @@ class DimensionRulesMaxParcelDimensions(BaseModel):
     DimensionRulesMaxParcelDimensions
     """
     length: Optional[StrictInt] = None
-    width: Optional[StrictFloat] = None
+    width: Optional[Union[StrictFloat, StrictInt]] = None
     height: Optional[StrictInt] = None
     unit_of_measurement: Optional[StrictStr] = Field(None, alias="unitOfMeasurement")
     __properties = ["length", "width", "height", "unitOfMeasurement"]

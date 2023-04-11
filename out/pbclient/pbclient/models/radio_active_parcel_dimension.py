@@ -20,17 +20,17 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr, validator
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, validator
 
 class RadioActiveParcelDimension(BaseModel):
     """
     RadioActiveParcelDimension
     """
     uom: Optional[StrictStr] = Field(None, alias="UOM", description="unit of measurement")
-    height: Optional[StrictFloat] = None
-    length: Optional[StrictFloat] = None
-    width: Optional[StrictFloat] = None
+    height: Optional[Union[StrictFloat, StrictInt]] = None
+    length: Optional[Union[StrictFloat, StrictInt]] = None
+    width: Optional[Union[StrictFloat, StrictInt]] = None
     __properties = ["UOM", "height", "length", "width"]
 
     @validator('uom')

@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictStr
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr
 
 class WeightRules(BaseModel):
     """
@@ -29,8 +29,8 @@ class WeightRules(BaseModel):
     """
     required: Optional[StrictBool] = None
     unit_of_measurement: Optional[StrictStr] = Field(None, alias="unitOfMeasurement")
-    min_weight: Optional[StrictFloat] = Field(None, alias="minWeight")
-    max_weight: Optional[StrictFloat] = Field(None, alias="maxWeight")
+    min_weight: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="minWeight")
+    max_weight: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="maxWeight")
     __properties = ["required", "unitOfMeasurement", "minWeight", "maxWeight"]
 
     class Config:

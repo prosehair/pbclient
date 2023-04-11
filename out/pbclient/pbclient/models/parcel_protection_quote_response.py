@@ -20,15 +20,15 @@ import re  # noqa: F401
 import json
 
 
-
-from pydantic import BaseModel, Field, StrictFloat, StrictStr
+from typing import Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 from pbclient.models.parcel_protection_quote_response_parcel_protection_fees_breakup import ParcelProtectionQuoteResponseParcelProtectionFeesBreakup
 
 class ParcelProtectionQuoteResponse(BaseModel):
     """
     ParcelProtectionQuoteResponse
     """
-    parcel_protection_fees: StrictFloat = Field(..., alias="parcelProtectionFees")
+    parcel_protection_fees: Union[StrictFloat, StrictInt] = Field(..., alias="parcelProtectionFees")
     parcel_protection_fees_currency_code: StrictStr = Field(..., alias="parcelProtectionFeesCurrencyCode")
     parcel_protection_fees_breakup: ParcelProtectionQuoteResponseParcelProtectionFeesBreakup = Field(..., alias="parcelProtectionFeesBreakup")
     __properties = ["parcelProtectionFees", "parcelProtectionFeesCurrencyCode", "parcelProtectionFeesBreakup"]

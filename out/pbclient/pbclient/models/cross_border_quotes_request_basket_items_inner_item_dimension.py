@@ -20,7 +20,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
+from typing import Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 
 class CrossBorderQuotesRequestBasketItemsInnerItemDimension(BaseModel):
@@ -28,7 +28,7 @@ class CrossBorderQuotesRequestBasketItemsInnerItemDimension(BaseModel):
     CrossBorderQuotesRequestBasketItemsInnerItemDimension
     """
     length: Optional[StrictInt] = None
-    height: Optional[StrictFloat] = None
+    height: Optional[Union[StrictFloat, StrictInt]] = None
     width: Optional[StrictInt] = None
     unit_of_measurement: Optional[StrictStr] = Field(None, alias="unitOfMeasurement")
     __properties = ["length", "height", "width", "unitOfMeasurement"]

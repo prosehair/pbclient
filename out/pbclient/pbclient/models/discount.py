@@ -20,14 +20,14 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 
 class Discount(BaseModel):
     """
     Discount
     """
-    discount_amount: Optional[StrictFloat] = Field(None, alias="discountAmount")
+    discount_amount: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="discountAmount")
     name: Optional[StrictStr] = None
     __properties = ["discountAmount", "name"]
 

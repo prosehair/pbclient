@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr, conlist
+from typing import List, Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
 from pbclient.models.carrier import Carrier
 from pbclient.models.delivery_commitment import DeliveryCommitment
 from pbclient.models.discount import Discount
@@ -37,9 +37,9 @@ class Rate(BaseModel):
     """
     Rate
     """
-    alternate_base_charge: Optional[StrictFloat] = Field(None, alias="alternateBaseCharge")
-    alternate_total_charge: Optional[StrictFloat] = Field(None, alias="alternateTotalCharge")
-    base_charge: Optional[StrictFloat] = Field(None, alias="baseCharge")
+    alternate_base_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="alternateBaseCharge")
+    alternate_total_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="alternateTotalCharge")
+    base_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="baseCharge")
     base_charge_taxes: Optional[conlist(Tax)] = Field(None, alias="baseChargeTaxes")
     carrier: Carrier = ...
     currency_code: Optional[StrictStr] = Field(None, alias="currencyCode", description="ISO-4217")
@@ -53,8 +53,8 @@ class Rate(BaseModel):
     service_id: Optional[Services] = Field(None, alias="serviceId")
     special_services: Optional[conlist(SpecialService)] = Field(None, alias="specialServices")
     surcharges: Optional[conlist(Surcharge)] = None
-    total_carrier_charge: Optional[StrictFloat] = Field(None, alias="totalCarrierCharge")
-    total_tax_amount: Optional[StrictFloat] = Field(None, alias="totalTaxAmount")
+    total_carrier_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="totalCarrierCharge")
+    total_tax_amount: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="totalTaxAmount")
     __properties = ["alternateBaseCharge", "alternateTotalCharge", "baseCharge", "baseChargeTaxes", "carrier", "currencyCode", "deliveryCommitment", "destinationZone", "dimensionalWeight", "discounts", "inductionPostalCode", "parcelType", "rateTypeId", "serviceId", "specialServices", "surcharges", "totalCarrierCharge", "totalTaxAmount"]
 
     class Config:

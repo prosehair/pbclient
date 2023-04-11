@@ -20,15 +20,15 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr, conlist
+from typing import List, Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
 from pbclient.models.parameter import Parameter
 
 class SpecialService(BaseModel):
     """
     SpecialService
     """
-    fee: Optional[StrictFloat] = None
+    fee: Optional[Union[StrictFloat, StrictInt]] = None
     input_parameters: Optional[conlist(Parameter)] = Field(None, alias="inputParameters")
     special_service_id: StrictStr = Field(..., alias="specialServiceId")
     __properties = ["fee", "inputParameters", "specialServiceId"]

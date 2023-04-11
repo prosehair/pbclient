@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 
 class Tax(BaseModel):
     """
@@ -29,8 +29,8 @@ class Tax(BaseModel):
     """
     display_name: Optional[StrictStr] = Field(None, alias="displayName")
     name: Optional[StrictStr] = None
-    tax_amount: Optional[StrictFloat] = Field(None, alias="taxAmount")
-    tax_rate: Optional[StrictFloat] = Field(None, alias="taxRate")
+    tax_amount: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="taxAmount")
+    tax_rate: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="taxRate")
     __properties = ["displayName", "name", "taxAmount", "taxRate"]
 
     class Config:

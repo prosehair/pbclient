@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr, conlist
+from typing import List, Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
 from pbclient.models.cross_border_quotes_response_quote_inner_quote_lines_inner import CrossBorderQuotesResponseQuoteInnerQuoteLinesInner
 from pbclient.models.cross_border_quotes_response_quote_inner_total_rates import CrossBorderQuotesResponseQuoteInnerTotalRates
 
@@ -31,7 +31,7 @@ class CrossBorderQuotesResponseQuoteInner(BaseModel):
     """
     quote_currency: Optional[StrictStr] = Field(None, alias="quoteCurrency")
     quote_lines: Optional[conlist(CrossBorderQuotesResponseQuoteInnerQuoteLinesInner)] = Field(None, alias="quoteLines")
-    total_price: Optional[StrictFloat] = Field(None, alias="totalPrice")
+    total_price: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="totalPrice")
     total_rates: Optional[CrossBorderQuotesResponseQuoteInnerTotalRates] = Field(None, alias="totalRates")
     __properties = ["quoteCurrency", "quoteLines", "totalPrice", "totalRates"]
 

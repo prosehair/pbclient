@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr, validator
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, validator
 from pbclient.models.address import Address
 
 class CustomsInfo(BaseModel):
@@ -34,24 +34,24 @@ class CustomsInfo(BaseModel):
     certificate_number: Optional[StrictStr] = Field(None, alias="certificateNumber")
     comments: Optional[StrictStr] = None
     currency_code: StrictStr = Field(..., alias="currencyCode", description="ISO-4217")
-    customs_declared_value: Optional[StrictFloat] = Field(None, alias="customsDeclaredValue")
+    customs_declared_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="customsDeclaredValue")
     declaration_statement: Optional[StrictStr] = Field(None, alias="declarationStatement")
-    freight_charge: Optional[StrictFloat] = Field(None, alias="freightCharge")
+    freight_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="freightCharge")
     from_customs_reference: Optional[StrictStr] = Field(None, alias="fromCustomsReference")
-    handling_costs: Optional[StrictFloat] = Field(None, alias="handlingCosts")
+    handling_costs: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="handlingCosts")
     importer_customs_reference: Optional[StrictStr] = Field(None, alias="importerCustomsReference")
-    insured_amount: Optional[StrictFloat] = Field(None, alias="insuredAmount")
+    insured_amount: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="insuredAmount")
     insured_number: Optional[StrictStr] = Field(None, alias="insuredNumber")
     invoice_number: Optional[StrictStr] = Field(None, alias="invoiceNumber")
     license_number: Optional[StrictStr] = Field(None, alias="licenseNumber")
-    other_charge: Optional[StrictFloat] = Field(None, alias="otherCharge")
+    other_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="otherCharge")
     other_description: Optional[StrictStr] = Field(None, alias="otherDescription")
     other_type: Optional[StrictStr] = Field(None, alias="otherType")
-    packing_costs: Optional[StrictFloat] = Field(None, alias="packingCosts")
+    packing_costs: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="packingCosts")
     producer_specification: Optional[StrictStr] = Field(None, alias="producerSpecification")
     reason_for_export: Optional[StrictStr] = Field(None, alias="reasonForExport")
     reason_for_export_explanation: Optional[StrictStr] = Field(None, alias="reasonForExportExplanation")
-    sdr_value: Optional[StrictFloat] = Field(None, alias="sdrValue")
+    sdr_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="sdrValue")
     shipping_document_type: Optional[StrictStr] = Field(None, alias="shippingDocumentType")
     signature_contact: Optional[Address] = Field(None, alias="signatureContact")
     terms_of_sale: Optional[StrictStr] = Field(None, alias="termsOfSale")

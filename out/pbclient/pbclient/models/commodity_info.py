@@ -20,7 +20,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
+from typing import Optional, Union
 from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr
 from pbclient.models.infectious_substance_contact import InfectiousSubstanceContact
 from pbclient.models.radio_activity_detail import RadioActivityDetail
@@ -37,7 +37,7 @@ class CommodityInfo(BaseModel):
     inner_receptacles_quantity_uom: Optional[StrictStr] = Field(None, alias="innerReceptaclesQuantityUOM")
     packaging_group: Optional[StrictStr] = Field(None, alias="packagingGroup")
     packaging_instructions: Optional[StrictStr] = Field(None, alias="packagingInstructions")
-    percentage: Optional[StrictFloat] = None
+    percentage: Optional[Union[StrictFloat, StrictInt]] = None
     proper_shipping_name: Optional[StrictStr] = Field(None, alias="properShippingName")
     quantity: Optional[StrictInt] = None
     quantity_uom: Optional[StrictStr] = Field(None, alias="quantityUOM")

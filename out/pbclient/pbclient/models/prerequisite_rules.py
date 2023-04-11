@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt
 from pbclient.models.special_service_codes import SpecialServiceCodes
 
 class PrerequisiteRules(BaseModel):
@@ -29,7 +29,7 @@ class PrerequisiteRules(BaseModel):
     PrerequisiteRules
     """
     special_service_codes: Optional[SpecialServiceCodes] = Field(None, alias="specialServiceCodes")
-    min_input_value: Optional[StrictFloat] = Field(None, alias="minInputValue")
+    min_input_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="minInputValue")
     __properties = ["specialServiceCodes", "minInputValue"]
 
     class Config:

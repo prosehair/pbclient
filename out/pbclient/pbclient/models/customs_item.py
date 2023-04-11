@@ -20,7 +20,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
+from typing import Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, validator
 from pbclient.models.address import Address
 from pbclient.models.parcel_weight import ParcelWeight
@@ -40,7 +40,7 @@ class CustomsItem(BaseModel):
     producer_id: Optional[StrictStr] = Field(None, alias="producerId")
     quantity: StrictInt = ...
     quantity_uom: Optional[StrictStr] = Field(None, alias="quantityUOM")
-    unit_price: StrictFloat = Field(..., alias="unitPrice")
+    unit_price: Union[StrictFloat, StrictInt] = Field(..., alias="unitPrice")
     unit_weight: ParcelWeight = Field(..., alias="unitWeight")
     __properties = ["description", "hSTariffCode", "netCostMethod", "originCountryCode", "originStateProvince", "preferenceCriterion", "producerAddress", "producerDetermination", "producerId", "quantity", "quantityUOM", "unitPrice", "unitWeight"]
 

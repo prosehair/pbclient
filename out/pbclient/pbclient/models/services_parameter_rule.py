@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictStr
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr
 
 class ServicesParameterRule(BaseModel):
     """
@@ -30,9 +30,9 @@ class ServicesParameterRule(BaseModel):
     name: Optional[StrictStr] = None
     branded_name: Optional[StrictStr] = Field(None, alias="brandedName")
     required: Optional[StrictBool] = None
-    min_value: Optional[StrictFloat] = Field(None, alias="minValue")
-    max_value: Optional[StrictFloat] = Field(None, alias="maxValue")
-    free_value: Optional[StrictFloat] = Field(None, alias="freeValue")
+    min_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="minValue")
+    max_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="maxValue")
+    free_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="freeValue")
     format: Optional[StrictStr] = None
     description: Optional[StrictStr] = None
     __properties = ["name", "brandedName", "required", "minValue", "maxValue", "freeValue", "format", "description"]

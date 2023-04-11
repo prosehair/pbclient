@@ -20,7 +20,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
+from typing import Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 from pbclient.models.cross_border_quotes_response_quote_inner_quote_lines_inner_unit_rates_delivery_commitment import CrossBorderQuotesResponseQuoteInnerQuoteLinesInnerUnitRatesDeliveryCommitment
 
@@ -28,13 +28,13 @@ class CrossBorderQuotesResponseQuoteInnerQuoteLinesInnerLineRates(BaseModel):
     """
     CrossBorderQuotesResponseQuoteInnerQuoteLinesInnerLineRates
     """
-    line_price: Optional[StrictFloat] = Field(None, alias="linePrice")
-    total_tax_amount: Optional[StrictFloat] = Field(None, alias="totalTaxAmount")
+    line_price: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="linePrice")
+    total_tax_amount: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="totalTaxAmount")
     total_duty_amount: Optional[StrictInt] = Field(None, alias="totalDutyAmount")
     service_id: Optional[StrictStr] = Field(None, alias="serviceId")
-    base_charge: Optional[StrictFloat] = Field(None, alias="baseCharge")
+    base_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="baseCharge")
     delivery_commitment: Optional[CrossBorderQuotesResponseQuoteInnerQuoteLinesInnerUnitRatesDeliveryCommitment] = Field(None, alias="deliveryCommitment")
-    total_carrier_charge: Optional[StrictFloat] = Field(None, alias="totalCarrierCharge")
+    total_carrier_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="totalCarrierCharge")
     __properties = ["linePrice", "totalTaxAmount", "totalDutyAmount", "serviceId", "baseCharge", "deliveryCommitment", "totalCarrierCharge"]
 
     class Config:

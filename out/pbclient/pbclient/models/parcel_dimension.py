@@ -20,19 +20,19 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt
 from pbclient.models.unit_of_dimension import UnitOfDimension
 
 class ParcelDimension(BaseModel):
     """
     ParcelDimension
     """
-    length: Optional[StrictFloat] = None
-    height: Optional[StrictFloat] = None
-    width: Optional[StrictFloat] = None
+    length: Optional[Union[StrictFloat, StrictInt]] = None
+    height: Optional[Union[StrictFloat, StrictInt]] = None
+    width: Optional[Union[StrictFloat, StrictInt]] = None
     unit_of_measurement: Optional[UnitOfDimension] = Field(None, alias="unitOfMeasurement")
-    irregular_parcel_girth: Optional[StrictFloat] = Field(None, alias="irregularParcelGirth")
+    irregular_parcel_girth: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="irregularParcelGirth")
     __properties = ["length", "height", "width", "unitOfMeasurement", "irregularParcelGirth"]
 
     class Config:

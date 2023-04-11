@@ -20,7 +20,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, conlist
 from pbclient.models.parameter import Parameter
 from pbclient.models.special_service import SpecialService
@@ -30,7 +30,7 @@ class RealTransactionDetailReport(BaseModel):
     RealTransactionDetailReport
     """
     adjustment_reason: Optional[StrictStr] = Field(None, alias="adjustmentReason")
-    credit_card_fee: Optional[StrictFloat] = Field(None, alias="creditCardFee")
+    credit_card_fee: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="creditCardFee")
     custom_message1: Optional[StrictStr] = Field(None, alias="customMessage1")
     custom_message2: Optional[StrictStr] = Field(None, alias="customMessage2")
     description: Optional[StrictStr] = None
@@ -39,11 +39,11 @@ class RealTransactionDetailReport(BaseModel):
     destination_zip: Optional[StrictStr] = Field(None, alias="destinationZip")
     developer_id: Optional[StrictStr] = Field(None, alias="developerId")
     developer_name: Optional[StrictStr] = Field(None, alias="developerName")
-    developer_postage_payment_account_balance: Optional[StrictFloat] = Field(None, alias="developerPostagePaymentAccountBalance")
+    developer_postage_payment_account_balance: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="developerPostagePaymentAccountBalance")
     developer_postage_payment_method: Optional[StrictStr] = Field(None, alias="developerPostagePaymentMethod")
-    developer_rate_amount: Optional[StrictFloat] = Field(None, alias="developerRateAmount")
+    developer_rate_amount: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="developerRateAmount")
     developer_rate_plan: Optional[StrictStr] = Field(None, alias="developerRatePlan")
-    dimensional_weight_oz: Optional[StrictFloat] = Field(None, alias="dimensionalWeightOz")
+    dimensional_weight_oz: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="dimensionalWeightOz")
     external_id: Optional[StrictStr] = Field(None, alias="externalId")
     international_country_price_group: Optional[StrictStr] = Field(None, alias="internationalCountryPriceGroup")
     label_fee: Optional[StrictStr] = Field(None, alias="labelFee")
@@ -51,31 +51,31 @@ class RealTransactionDetailReport(BaseModel):
     merchant_id: Optional[StrictStr] = Field(None, alias="merchantId")
     merchant_name: Optional[StrictStr] = Field(None, alias="merchantName")
     merchant_postage_account_payment_method: Optional[StrictStr] = Field(None, alias="merchantPostageAccountPaymentMethod")
-    merchant_rate: Optional[StrictFloat] = Field(None, alias="merchantRate")
+    merchant_rate: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="merchantRate")
     merchant_rate_plan: Optional[StrictStr] = Field(None, alias="merchantRatePlan")
     meter_number: Optional[StrictStr] = Field(None, alias="meterNumber")
     origin_zip: Optional[StrictStr] = Field(None, alias="originZip")
     origination_address: Optional[StrictStr] = Field(None, alias="originationAddress")
-    package_height_in_inches: Optional[StrictFloat] = Field(None, alias="packageHeightInInches")
-    package_length_in_inches: Optional[StrictFloat] = Field(None, alias="packageLengthInInches")
+    package_height_in_inches: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="packageHeightInInches")
+    package_length_in_inches: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="packageLengthInInches")
     package_type: Optional[StrictStr] = Field(None, alias="packageType")
     package_type_indicator: Optional[StrictStr] = Field(None, alias="packageTypeIndicator")
-    package_width_in_inches: Optional[StrictFloat] = Field(None, alias="packageWidthInInches")
+    package_width_in_inches: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="packageWidthInInches")
     parcel_tracking_number: Optional[StrictStr] = Field(None, alias="parcelTrackingNumber")
-    postage_deposit_amount: Optional[StrictFloat] = Field(None, alias="postageDepositAmount")
+    postage_deposit_amount: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="postageDepositAmount")
     print_status: Optional[StrictStr] = Field(None, alias="printStatus")
     references: Optional[conlist(Parameter)] = None
     refund_denial_reason: Optional[StrictStr] = Field(None, alias="refundDenialReason")
     refund_requestor: Optional[StrictStr] = Field(None, alias="refundRequestor")
     refund_status: Optional[StrictStr] = Field(None, alias="refundStatus")
     shipment_id: Optional[StrictStr] = Field(None, alias="shipmentId")
-    shipper_postage_payment_account_balance: Optional[StrictFloat] = Field(None, alias="shipperPostagePaymentAccountBalance")
+    shipper_postage_payment_account_balance: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="shipperPostagePaymentAccountBalance")
     special_services: Optional[conlist(SpecialService)] = Field(None, alias="specialServices")
     status: Optional[StrictStr] = None
     transaction_date_time: Optional[datetime] = Field(None, alias="transactionDateTime")
     transaction_id: Optional[StrictStr] = Field(None, alias="transactionId")
     transaction_type: Optional[StrictStr] = Field(None, alias="transactionType")
-    value_of_goods: Optional[StrictFloat] = Field(None, alias="valueOfGoods")
+    value_of_goods: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="valueOfGoods")
     weight_in_ounces: Optional[StrictInt] = Field(None, alias="weightInOunces")
     zone: Optional[StrictStr] = None
     __properties = ["adjustmentReason", "creditCardFee", "customMessage1", "customMessage2", "description", "destinationAddress", "destinationCountry", "destinationZip", "developerId", "developerName", "developerPostagePaymentAccountBalance", "developerPostagePaymentMethod", "developerRateAmount", "developerRatePlan", "dimensionalWeightOz", "externalId", "internationalCountryPriceGroup", "labelFee", "mailClass", "merchantId", "merchantName", "merchantPostageAccountPaymentMethod", "merchantRate", "merchantRatePlan", "meterNumber", "originZip", "originationAddress", "packageHeightInInches", "packageLengthInInches", "packageType", "packageTypeIndicator", "packageWidthInInches", "parcelTrackingNumber", "postageDepositAmount", "printStatus", "references", "refundDenialReason", "refundRequestor", "refundStatus", "shipmentId", "shipperPostagePaymentAccountBalance", "specialServices", "status", "transactionDateTime", "transactionId", "transactionType", "valueOfGoods", "weightInOunces", "zone"]

@@ -20,8 +20,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat, StrictStr
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 from pbclient.models.parcel_protection_create_response_parcel_protection_fees_breakup import ParcelProtectionCreateResponseParcelProtectionFeesBreakup
 
 class ParcelProtectionCreateResponse(BaseModel):
@@ -31,7 +31,7 @@ class ParcelProtectionCreateResponse(BaseModel):
     transaction_id: Optional[StrictStr] = Field(None, alias="transactionID")
     parcel_protection_reference_id: Optional[StrictStr] = Field(None, alias="parcelProtectionReferenceID")
     parcel_protection_date: Optional[StrictStr] = Field(None, alias="parcelProtectionDate")
-    parcel_protection_fees: Optional[StrictFloat] = Field(None, alias="parcelProtectionFees")
+    parcel_protection_fees: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="parcelProtectionFees")
     parcel_protection_fees_currency_code: Optional[StrictStr] = Field(None, alias="parcelProtectionFeesCurrencyCode")
     parcel_protection_fees_breakup: Optional[ParcelProtectionCreateResponseParcelProtectionFeesBreakup] = Field(None, alias="parcelProtectionFeesBreakup")
     __properties = ["transactionID", "parcelProtectionReferenceID", "parcelProtectionDate", "parcelProtectionFees", "parcelProtectionFeesCurrencyCode", "parcelProtectionFeesBreakup"]

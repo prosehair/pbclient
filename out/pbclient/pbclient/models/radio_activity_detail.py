@@ -20,18 +20,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field, StrictFloat
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt
 from pbclient.models.radio_active_parcel_dimension import RadioActiveParcelDimension
 
 class RadioActivityDetail(BaseModel):
     """
     RadioActivityDetail
     """
-    criticality_safety_index: Optional[StrictFloat] = Field(None, alias="criticalitySafetyIndex")
+    criticality_safety_index: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="criticalitySafetyIndex")
     radio_active_parcel_dimension: Optional[RadioActiveParcelDimension] = Field(None, alias="radioActiveParcelDimension")
-    surface_reading: Optional[StrictFloat] = Field(None, alias="surfaceReading")
-    transport_index: Optional[StrictFloat] = Field(None, alias="transportIndex")
+    surface_reading: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="surfaceReading")
+    transport_index: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="transportIndex")
     __properties = ["criticalitySafetyIndex", "radioActiveParcelDimension", "surfaceReading", "transportIndex"]
 
     class Config:
