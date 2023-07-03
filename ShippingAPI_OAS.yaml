@@ -2457,6 +2457,7 @@ components:
         - FEDEX
         - UPS
         - pbcs
+        - IMB
     ISOCountryCode:
       type: string
       default: US
