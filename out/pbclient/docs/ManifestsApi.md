@@ -20,12 +20,13 @@ This operation creates an end-of-day manifest that either combines all parcels i
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.manifest import Manifest
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -55,6 +56,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ManifestsApi->create_manifest: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -94,12 +96,13 @@ reprintManifest
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.manifest import Manifest
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -128,6 +131,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ManifestsApi->reprint_manifest: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -167,12 +171,13 @@ retryManifest
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.manifest import Manifest
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -201,6 +206,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ManifestsApi->retry_manifest: %s\n" % e)
 ```
+
 
 ### Parameters
 

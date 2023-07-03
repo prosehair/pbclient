@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -31,7 +30,7 @@ class Manifest(BaseModel):
     """
     Manifest
     """
-    carrier: Carrier = ...
+    carrier: Carrier = Field(...)
     documents: Optional[conlist(Document)] = None
     from_address: Optional[Address] = Field(None, alias="fromAddress")
     induction_postal_code: Optional[StrictStr] = Field(None, alias="inductionPostalCode")
@@ -43,6 +42,7 @@ class Manifest(BaseModel):
     __properties = ["carrier", "documents", "fromAddress", "inductionPostalCode", "manifestId", "manifestTrackingNumber", "parameters", "parcelTrackingNumbers", "submissionDate"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -90,7 +90,7 @@ class Manifest(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return Manifest.parse_obj(obj)
 
         _obj = Manifest.parse_obj({

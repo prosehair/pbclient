@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -41,6 +40,7 @@ class ParcelProtectionPolicyResponseContentInnerShipperInfo(BaseModel):
     __properties = ["shipperID", "firstName", "middleName", "lastName", "company", "email", "phoneNumber1", "phoneNumber2", "faxNumber", "address"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -74,7 +74,7 @@ class ParcelProtectionPolicyResponseContentInnerShipperInfo(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return ParcelProtectionPolicyResponseContentInnerShipperInfo.parse_obj(obj)
 
         _obj = ParcelProtectionPolicyResponseContentInnerShipperInfo.parse_obj({

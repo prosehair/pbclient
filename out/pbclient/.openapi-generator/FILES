@@ -164,6 +164,7 @@ pbclient/api/shipment_api.py
 pbclient/api/tracking_api.py
 pbclient/api/transaction_reports_api.py
 pbclient/api_client.py
+pbclient/api_response.py
 pbclient/configuration.py
 pbclient/exceptions.py
 pbclient/models/__init__.py
@@ -300,6 +301,7 @@ pbclient/models/unit_of_weight.py
 pbclient/models/void_parcel_protection_request.py
 pbclient/models/void_parcel_protection_response.py
 pbclient/models/weight_rules.py
+pbclient/py.typed
 pbclient/rest.py
 pyproject.toml
 requirements.txt

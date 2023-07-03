@@ -17,12 +17,13 @@ This API call generates the OAuth token based on the Base64-encoded value of the
 ### Example
 
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.o_auth_token import OAuthToken
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -46,6 +47,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AuthenticationApi->oauth_token: %s\n" % e)
 ```
+
 
 ### Parameters
 

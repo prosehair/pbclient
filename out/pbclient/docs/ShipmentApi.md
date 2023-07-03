@@ -19,12 +19,14 @@ cancelShipment
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.cancel_shipment import CancelShipment
+from pbclient.models.carrier import Carrier
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -57,6 +59,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShipmentApi->cancel_shipment: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -102,12 +105,13 @@ The API returns the label as either a Base64 string or a link to a PDF. For more
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.shipment import Shipment
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -142,6 +146,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShipmentApi->create_shipment_label: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -186,12 +191,14 @@ reprintShipment
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.carrier import Carrier
+from pbclient.models.shipment import Shipment
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -221,6 +228,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShipmentApi->reprint_shipment: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -260,12 +268,14 @@ retryShipment
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.carrier import Carrier
+from pbclient.models.shipment import Shipment
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -295,6 +305,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ShipmentApi->retry_shipment: %s\n" % e)
 ```
+
 
 ### Parameters
 

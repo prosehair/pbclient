@@ -13,7 +13,7 @@
 """
 
 
-from inspect import getfullargspec
+import json
 import pprint
 import re  # noqa: F401
 from aenum import Enum, no_arg
@@ -279,4 +279,10 @@ class ISOCountryCode(str, Enum):
     YE = 'YE'
     ZM = 'ZM'
     ZW = 'ZW'
+
+    @classmethod
+    def from_json(cls, json_str: str) -> ISOCountryCode:
+        """Create an instance of ISOCountryCode from a JSON string"""
+        return ISOCountryCode(json.loads(json_str))
+
 

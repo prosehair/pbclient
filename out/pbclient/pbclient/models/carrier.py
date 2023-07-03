@@ -13,7 +13,7 @@
 """
 
 
-from inspect import getfullargspec
+import json
 import pprint
 import re  # noqa: F401
 from aenum import Enum, no_arg
@@ -38,4 +38,10 @@ class Carrier(str, Enum):
     UPS = 'UPS'
     PBCS = 'pbcs'
     IMB = 'IMB'
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Carrier:
+        """Create an instance of Carrier from a JSON string"""
+        return Carrier(json.loads(json_str))
+
 

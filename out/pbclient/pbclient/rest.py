@@ -22,7 +22,7 @@ import ssl
 from urllib.parse import urlencode, quote_plus
 import urllib3
 
-from pbclient.exceptions import ApiException, UnauthorizedException, ForbiddenException, NotFoundException, ServiceException, ApiValueError
+from pbclient.exceptions import ApiException, UnauthorizedException, ForbiddenException, NotFoundException, ServiceException, ApiValueError, BadRequestException
 
 
 logger = logging.getLogger(__name__)
@@ -66,6 +66,10 @@ class RESTClientObject(object):
 
         if configuration.retries is not None:
             addition_pool_args['retries'] = configuration.retries
+
+        if configuration.tls_server_name:
+            addition_pool_args['server_hostname'] = configuration.tls_server_name
+
 
         if configuration.socket_options is not None:
             addition_pool_args['socket_options'] = configuration.socket_options
@@ -215,6 +219,9 @@ class RESTClientObject(object):
             logger.debug("response body: %s", r.data)
 
         if not 200 <= r.status <= 299:
+            if r.status == 400:
+                raise BadRequestException(http_resp=r)
+
             if r.status == 401:
                 raise UnauthorizedException(http_resp=r)
 

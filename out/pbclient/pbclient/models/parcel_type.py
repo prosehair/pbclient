@@ -13,7 +13,7 @@
 """
 
 
-from inspect import getfullargspec
+import json
 import pprint
 import re  # noqa: F401
 from aenum import Enum, no_arg
@@ -66,4 +66,10 @@ class ParcelType(str, Enum):
     ENUM_25KG = '25KG'
     ENUM_10KG = '10KG'
     PKG = 'PKG'
+
+    @classmethod
+    def from_json(cls, json_str: str) -> ParcelType:
+        """Create an instance of ParcelType from a JSON string"""
+        return ParcelType(json.loads(json_str))
+
 

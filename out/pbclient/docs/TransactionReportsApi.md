@@ -16,12 +16,13 @@ This operation retrieves all transactions for a specified period of time.
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.page_real_transaction_detail_report import PageRealTransactionDetailReport
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -61,6 +62,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling TransactionReportsApi->get_transaction_report: %s\n" % e)
 ```
+
 
 ### Parameters
 

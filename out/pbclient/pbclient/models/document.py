@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -39,50 +38,61 @@ class Document(BaseModel):
     print_dialog_option: Optional[StrictStr] = Field(None, alias="printDialogOption")
     resolution: Optional[StrictStr] = None
     size: Optional[StrictStr] = None
-    type: StrictStr = ...
+    type: StrictStr = Field(...)
     __properties = ["contentType", "contents", "customerData", "docTab", "fileFormat", "pages", "printDialogOption", "resolution", "size", "type"]
 
     @validator('content_type')
-    def content_type_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('URL', 'BASE64'):
+    def content_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('URL', 'BASE64'):
             raise ValueError("must be one of enum values ('URL', 'BASE64')")
-        return v
+        return value
 
     @validator('file_format')
-    def file_format_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('PDF', 'PNG', 'GIF', 'ZPL', 'ZPL2'):
+    def file_format_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('PDF', 'PNG', 'GIF', 'ZPL', 'ZPL2'):
             raise ValueError("must be one of enum values ('PDF', 'PNG', 'GIF', 'ZPL', 'ZPL2')")
-        return v
+        return value
 
     @validator('print_dialog_option')
-    def print_dialog_option_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('NO_PRINT_DIALOG', 'EMBED_PRINT_DIALOG'):
+    def print_dialog_option_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('NO_PRINT_DIALOG', 'EMBED_PRINT_DIALOG'):
             raise ValueError("must be one of enum values ('NO_PRINT_DIALOG', 'EMBED_PRINT_DIALOG')")
-        return v
+        return value
 
     @validator('resolution')
-    def resolution_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('DPI_300', 'DPI_203', 'DPI_150'):
+    def resolution_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('DPI_300', 'DPI_203', 'DPI_150'):
             raise ValueError("must be one of enum values ('DPI_300', 'DPI_203', 'DPI_150')")
-        return v
+        return value
 
     @validator('size')
-    def size_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('DOC_2X7', 'DOC_4X1', 'DOC_4X3', 'DOC_4X6', 'DOC_4X8', 'DOC_6X4', 'DOC_8X11', 'DOC_9X4', 'DOC_4X5', 'DOC_8_5X5_5'):
+    def size_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('DOC_2X7', 'DOC_4X1', 'DOC_4X3', 'DOC_4X6', 'DOC_4X8', 'DOC_6X4', 'DOC_8X11', 'DOC_9X4', 'DOC_4X5', 'DOC_8_5X5_5'):
             raise ValueError("must be one of enum values ('DOC_2X7', 'DOC_4X1', 'DOC_4X3', 'DOC_4X6', 'DOC_4X8', 'DOC_6X4', 'DOC_8X11', 'DOC_9X4', 'DOC_4X5', 'DOC_8_5X5_5')")
-        return v
+        return value
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -130,7 +140,7 @@ class Document(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return Document.parse_obj(obj)
 
         _obj = Document.parse_obj({

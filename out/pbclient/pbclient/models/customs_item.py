@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -29,7 +28,7 @@ class CustomsItem(BaseModel):
     """
     CustomsItem
     """
-    description: StrictStr = ...
+    description: StrictStr = Field(...)
     h_s_tariff_code: Optional[StrictStr] = Field(None, alias="hSTariffCode")
     net_cost_method: Optional[StrictStr] = Field(None, alias="netCostMethod")
     origin_country_code: StrictStr = Field(..., alias="originCountryCode")
@@ -38,37 +37,44 @@ class CustomsItem(BaseModel):
     producer_address: Optional[Address] = Field(None, alias="producerAddress")
     producer_determination: Optional[StrictStr] = Field(None, alias="producerDetermination")
     producer_id: Optional[StrictStr] = Field(None, alias="producerId")
-    quantity: StrictInt = ...
+    quantity: StrictInt = Field(...)
     quantity_uom: Optional[StrictStr] = Field(None, alias="quantityUOM")
     unit_price: Union[StrictFloat, StrictInt] = Field(..., alias="unitPrice")
     unit_weight: ParcelWeight = Field(..., alias="unitWeight")
     __properties = ["description", "hSTariffCode", "netCostMethod", "originCountryCode", "originStateProvince", "preferenceCriterion", "producerAddress", "producerDetermination", "producerId", "quantity", "quantityUOM", "unitPrice", "unitWeight"]
 
     @validator('net_cost_method')
-    def net_cost_method_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('NO_NET_COST', 'NET_COST'):
+    def net_cost_method_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('NO_NET_COST', 'NET_COST'):
             raise ValueError("must be one of enum values ('NO_NET_COST', 'NET_COST')")
-        return v
+        return value
 
     @validator('preference_criterion')
-    def preference_criterion_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('A', 'B', 'C', 'D', 'E', 'F'):
+    def preference_criterion_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('A', 'B', 'C', 'D', 'E', 'F'):
             raise ValueError("must be one of enum values ('A', 'B', 'C', 'D', 'E', 'F')")
-        return v
+        return value
 
     @validator('producer_determination')
-    def producer_determination_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('NO_1', 'NO_2', 'NO_3', 'PD_YES'):
+    def producer_determination_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('NO_1', 'NO_2', 'NO_3', 'PD_YES'):
             raise ValueError("must be one of enum values ('NO_1', 'NO_2', 'NO_3', 'PD_YES')")
-        return v
+        return value
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -105,7 +111,7 @@ class CustomsItem(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return CustomsItem.parse_obj(obj)
 
         _obj = CustomsItem.parse_obj({

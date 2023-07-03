@@ -18,12 +18,14 @@ This operation prints a label for the shipment of containerized parcels destined
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.container_manifest_response import ContainerManifestResponse
+from pbclient.models.manifest import Manifest
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -53,6 +55,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ContainerApi->get_containerized_parcels_labels: %s\n" % e)
 ```
+
 
 ### Parameters
 

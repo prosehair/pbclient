@@ -21,12 +21,14 @@ This API lets merchants request Pitney Bowes [Parcel Protection](https://shippin
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.void_parcel_protection_request import VoidParcelProtectionRequest
+from pbclient.models.void_parcel_protection_response import VoidParcelProtectionResponse
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -57,6 +59,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ParcelProtectionApi->cancel_parcel_protection: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -99,12 +102,14 @@ This API lets merchants request Pitney Bowes [Parcel Protection](https://shippin
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.parcel_protection_create_request import ParcelProtectionCreateRequest
+from pbclient.models.parcel_protection_create_response import ParcelProtectionCreateResponse
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -134,6 +139,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ParcelProtectionApi->get_parcel_protection_coverage: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -175,12 +181,14 @@ This API provides a quote for covering a shipment through Pitney Bowes [Parcel P
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.parcel_protection_quote_request import ParcelProtectionQuoteRequest
+from pbclient.models.parcel_protection_quote_response import ParcelProtectionQuoteResponse
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -210,6 +218,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ParcelProtectionApi->get_parcel_protection_quote: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -251,12 +260,13 @@ This operation retrieves the policy status and other information on the Parcel P
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.parcel_protection_policy_response import ParcelProtectionPolicyResponse
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -295,6 +305,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ParcelProtectionApi->get_parcel_protection_reports: %s\n" % e)
 ```
+
 
 ### Parameters
 

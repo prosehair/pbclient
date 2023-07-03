@@ -13,7 +13,7 @@
 """
 
 
-from inspect import getfullargspec
+import json
 import pprint
 import re  # noqa: F401
 from aenum import Enum, no_arg
@@ -33,4 +33,10 @@ class Trackable(str, Enum):
     TRACKABLE = 'TRACKABLE'
     NON_TRACKABLE = 'NON_TRACKABLE'
     REQUIRES_TRACKABLE_SPECIAL_SERVICE = 'REQUIRES_TRACKABLE_SPECIAL_SERVICE'
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Trackable:
+        """Create an instance of Trackable from a JSON string"""
+        return Trackable(json.loads(json_str))
+
 

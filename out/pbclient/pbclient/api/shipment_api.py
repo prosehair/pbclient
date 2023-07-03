@@ -14,6 +14,8 @@
 
 
 import re  # noqa: F401
+import io
+import warnings
 
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
@@ -27,6 +29,7 @@ from pbclient.models.carrier import Carrier
 from pbclient.models.shipment import Shipment
 
 from pbclient.api_client import ApiClient
+from pbclient.api_response import ApiResponse
 from pbclient.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
@@ -69,10 +72,6 @@ class ShipmentApi(object):
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -83,10 +82,12 @@ class ShipmentApi(object):
         :rtype: CancelShipment
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the cancel_shipment_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.cancel_shipment_with_http_info(x_pb_transaction_id, shipment_id, x_pb_unified_error_structure, x_pb_shipper_carrier_account_id, cancel_initiator, carrier, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def cancel_shipment_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], shipment_id : Annotated[StrictStr, Field(..., description="shipmentId")], x_pb_unified_error_structure : Annotated[Optional[StrictStr], Field(description="Recommended. Set this to true to use the standard error object if an error occurs.")] = None, x_pb_shipper_carrier_account_id : Annotated[Optional[StrictStr], Field(description="UPS Only. The unique identifier returned in the shipperCarrierAccountId field by the [Register an Existing Carrier Account API.(https://shipping.pitneybowes.com/api/post-carrier-accounts-register.html)")] = None, cancel_initiator : Annotated[Optional[StrictStr], Field(description="Indicates that this refund request is initiated by the shipper. Set this to: SHIPPER")] = None, carrier : Annotated[Optional[Carrier], Field(description="Conditional. The carrier. This is required if the carrier is not USPS")] = None, **kwargs):  # noqa: E501
+    def cancel_shipment_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], shipment_id : Annotated[StrictStr, Field(..., description="shipmentId")], x_pb_unified_error_structure : Annotated[Optional[StrictStr], Field(description="Recommended. Set this to true to use the standard error object if an error occurs.")] = None, x_pb_shipper_carrier_account_id : Annotated[Optional[StrictStr], Field(description="UPS Only. The unique identifier returned in the shipperCarrierAccountId field by the [Register an Existing Carrier Account API.(https://shipping.pitneybowes.com/api/post-carrier-accounts-register.html)")] = None, cancel_initiator : Annotated[Optional[StrictStr], Field(description="Indicates that this refund request is initiated by the shipper. Set this to: SHIPPER")] = None, carrier : Annotated[Optional[Carrier], Field(description="Conditional. The carrier. This is required if the carrier is not USPS")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """cancelShipment  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -109,13 +110,14 @@ class ShipmentApi(object):
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -177,7 +179,7 @@ class ShipmentApi(object):
             _query_params.append(('cancelInitiator', _params['cancel_initiator']))
 
         if _params.get('carrier') is not None:  # noqa: E501
-            _query_params.append(('carrier', _params['carrier']))
+            _query_params.append(('carrier', _params['carrier'].value))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
@@ -253,10 +255,6 @@ class ShipmentApi(object):
         :type include_delivery_commitment: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -267,10 +265,12 @@ class ShipmentApi(object):
         :rtype: Shipment
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the create_shipment_label_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.create_shipment_label_with_http_info(x_pb_transaction_id, shipment, x_pb_unified_error_structure, x_pb_integrator_carrier_id, x_pb_shipper_rate_plan, x_pb_shipment_group_id, x_pb_shipper_carrier_account_id, include_delivery_commitment, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def create_shipment_label_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], shipment : Annotated[Shipment, Field(..., description="request")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, x_pb_integrator_carrier_id : Annotated[Optional[StrictStr], Field(description="USPS Only. Negotiated services rate, if applicable.")] = None, x_pb_shipper_rate_plan : Annotated[Optional[StrictStr], Field(description="USPS Only. Shipper rate plan, if applicable. For more information, see [this FAQ](https://shipping.pitneybowes.com/faqs/rates.html#rate-plans-faq).")] = None, x_pb_shipment_group_id : Annotated[Optional[StrictStr], Field(description=" **[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**.The job number that represents the agreement between the merchant and PB Presort. This was provided by Pitney Bowes during [merchant onboarding for PB Presort](https://shipping.pitneybowes.com/carriers/pb-presort.html).")] = None, x_pb_shipper_carrier_account_id : Annotated[Optional[StrictStr], Field(description="**[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**. The merchant's Mailer ID (MID), as provided by Pitney Bowes during merchant onboarding for PB Presort.")] = None, include_delivery_commitment : Annotated[Optional[StrictStr], Field(description="If set to true, returns estimated transit times in days. Only for USPS Create Shipment. See also [Pitney Bowes Delivery Guarantee](https://shipping.pitneybowes.com/faqs/delivery-guarantee.html) [Do all USPS services return transit times?](https://shipping.pitneybowes.com/faqs/shipments.html#transit-times-faq)")] = None, **kwargs):  # noqa: E501
+    def create_shipment_label_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], shipment : Annotated[Shipment, Field(..., description="request")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, x_pb_integrator_carrier_id : Annotated[Optional[StrictStr], Field(description="USPS Only. Negotiated services rate, if applicable.")] = None, x_pb_shipper_rate_plan : Annotated[Optional[StrictStr], Field(description="USPS Only. Shipper rate plan, if applicable. For more information, see [this FAQ](https://shipping.pitneybowes.com/faqs/rates.html#rate-plans-faq).")] = None, x_pb_shipment_group_id : Annotated[Optional[StrictStr], Field(description=" **[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**.The job number that represents the agreement between the merchant and PB Presort. This was provided by Pitney Bowes during [merchant onboarding for PB Presort](https://shipping.pitneybowes.com/carriers/pb-presort.html).")] = None, x_pb_shipper_carrier_account_id : Annotated[Optional[StrictStr], Field(description="**[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**. The merchant's Mailer ID (MID), as provided by Pitney Bowes during merchant onboarding for PB Presort.")] = None, include_delivery_commitment : Annotated[Optional[StrictStr], Field(description="If set to true, returns estimated transit times in days. Only for USPS Create Shipment. See also [Pitney Bowes Delivery Guarantee](https://shipping.pitneybowes.com/faqs/delivery-guarantee.html) [Do all USPS services return transit times?](https://shipping.pitneybowes.com/faqs/shipments.html#transit-times-faq)")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """This operation creates a shipment and purchases a shipment label.  # noqa: E501
 
         The API returns the label as either a Base64 string or a link to a PDF. For more information visit [Create Shipment Documents](https://shipping.pitneybowes.com/api/post-shipments.html). Following are samples of different carriers -  * [Create a USPS (U.S. Postal Service) Label](https://shipping.pitneybowes.com/api/post-shipments-usps.html)  * [Create a USPS PMOD Label](https://shipping.pitneybowes.com/api/post-shipments-pmod.html) * [Create a USPS Scan-Based Return Label](https://shipping.pitneybowes.com/api/post-shipments-returns.html) * [Create a Pure Post Return Label](https://shipping.pitneybowes.com/api/post-shipments-pure-post-return.html) * [Create a Newgistics Label](https://shipping.pitneybowes.com/api/post-shipments-newgistics.html) * [Create a PB Presort Label](https://shipping.pitneybowes.com/api/post-shipments-presort.html) * [Create a PB Cross-Border Shipment](https://shipping.pitneybowes.com/api/post-shipments-cbds.html) * [Create a UPS (United Parcel Service) Label](https://shipping.pitneybowes.com/api/post-shipments-ups.html)  # noqa: E501
@@ -298,13 +298,14 @@ class ShipmentApi(object):
         :type include_delivery_commitment: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -389,7 +390,7 @@ class ShipmentApi(object):
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['shipment']:
+        if _params['shipment'] is not None:
             _body_params = _params['shipment']
 
         # set the HTTP header `Accept`
@@ -445,10 +446,6 @@ class ShipmentApi(object):
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -459,10 +456,12 @@ class ShipmentApi(object):
         :rtype: Shipment
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the reprint_shipment_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.reprint_shipment_with_http_info(shipment_id, x_pb_unified_error_structure, carrier, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def reprint_shipment_with_http_info(self, shipment_id : Annotated[StrictStr, Field(..., description="Required. The shipment ID that was issued when shipment label was generated.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="Conditional. The carrier. This is required if the carrier is not USPS")] = None, **kwargs):  # noqa: E501
+    def reprint_shipment_with_http_info(self, shipment_id : Annotated[StrictStr, Field(..., description="Required. The shipment ID that was issued when shipment label was generated.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="Conditional. The carrier. This is required if the carrier is not USPS")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """reprintShipment  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -479,13 +478,14 @@ class ShipmentApi(object):
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -541,7 +541,7 @@ class ShipmentApi(object):
         # process the query parameters
         _query_params = []
         if _params.get('carrier') is not None:  # noqa: E501
-            _query_params.append(('carrier', _params['carrier']))
+            _query_params.append(('carrier', _params['carrier'].value))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
@@ -599,10 +599,6 @@ class ShipmentApi(object):
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -613,10 +609,12 @@ class ShipmentApi(object):
         :rtype: Shipment
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the retry_shipment_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.retry_shipment_with_http_info(original_transaction_id, x_pb_unified_error_structure, carrier, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def retry_shipment_with_http_info(self, original_transaction_id : StrictStr, x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="Conditional. The carrier. This is required if the carrier is not USPS")] = None, **kwargs):  # noqa: E501
+    def retry_shipment_with_http_info(self, original_transaction_id : StrictStr, x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="Conditional. The carrier. This is required if the carrier is not USPS")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """retryShipment  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -633,13 +631,14 @@ class ShipmentApi(object):
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -695,7 +694,7 @@ class ShipmentApi(object):
             _query_params.append(('originalTransactionId', _params['original_transaction_id']))
 
         if _params.get('carrier') is not None:  # noqa: E501
-            _query_params.append(('carrier', _params['carrier']))
+            _query_params.append(('carrier', _params['carrier'].value))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

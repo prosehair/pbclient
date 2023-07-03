@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -60,22 +59,27 @@ class TrackingResponse(BaseModel):
     __properties = ["packageCount", "carrier", "trackingNumber", "referenceNumber", "status", "updatedDate", "updatedTime", "shipDate", "shipTime", "shipTimeOffset", "estimatedDeliveryDate", "estimatedDeliveryTime", "estimatedDeliveryTimeOffset", "deliveryDate", "deliveryTime", "deliveryTimeOffset", "deliveryLocation", "deliveryLocationDescription", "signedBy", "weight", "weightOUM", "reattemptDate", "reattemptTime", "destinationAddress", "senderAddress", "currentStatus", "scanDetailsList"]
 
     @validator('status')
-    def status_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('Acceptance', 'Delivered', 'DeliveryAttempt', 'Exception', 'InTransit', 'Manifest', 'OutForDelivery', 'PickedUp', 'PickupMissed', 'ReadyForPickup', 'ReturnToSender'):
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('Acceptance', 'Delivered', 'DeliveryAttempt', 'Exception', 'InTransit', 'Manifest', 'OutForDelivery', 'PickedUp', 'PickupMissed', 'ReadyForPickup', 'ReturnToSender'):
             raise ValueError("must be one of enum values ('Acceptance', 'Delivered', 'DeliveryAttempt', 'Exception', 'InTransit', 'Manifest', 'OutForDelivery', 'PickedUp', 'PickupMissed', 'ReadyForPickup', 'ReturnToSender')")
-        return v
+        return value
 
     @validator('weight_oum')
-    def weight_oum_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('lb', 'LBS', 'Pounds', 'KGS'):
+    def weight_oum_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('lb', 'LBS', 'Pounds', 'KGS'):
             raise ValueError("must be one of enum values ('lb', 'LBS', 'Pounds', 'KGS')")
-        return v
+        return value
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -122,7 +126,7 @@ class TrackingResponse(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return TrackingResponse.parse_obj(obj)
 
         _obj = TrackingResponse.parse_obj({

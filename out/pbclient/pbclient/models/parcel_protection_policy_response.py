@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -41,6 +40,7 @@ class ParcelProtectionPolicyResponse(BaseModel):
     __properties = ["content", "last", "totalElements", "totalPages", "first", "numberOfElements", "sort", "size", "number"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -85,7 +85,7 @@ class ParcelProtectionPolicyResponse(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return ParcelProtectionPolicyResponse.parse_obj(obj)
 
         _obj = ParcelProtectionPolicyResponse.parse_obj({

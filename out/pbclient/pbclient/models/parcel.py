@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -36,6 +35,7 @@ class Parcel(BaseModel):
     __properties = ["dimension", "weight", "valueOfGoods", "currencyCode"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -72,7 +72,7 @@ class Parcel(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return Parcel.parse_obj(obj)
 
         _obj = Parcel.parse_obj({

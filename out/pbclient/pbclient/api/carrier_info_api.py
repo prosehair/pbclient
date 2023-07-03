@@ -14,6 +14,8 @@
 
 
 import re  # noqa: F401
+import io
+import warnings
 
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
@@ -32,6 +34,7 @@ from pbclient.models.get_carrier_license_agreement200_response import GetCarrier
 from pbclient.models.iso_country_code import ISOCountryCode
 
 from pbclient.api_client import ApiClient
+from pbclient.api_response import ApiResponse
 from pbclient.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
@@ -67,10 +70,6 @@ class CarrierInfoApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -81,10 +80,12 @@ class CarrierInfoApi(object):
         :rtype: CarrierFacilityResponse
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the get_carrier_facilities_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.get_carrier_facilities_with_http_info(carrier_facility_request, x_pb_unified_error_structure, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_carrier_facilities_with_http_info(self, carrier_facility_request : CarrierFacilityRequest, x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def get_carrier_facilities_with_http_info(self, carrier_facility_request : CarrierFacilityRequest, x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Find Carrier Facilities  # noqa: E501
 
         This operation locates Post Offices and other facilities for a given carrier. You can use this operation, for example, to locate all USPS Post Offices near to a given postal code.If you use the Standard Return API and if you use the option to print a QR code, use this API to locate facilities where the buyer can print the label from the QR code.  # noqa: E501
@@ -100,13 +101,14 @@ class CarrierInfoApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -167,7 +169,7 @@ class CarrierInfoApi(object):
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['carrier_facility_request']:
+        if _params['carrier_facility_request'] is not None:
             _body_params = _params['carrier_facility_request']
 
         # set the HTTP header `Accept`
@@ -224,10 +226,6 @@ class CarrierInfoApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -238,10 +236,12 @@ class CarrierInfoApi(object):
         :rtype: GetCarrierLicenseAgreement200Response
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the get_carrier_license_agreement_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.get_carrier_license_agreement_with_http_info(carrier, origin_country_code, x_pb_unified_error_structure, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_carrier_license_agreement_with_http_info(self, carrier : Annotated[Carrier, Field(..., description="The carrier name. Currently this must be set to: UPS")], origin_country_code : Annotated[ISOCountryCode, Field(..., description="The two-character ISO country code for the country where the shipment originates.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def get_carrier_license_agreement_with_http_info(self, carrier : Annotated[Carrier, Field(..., description="The carrier name. Currently this must be set to: UPS")], origin_country_code : Annotated[ISOCountryCode, Field(..., description="The two-character ISO country code for the country where the shipment originates.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """This operation retrieves a carrier's license agreement.  # noqa: E501
 
         This operation retrieves a carrier's license agreement. The operation is used in the [Carrier Registration Tutorial](https://shipping.pitneybowes.com/carrier-registration.html).  # noqa: E501
@@ -259,13 +259,14 @@ class CarrierInfoApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -318,10 +319,10 @@ class CarrierInfoApi(object):
         # process the query parameters
         _query_params = []
         if _params.get('carrier') is not None:  # noqa: E501
-            _query_params.append(('carrier', _params['carrier']))
+            _query_params.append(('carrier', _params['carrier'].value))
 
         if _params.get('origin_country_code') is not None:  # noqa: E501
-            _query_params.append(('originCountryCode', _params['origin_country_code']))
+            _query_params.append(('originCountryCode', _params['origin_country_code'].value))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
@@ -390,10 +391,6 @@ class CarrierInfoApi(object):
         :type compact_response: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -404,10 +401,12 @@ class CarrierInfoApi(object):
         :rtype: CarrierRule
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the get_carrier_service_rules_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.get_carrier_service_rules_with_http_info(carrier, origin_country_code, destination_country_code, x_pb_unified_error_structure, rate_type_id, future_shipment_date, return_shipment, compact_response, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_carrier_service_rules_with_http_info(self, carrier : Annotated[Carrier, Field(..., description="The carrier name. **Currently this must be set to: USPS** ")], origin_country_code : Annotated[ISOCountryCode, Field(..., description="The [two-character ISO country code](https://www.iso.org/obp/ui/#search) for the country where the shipment originates.")], destination_country_code : Annotated[ISOCountryCode, Field(..., description="The [two-character ISO country code](https://www.iso.org/obp/ui/#search) for the country of the shipment's destination address.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, rate_type_id : Annotated[Optional[StrictStr], Field(description="The type of rate requested, such as COMMERCIAL_BASE. If a rate type is not specified, all eligible rate types are returned.")] = None, future_shipment_date : Annotated[Optional[StrictStr], Field(description="If the shipment is for a future date, and if a rate change is expected before the shipment date, use this field to ensure you get the correct rates and correct rate rules. Note that a rate change can affect the structure of the rate rules as well as the actual rates.Specify this value in UTC/GMT, not in local time. Formats allowed are   * **YYYY-MM-DD**   * **YYYY-MM-DD HH:mm:ss** * **YYYY-MM-DD HH:mm:ss.SSS**")] = None, return_shipment : Annotated[Optional[datetime], Field(description="If set to true, provides only services applicable for return shipment.")] = None, compact_response : Annotated[Optional[StrictBool], Field(description="If set to true, returns only summary, without special service details.")] = None, **kwargs):  # noqa: E501
+    def get_carrier_service_rules_with_http_info(self, carrier : Annotated[Carrier, Field(..., description="The carrier name. **Currently this must be set to: USPS** ")], origin_country_code : Annotated[ISOCountryCode, Field(..., description="The [two-character ISO country code](https://www.iso.org/obp/ui/#search) for the country where the shipment originates.")], destination_country_code : Annotated[ISOCountryCode, Field(..., description="The [two-character ISO country code](https://www.iso.org/obp/ui/#search) for the country of the shipment's destination address.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, rate_type_id : Annotated[Optional[StrictStr], Field(description="The type of rate requested, such as COMMERCIAL_BASE. If a rate type is not specified, all eligible rate types are returned.")] = None, future_shipment_date : Annotated[Optional[StrictStr], Field(description="If the shipment is for a future date, and if a rate change is expected before the shipment date, use this field to ensure you get the correct rates and correct rate rules. Note that a rate change can affect the structure of the rate rules as well as the actual rates.Specify this value in UTC/GMT, not in local time. Formats allowed are   * **YYYY-MM-DD**   * **YYYY-MM-DD HH:mm:ss** * **YYYY-MM-DD HH:mm:ss.SSS**")] = None, return_shipment : Annotated[Optional[datetime], Field(description="If set to true, provides only services applicable for return shipment.")] = None, compact_response : Annotated[Optional[StrictBool], Field(description="If set to true, returns only summary, without special service details.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Retrieves the rules governing the carrier's services.  # noqa: E501
 
         This operation retrieves the rules governing the carrier's services, including the available parcel types and the limits on weights and dimensions. **This API currently returns rules only for USPS** . Find more information at [Get Carrier Rules](https://shipping.pitneybowes.com/api/get-carrier-rules.html)  # noqa: E501
@@ -435,13 +434,14 @@ class CarrierInfoApi(object):
         :type compact_response: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -499,13 +499,13 @@ class CarrierInfoApi(object):
         # process the query parameters
         _query_params = []
         if _params.get('carrier') is not None:  # noqa: E501
-            _query_params.append(('carrier', _params['carrier']))
+            _query_params.append(('carrier', _params['carrier'].value))
 
         if _params.get('origin_country_code') is not None:  # noqa: E501
-            _query_params.append(('originCountryCode', _params['origin_country_code']))
+            _query_params.append(('originCountryCode', _params['origin_country_code'].value))
 
         if _params.get('destination_country_code') is not None:  # noqa: E501
-            _query_params.append(('destinationCountryCode', _params['destination_country_code']))
+            _query_params.append(('destinationCountryCode', _params['destination_country_code'].value))
 
         if _params.get('rate_type_id') is not None:  # noqa: E501
             _query_params.append(('rateTypeId', _params['rate_type_id']))
@@ -578,10 +578,6 @@ class CarrierInfoApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -592,10 +588,12 @@ class CarrierInfoApi(object):
         :rtype: List[object]
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the get_carrier_supported_destination_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.get_carrier_supported_destination_with_http_info(carrier, origin_country_code, x_pb_unified_error_structure, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_carrier_supported_destination_with_http_info(self, carrier : Annotated[Carrier, Field(..., description="The carrier name. Currently this must be set to: USPS")], origin_country_code : Annotated[ISOCountryCode, Field(..., description="The two-character ISO country code for the country where the shipment originates.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def get_carrier_supported_destination_with_http_info(self, carrier : Annotated[Carrier, Field(..., description="The carrier name. Currently this must be set to: USPS")], origin_country_code : Annotated[ISOCountryCode, Field(..., description="The two-character ISO country code for the country where the shipment originates.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """This operation returns a list of supported destination countries to which the carrier offers international shipping services.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -612,13 +610,14 @@ class CarrierInfoApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -671,10 +670,10 @@ class CarrierInfoApi(object):
         # process the query parameters
         _query_params = []
         if _params.get('carrier') is not None:  # noqa: E501
-            _query_params.append(('carrier', _params['carrier']))
+            _query_params.append(('carrier', _params['carrier'].value))
 
         if _params.get('origin_country_code') is not None:  # noqa: E501
-            _query_params.append(('originCountryCode', _params['origin_country_code']))
+            _query_params.append(('originCountryCode', _params['origin_country_code'].value))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

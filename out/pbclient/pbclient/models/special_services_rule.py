@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -41,6 +40,7 @@ class SpecialServicesRule(BaseModel):
     __properties = ["specialServiceId", "brandedName", "categoryId", "categoryName", "trackable", "inputParameterRules", "prerequisiteRules", "incompatibleSpecialServices"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -85,7 +85,7 @@ class SpecialServicesRule(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return SpecialServicesRule.parse_obj(obj)
 
         _obj = SpecialServicesRule.parse_obj({

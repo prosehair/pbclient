@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -38,6 +37,7 @@ class CrossBorderQuotesResponseQuoteInnerQuoteLinesInner(BaseModel):
     __properties = ["lineId", "itemId", "quoteLineId", "quantity", "unitRates", "lineRates"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -74,7 +74,7 @@ class CrossBorderQuotesResponseQuoteInnerQuoteLinesInner(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return CrossBorderQuotesResponseQuoteInnerQuoteLinesInner.parse_obj(obj)
 
         _obj = CrossBorderQuotesResponseQuoteInnerQuoteLinesInner.parse_obj({

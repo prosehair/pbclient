@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -58,38 +57,47 @@ class CustomsInfo(BaseModel):
     __properties = ["EELPFC", "blanketEndDate", "blanketStartDate", "certificateNumber", "comments", "currencyCode", "customsDeclaredValue", "declarationStatement", "freightCharge", "fromCustomsReference", "handlingCosts", "importerCustomsReference", "insuredAmount", "insuredNumber", "invoiceNumber", "licenseNumber", "otherCharge", "otherDescription", "otherType", "packingCosts", "producerSpecification", "reasonForExport", "reasonForExportExplanation", "sdrValue", "shippingDocumentType", "signatureContact", "termsOfSale"]
 
     @validator('other_type')
-    def other_type_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('COMMISSIONS', 'DISCOUNTS', 'HANDLING_FEES', 'OTHER', 'ROYALTIES_AND_LICENSE_FEES', 'TAXES'):
+    def other_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('COMMISSIONS', 'DISCOUNTS', 'HANDLING_FEES', 'OTHER', 'ROYALTIES_AND_LICENSE_FEES', 'TAXES'):
             raise ValueError("must be one of enum values ('COMMISSIONS', 'DISCOUNTS', 'HANDLING_FEES', 'OTHER', 'ROYALTIES_AND_LICENSE_FEES', 'TAXES')")
-        return v
+        return value
 
     @validator('producer_specification')
-    def producer_specification_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('MULTIPLE_SPECIFIED', 'SAME', 'SINGLE_SPECIFIED', 'UNKNOWN', 'AVAILABLE_UPON_REQUEST'):
+    def producer_specification_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('MULTIPLE_SPECIFIED', 'SAME', 'SINGLE_SPECIFIED', 'UNKNOWN', 'AVAILABLE_UPON_REQUEST'):
             raise ValueError("must be one of enum values ('MULTIPLE_SPECIFIED', 'SAME', 'SINGLE_SPECIFIED', 'UNKNOWN', 'AVAILABLE_UPON_REQUEST')")
-        return v
+        return value
 
     @validator('reason_for_export')
-    def reason_for_export_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('GIFT', 'COMMERCIAL_SAMPLE', 'MERCHANDISE', 'DOCUMENTS', 'RETURNED_GOODS', 'SOLD', 'NOT_SOLD', 'OTHER', 'DANGEROUS_GOOD', 'HUMANITARIAN_GOODS'):
+    def reason_for_export_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('GIFT', 'COMMERCIAL_SAMPLE', 'MERCHANDISE', 'DOCUMENTS', 'RETURNED_GOODS', 'SOLD', 'NOT_SOLD', 'OTHER', 'DANGEROUS_GOOD', 'HUMANITARIAN_GOODS'):
             raise ValueError("must be one of enum values ('GIFT', 'COMMERCIAL_SAMPLE', 'MERCHANDISE', 'DOCUMENTS', 'RETURNED_GOODS', 'SOLD', 'NOT_SOLD', 'OTHER', 'DANGEROUS_GOOD', 'HUMANITARIAN_GOODS')")
-        return v
+        return value
 
     @validator('shipping_document_type')
-    def shipping_document_type_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('NAFTA', 'COO'):
+    def shipping_document_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('NAFTA', 'COO'):
             raise ValueError("must be one of enum values ('NAFTA', 'COO')")
-        return v
+        return value
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -123,7 +131,7 @@ class CustomsInfo(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return CustomsInfo.parse_obj(obj)
 
         _obj = CustomsInfo.parse_obj({

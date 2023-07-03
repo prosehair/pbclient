@@ -19,12 +19,13 @@ Address validation verifies and cleanses postal addresses within the United Stat
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.address import Address
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -54,6 +55,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AddressValidationApi->verify_address: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -95,12 +97,14 @@ This operation returns suggested addresses. Use this if the [Address Validation 
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.address_suggestion_response import AddressSuggestionResponse
+from pbclient.models.address_verify_suggest import AddressVerifySuggest
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -130,6 +134,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling AddressValidationApi->verify_and_suggest_address: %s\n" % e)
 ```
+
 
 ### Parameters
 

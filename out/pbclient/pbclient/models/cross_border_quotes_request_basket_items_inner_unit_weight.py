@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -27,11 +26,12 @@ class CrossBorderQuotesRequestBasketItemsInnerUnitWeight(BaseModel):
     """
     CrossBorderQuotesRequestBasketItemsInnerUnitWeight
     """
-    weight: StrictInt = ...
+    weight: StrictInt = Field(...)
     unit_of_measurement: StrictStr = Field(..., alias="unitOfMeasurement")
     __properties = ["weight", "unitOfMeasurement"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -62,7 +62,7 @@ class CrossBorderQuotesRequestBasketItemsInnerUnitWeight(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return CrossBorderQuotesRequestBasketItemsInnerUnitWeight.parse_obj(obj)
 
         _obj = CrossBorderQuotesRequestBasketItemsInnerUnitWeight.parse_obj({

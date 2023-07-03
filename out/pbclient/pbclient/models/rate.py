@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -41,7 +40,7 @@ class Rate(BaseModel):
     alternate_total_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="alternateTotalCharge")
     base_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="baseCharge")
     base_charge_taxes: Optional[conlist(Tax)] = Field(None, alias="baseChargeTaxes")
-    carrier: Carrier = ...
+    carrier: Carrier = Field(...)
     currency_code: Optional[StrictStr] = Field(None, alias="currencyCode", description="ISO-4217")
     delivery_commitment: Optional[DeliveryCommitment] = Field(None, alias="deliveryCommitment")
     destination_zone: Optional[RateDestinationZone] = Field(None, alias="destinationZone")
@@ -58,6 +57,7 @@ class Rate(BaseModel):
     __properties = ["alternateBaseCharge", "alternateTotalCharge", "baseCharge", "baseChargeTaxes", "carrier", "currencyCode", "deliveryCommitment", "destinationZone", "dimensionalWeight", "discounts", "inductionPostalCode", "parcelType", "rateTypeId", "serviceId", "specialServices", "surcharges", "totalCarrierCharge", "totalTaxAmount"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -125,7 +125,7 @@ class Rate(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return Rate.parse_obj(obj)
 
         _obj = Rate.parse_obj({

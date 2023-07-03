@@ -19,12 +19,14 @@ This operation provides an estimate of the duties, taxes, and transportation cos
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.cross_border_quotes_request import CrossBorderQuotesRequest
+from pbclient.models.cross_border_quotes_response import CrossBorderQuotesResponse
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -53,6 +55,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CrossBorderQuotesApi->get_cross_border_quotes: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -93,12 +96,14 @@ This operation predicts the HS Code for a parcel being shipped internationally a
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.manifest import Manifest
+from pbclient.models.parcel_protection_policy_response import ParcelProtectionPolicyResponse
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -128,6 +133,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CrossBorderQuotesApi->predicted_hs_code: %s\n" % e)
 ```
+
 
 ### Parameters
 

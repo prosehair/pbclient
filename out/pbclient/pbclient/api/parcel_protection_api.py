@@ -14,6 +14,8 @@
 
 
 import re  # noqa: F401
+import io
+import warnings
 
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
@@ -31,6 +33,7 @@ from pbclient.models.void_parcel_protection_request import VoidParcelProtectionR
 from pbclient.models.void_parcel_protection_response import VoidParcelProtectionResponse
 
 from pbclient.api_client import ApiClient
+from pbclient.api_response import ApiResponse
 from pbclient.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
@@ -70,10 +73,6 @@ class ParcelProtectionApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -84,10 +83,12 @@ class ParcelProtectionApi(object):
         :rtype: VoidParcelProtectionResponse
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the cancel_parcel_protection_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.cancel_parcel_protection_with_http_info(x_pb_transaction_id, parcel_protection_reference_id, void_parcel_protection_request, x_pb_unified_error_structure, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def cancel_parcel_protection_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], parcel_protection_reference_id : Annotated[StrictStr, Field(..., description="Required. The identifier for the PB Parcel Protection policy that is being voided.")], void_parcel_protection_request : Annotated[VoidParcelProtectionRequest, Field(..., description="manifest")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def cancel_parcel_protection_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], parcel_protection_reference_id : Annotated[StrictStr, Field(..., description="Required. The identifier for the PB Parcel Protection policy that is being voided.")], void_parcel_protection_request : Annotated[VoidParcelProtectionRequest, Field(..., description="manifest")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Parcel Protection Coverage  # noqa: E501
 
         This API lets merchants request Pitney Bowes [Parcel Protection](https://shipping.pitneybowes.com/faqs/parcel-protection.html) coverage for shipments. Merchants can request coverage for shipments created with the Shipping APIs as well as for shipments created with other platforms.  # noqa: E501
@@ -107,13 +108,14 @@ class ParcelProtectionApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -182,7 +184,7 @@ class ParcelProtectionApi(object):
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['void_parcel_protection_request']:
+        if _params['void_parcel_protection_request'] is not None:
             _body_params = _params['void_parcel_protection_request']
 
         # set the HTTP header `Accept`
@@ -239,10 +241,6 @@ class ParcelProtectionApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -253,10 +251,12 @@ class ParcelProtectionApi(object):
         :rtype: ParcelProtectionCreateResponse
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the get_parcel_protection_coverage_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.get_parcel_protection_coverage_with_http_info(x_pb_transaction_id, parcel_protection_create_request, x_pb_unified_error_structure, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_parcel_protection_coverage_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], parcel_protection_create_request : Annotated[ParcelProtectionCreateRequest, Field(..., description="manifest")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def get_parcel_protection_coverage_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], parcel_protection_create_request : Annotated[ParcelProtectionCreateRequest, Field(..., description="manifest")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Parcel Protection Coverage  # noqa: E501
 
         This API lets merchants request Pitney Bowes [Parcel Protection](https://shipping.pitneybowes.com/faqs/parcel-protection.html) coverage for shipments. Merchants can request coverage for shipments created with the Shipping APIs as well as for shipments created with other platforms.  # noqa: E501
@@ -274,13 +274,14 @@ class ParcelProtectionApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -345,7 +346,7 @@ class ParcelProtectionApi(object):
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['parcel_protection_create_request']:
+        if _params['parcel_protection_create_request'] is not None:
             _body_params = _params['parcel_protection_create_request']
 
         # set the HTTP header `Accept`
@@ -402,10 +403,6 @@ class ParcelProtectionApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -416,10 +413,12 @@ class ParcelProtectionApi(object):
         :rtype: ParcelProtectionQuoteResponse
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the get_parcel_protection_quote_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.get_parcel_protection_quote_with_http_info(x_pb_transaction_id, parcel_protection_quote_request, x_pb_unified_error_structure, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_parcel_protection_quote_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], parcel_protection_quote_request : Annotated[ParcelProtectionQuoteRequest, Field(..., description="manifest")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def get_parcel_protection_quote_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], parcel_protection_quote_request : Annotated[ParcelProtectionQuoteRequest, Field(..., description="manifest")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Parcel Protection Quote  # noqa: E501
 
         This API provides a quote for covering a shipment through Pitney Bowes [Parcel Protection](https://www.pitneybowes.com/us/ecommerce-delivery-services/parcel-protection.html).  # noqa: E501
@@ -437,13 +436,14 @@ class ParcelProtectionApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -508,7 +508,7 @@ class ParcelProtectionApi(object):
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['parcel_protection_quote_request']:
+        if _params['parcel_protection_quote_request'] is not None:
             _body_params = _params['parcel_protection_quote_request']
 
         # set the HTTP header `Accept`
@@ -583,10 +583,6 @@ class ParcelProtectionApi(object):
         :type sort: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -597,10 +593,12 @@ class ParcelProtectionApi(object):
         :rtype: ParcelProtectionPolicyResponse
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the get_parcel_protection_reports_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.get_parcel_protection_reports_with_http_info(x_pb_transaction_id, developer_id, policy_created_from_date, x_pb_unified_error_structure, policy_created_to_date, policy_reference_id, parcel_tracking_number, merchant_id, policy_status, size, page, sort, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_parcel_protection_reports_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], developer_id : Annotated[StrictStr, Field(..., description="Required. Your Pitney Bowes developer ID.")], policy_created_from_date : Annotated[StrictStr, Field(..., description="The beginning of the date range. Specify this value in UTC using the ISO 8601 standard. You must include both date and time, and you must end the time with Z to indicate a zero offset.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, policy_created_to_date : Annotated[Optional[StrictStr], Field(description="The end of the date range. Specify this value in UTC using the ISO 8601 standard. You must include both date and time, and you must end the time with Z to indicate a zero offset.")] = None, policy_reference_id : Annotated[Optional[StrictStr], Field(description="The unique identifier for the PB Parcel Protection policy.].")] = None, parcel_tracking_number : Annotated[Optional[StrictStr], Field(description="The parcel tracking number of the shipment that the policy applies to.")] = None, merchant_id : Annotated[Optional[StrictStr], Field(description="The merchant's Shipper ID. This is the value of the postalReportingNumber element in the Merchant Object.")] = None, policy_status : Annotated[Optional[StrictStr], Field(description="Whether the policy is active or voided.")] = None, size : Annotated[Optional[StrictStr], Field(description="The number of transactions to return per page in the result set.")] = None, page : Annotated[Optional[StrictStr], Field(description="The index number of the page to return. Page index numbering starts at 0. Specifying page=0 returns the first page of the result set.")] = None, sort : Annotated[Optional[StrictStr], Field(description="Defines a property to sort on and the sort order. Sort order can be ascending (asc) or descending (desc).")] = None, **kwargs):  # noqa: E501
+    def get_parcel_protection_reports_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="Required. A unique identifier for the transaction, up to 25 characters.")], developer_id : Annotated[StrictStr, Field(..., description="Required. Your Pitney Bowes developer ID.")], policy_created_from_date : Annotated[StrictStr, Field(..., description="The beginning of the date range. Specify this value in UTC using the ISO 8601 standard. You must include both date and time, and you must end the time with Z to indicate a zero offset.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, policy_created_to_date : Annotated[Optional[StrictStr], Field(description="The end of the date range. Specify this value in UTC using the ISO 8601 standard. You must include both date and time, and you must end the time with Z to indicate a zero offset.")] = None, policy_reference_id : Annotated[Optional[StrictStr], Field(description="The unique identifier for the PB Parcel Protection policy.].")] = None, parcel_tracking_number : Annotated[Optional[StrictStr], Field(description="The parcel tracking number of the shipment that the policy applies to.")] = None, merchant_id : Annotated[Optional[StrictStr], Field(description="The merchant's Shipper ID. This is the value of the postalReportingNumber element in the Merchant Object.")] = None, policy_status : Annotated[Optional[StrictStr], Field(description="Whether the policy is active or voided.")] = None, size : Annotated[Optional[StrictStr], Field(description="The number of transactions to return per page in the result set.")] = None, page : Annotated[Optional[StrictStr], Field(description="The index number of the page to return. Page index numbering starts at 0. Specifying page=0 returns the first page of the result set.")] = None, sort : Annotated[Optional[StrictStr], Field(description="Defines a property to sort on and the sort order. Sort order can be ascending (asc) or descending (desc).")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Parcel Protection Reports  # noqa: E501
 
         This operation retrieves the policy status and other information on the Parcel Protection policies you have purchased for your shipments. Further Details https://shipping.pitneybowes.com/api/get-parcel-protection-reports.html  # noqa: E501
@@ -636,13 +634,14 @@ class ParcelProtectionApi(object):
         :type sort: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of

@@ -32,6 +32,7 @@ from pbclient.api.tracking_api import TrackingApi
 from pbclient.api.transaction_reports_api import TransactionReportsApi
 
 # import ApiClient
+from pbclient.api_response import ApiResponse
 from pbclient.api_client import ApiClient
 from pbclient.configuration import Configuration
 from pbclient.exceptions import OpenApiException
@@ -40,6 +41,7 @@ from pbclient.exceptions import ApiValueError
 from pbclient.exceptions import ApiKeyError
 from pbclient.exceptions import ApiAttributeError
 from pbclient.exceptions import ApiException
+
 # import models into sdk package
 from pbclient.models.add_tracking_events import AddTrackingEvents
 from pbclient.models.add_tracking_events200_response import AddTrackingEvents200Response

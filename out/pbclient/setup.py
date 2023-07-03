@@ -25,9 +25,9 @@ NAME = "pbclient"
 VERSION = "1.0.0"
 PYTHON_REQUIRES = ">=3.7"
 REQUIRES = [
-    "urllib3 >= 1.25.3",
+    "urllib3 >= 1.25.3, < 2.1.0",
     "python-dateutil",
-    "pydantic",
+    "pydantic >= 1.10.5, < 2",
     "aenum"
 ]
 
@@ -46,5 +46,6 @@ setup(
     long_description_content_type='text/markdown',
     long_description="""\
     Shipping API Sample.  # noqa: E501
-    """
+    """,
+    package_data={"pbclient": ["py.typed"]},
 )

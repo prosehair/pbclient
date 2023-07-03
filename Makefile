@@ -5,7 +5,7 @@ GID!=id -g
 
 generate:  ## Generate python library from the OpenAPI specification
 	mkdir -p out
-	docker run --rm -v $(PWD):/local openapitools/openapi-generator-cli generate -i /local/ShippingAPI_OAS.yaml -g python-nextgen -o /local/out/pbclient --package-name pbclient
+	docker run --rm -v $(PWD):/local openapitools/openapi-generator-cli generate -i /local/ShippingAPI_OAS.yaml -g python -o /local/out/pbclient --package-name pbclient
 	docker run --rm -v $(PWD):/local openapitools/openapi-generator-cli chown -R $(UID):$(GID) /local/out/pbclient
 
 help:  ## Show this help.

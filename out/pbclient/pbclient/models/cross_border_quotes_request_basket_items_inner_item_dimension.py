@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -34,6 +33,7 @@ class CrossBorderQuotesRequestBasketItemsInnerItemDimension(BaseModel):
     __properties = ["length", "height", "width", "unitOfMeasurement"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -64,7 +64,7 @@ class CrossBorderQuotesRequestBasketItemsInnerItemDimension(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return CrossBorderQuotesRequestBasketItemsInnerItemDimension.parse_obj(obj)
 
         _obj = CrossBorderQuotesRequestBasketItemsInnerItemDimension.parse_obj({

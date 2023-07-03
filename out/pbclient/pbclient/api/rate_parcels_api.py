@@ -14,6 +14,8 @@
 
 
 import re  # noqa: F401
+import io
+import warnings
 
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
@@ -25,6 +27,7 @@ from typing import Optional
 from pbclient.models.shipment import Shipment
 
 from pbclient.api_client import ApiClient
+from pbclient.api_response import ApiResponse
 from pbclient.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
@@ -69,10 +72,6 @@ class RateParcelsApi(object):
         :type carrier: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -83,10 +82,12 @@ class RateParcelsApi(object):
         :rtype: Shipment
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the rate_parcel_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.rate_parcel_with_http_info(shipment, x_pb_unified_error_structure, x_pb_shipper_rate_plan, x_pb_integrator_carrier_id, x_pb_shipper_carrier_account_id, include_delivery_commitment, carrier, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def rate_parcel_with_http_info(self, shipment : Annotated[Shipment, Field(..., description="Shipment request for Rates")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, x_pb_shipper_rate_plan : Annotated[Optional[StrictStr], Field(description="USPS Only. Shipper rate plan, if applicable. For more information, see [this FAQ](https://shipping.pitneybowes.com/faqs/rates.html#rate-plans-faq)")] = None, x_pb_integrator_carrier_id : Annotated[Optional[StrictStr], Field(description="USPS Only. Negotiated services rate, if applicable.")] = None, x_pb_shipper_carrier_account_id : Annotated[Optional[StrictStr], Field(description="UPS (United Parcel Service) Only. The unique identifier returned in the shipperCarrierAccountId field by the [Register an Existing Carrier Account](https://shipping.pitneybowes.com/api/post-carrier-accounts-register.html) API.")] = None, include_delivery_commitment : Annotated[Optional[StrictBool], Field(description="When set to true, returns estimated transit time in days.")] = None, carrier : Annotated[Optional[StrictStr], Field(description="Cross-Border only. Required for PB Cross-Border. Set this to PBI.")] = None, **kwargs):  # noqa: E501
+    def rate_parcel_with_http_info(self, shipment : Annotated[Shipment, Field(..., description="Shipment request for Rates")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, x_pb_shipper_rate_plan : Annotated[Optional[StrictStr], Field(description="USPS Only. Shipper rate plan, if applicable. For more information, see [this FAQ](https://shipping.pitneybowes.com/faqs/rates.html#rate-plans-faq)")] = None, x_pb_integrator_carrier_id : Annotated[Optional[StrictStr], Field(description="USPS Only. Negotiated services rate, if applicable.")] = None, x_pb_shipper_carrier_account_id : Annotated[Optional[StrictStr], Field(description="UPS (United Parcel Service) Only. The unique identifier returned in the shipperCarrierAccountId field by the [Register an Existing Carrier Account](https://shipping.pitneybowes.com/api/post-carrier-accounts-register.html) API.")] = None, include_delivery_commitment : Annotated[Optional[StrictBool], Field(description="When set to true, returns estimated transit time in days.")] = None, carrier : Annotated[Optional[StrictStr], Field(description="Cross-Border only. Required for PB Cross-Border. Set this to PBI.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Use this operation to rate a parcel before you print and purchase a shipment label. You can rate a parcel for multiple services and multiple parcel types with a single API request.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -111,13 +112,14 @@ class RateParcelsApi(object):
         :type carrier: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -198,7 +200,7 @@ class RateParcelsApi(object):
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['shipment']:
+        if _params['shipment'] is not None:
             _body_params = _params['shipment']
 
         # set the HTTP header `Accept`

@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -43,9 +42,9 @@ class Shipment(BaseModel):
     documents: Optional[conlist(Document)] = None
     from_address: Address = Field(..., alias="fromAddress")
     hazmat_details: Optional[HazmatDetails] = Field(None, alias="hazmatDetails")
-    parcel: Parcel = ...
+    parcel: Parcel = Field(...)
     parcel_tracking_number: Optional[StrictStr] = Field(None, alias="parcelTrackingNumber")
-    rates: conlist(Rate) = ...
+    rates: conlist(Rate) = Field(...)
     references: Optional[conlist(Parameter)] = None
     shipment_id: Optional[StrictStr] = Field(None, alias="shipmentId")
     shipment_options: Optional[conlist(Parameter)] = Field(None, alias="shipmentOptions")
@@ -55,14 +54,17 @@ class Shipment(BaseModel):
     __properties = ["additionalAddresses", "altReturnAddress", "carrierPayments", "customs", "documents", "fromAddress", "hazmatDetails", "parcel", "parcelTrackingNumber", "rates", "references", "shipmentId", "shipmentOptions", "shipmentType", "soldToAddress", "toAddress"]
 
     @validator('shipment_type')
-    def shipment_type_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('OUTBOUND', 'RETURN'):
+    def shipment_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('OUTBOUND', 'RETURN'):
             raise ValueError("must be one of enum values ('OUTBOUND', 'RETURN')")
-        return v
+        return value
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -156,7 +158,7 @@ class Shipment(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return Shipment.parse_obj(obj)
 
         _obj = Shipment.parse_obj({

@@ -14,24 +14,24 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
 
 
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from pbclient.models.parcel_protection_quote_request_shipment_info_shipper_info_address import ParcelProtectionQuoteRequestShipmentInfoShipperInfoAddress
 
 class ParcelProtectionQuoteRequestShipmentInfoConsigneeInfo(BaseModel):
     """
     ParcelProtectionQuoteRequestShipmentInfoConsigneeInfo
     """
-    address: ParcelProtectionQuoteRequestShipmentInfoShipperInfoAddress = ...
+    address: ParcelProtectionQuoteRequestShipmentInfoShipperInfoAddress = Field(...)
     __properties = ["address"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -65,7 +65,7 @@ class ParcelProtectionQuoteRequestShipmentInfoConsigneeInfo(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return ParcelProtectionQuoteRequestShipmentInfoConsigneeInfo.parse_obj(obj)
 
         _obj = ParcelProtectionQuoteRequestShipmentInfoConsigneeInfo.parse_obj({

@@ -14,6 +14,8 @@
 
 
 import re  # noqa: F401
+import io
+import warnings
 
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
@@ -27,6 +29,7 @@ from typing import Optional
 from pbclient.models.page_real_transaction_detail_report import PageRealTransactionDetailReport
 
 from pbclient.api_client import ApiClient
+from pbclient.api_response import ApiResponse
 from pbclient.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
@@ -83,10 +86,6 @@ class TransactionReportsApi(object):
         :type transaction_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -97,10 +96,12 @@ class TransactionReportsApi(object):
         :rtype: PageRealTransactionDetailReport
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the get_transaction_report_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.get_transaction_report_with_http_info(developer_id, x_pb_unified_error_structure, from_date, ship_details, page, size, print_status, to_date, transaction_type, merchant_id, sort, parcel_tracking_number, transaction_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_transaction_report_with_http_info(self, developer_id : Annotated[StrictStr, Field(..., description="developerId")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, from_date : Annotated[Optional[datetime], Field(description="fromDate")] = None, ship_details : Optional[StrictInt] = None, page : Optional[StrictInt] = None, size : Optional[StrictInt] = None, print_status : Annotated[Optional[StrictStr], Field(description="printStatus")] = None, to_date : Annotated[Optional[datetime], Field(description="toDate")] = None, transaction_type : Annotated[Optional[StrictStr], Field(description="transactionType")] = None, merchant_id : Annotated[Optional[StrictStr], Field(description="The value of the postalReportingNumber element in the [merchant object](https://shipping.pitneybowes.com/reference/resource-objects.html). This value is also the merchant's Shipper ID.")] = None, sort : Annotated[Optional[StrictStr], Field(description="Defines a property to sort on and the sort order. Sort order can be ascending (asc) or descending (desc). Use the following form-  * **sort=<property_name>,<sort_direction>** For example- **sort=transactionId,desc** ")] = None, parcel_tracking_number : Annotated[Optional[StrictStr], Field(description="Parcel tracking number of the shipment.")] = None, transaction_id : Annotated[Optional[StrictStr], Field(description="The unique string that identifies all the transactions associated with a given shipment. The string comprises the developer ID and the shipment's X-PB-TransactionId, separated by an underscore (_). For example-  * **transactionId=44397664_ad5aa07-ad7414-a78a-c22b3**")] = None, **kwargs):  # noqa: E501
+    def get_transaction_report_with_http_info(self, developer_id : Annotated[StrictStr, Field(..., description="developerId")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, from_date : Annotated[Optional[datetime], Field(description="fromDate")] = None, ship_details : Optional[StrictInt] = None, page : Optional[StrictInt] = None, size : Optional[StrictInt] = None, print_status : Annotated[Optional[StrictStr], Field(description="printStatus")] = None, to_date : Annotated[Optional[datetime], Field(description="toDate")] = None, transaction_type : Annotated[Optional[StrictStr], Field(description="transactionType")] = None, merchant_id : Annotated[Optional[StrictStr], Field(description="The value of the postalReportingNumber element in the [merchant object](https://shipping.pitneybowes.com/reference/resource-objects.html). This value is also the merchant's Shipper ID.")] = None, sort : Annotated[Optional[StrictStr], Field(description="Defines a property to sort on and the sort order. Sort order can be ascending (asc) or descending (desc). Use the following form-  * **sort=<property_name>,<sort_direction>** For example- **sort=transactionId,desc** ")] = None, parcel_tracking_number : Annotated[Optional[StrictStr], Field(description="Parcel tracking number of the shipment.")] = None, transaction_id : Annotated[Optional[StrictStr], Field(description="The unique string that identifies all the transactions associated with a given shipment. The string comprises the developer ID and the shipment's X-PB-TransactionId, separated by an underscore (_). For example-  * **transactionId=44397664_ad5aa07-ad7414-a78a-c22b3**")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """This operation retrieves all transactions for a specified period of time.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -137,13 +138,14 @@ class TransactionReportsApi(object):
         :type transaction_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -215,7 +217,7 @@ class TransactionReportsApi(object):
                 _query_params.append(('fromDate', _params['from_date']))
 
         if _params.get('ship_details') is not None:  # noqa: E501
-            _query_params.append(('shipDetails', _params['ship_details']))
+            _query_params.append(('shipDetails', _params['ship_details'].value))
 
         if _params.get('page') is not None:  # noqa: E501
             _query_params.append(('page', _params['page']))
@@ -224,7 +226,7 @@ class TransactionReportsApi(object):
             _query_params.append(('size', _params['size']))
 
         if _params.get('print_status') is not None:  # noqa: E501
-            _query_params.append(('printStatus', _params['print_status']))
+            _query_params.append(('printStatus', _params['print_status'].value))
 
         if _params.get('to_date') is not None:  # noqa: E501
             if isinstance(_params['to_date'], datetime):
@@ -233,7 +235,7 @@ class TransactionReportsApi(object):
                 _query_params.append(('toDate', _params['to_date']))
 
         if _params.get('transaction_type') is not None:  # noqa: E501
-            _query_params.append(('transactionType', _params['transaction_type']))
+            _query_params.append(('transactionType', _params['transaction_type'].value))
 
         if _params.get('merchant_id') is not None:  # noqa: E501
             _query_params.append(('merchantId', _params['merchant_id']))

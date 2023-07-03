@@ -13,7 +13,7 @@
 """
 
 
-from inspect import getfullargspec
+import json
 import pprint
 import re  # noqa: F401
 from aenum import Enum, no_arg
@@ -32,4 +32,10 @@ class UnitOfDimension(str, Enum):
     """
     CM = 'CM'
     IN = 'IN'
+
+    @classmethod
+    def from_json(cls, json_str: str) -> UnitOfDimension:
+        """Create an instance of UnitOfDimension from a JSON string"""
+        return UnitOfDimension(json.loads(json_str))
+
 

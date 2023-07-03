@@ -17,12 +17,14 @@ getTrackingDetails
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.add_tracking_events import AddTrackingEvents
+from pbclient.models.add_tracking_events200_response import AddTrackingEvents200Response
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -51,6 +53,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling TrackingApi->add_tracking_events: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -89,12 +92,14 @@ getTrackingDetails
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.carrier import Carrier
+from pbclient.models.tracking_response import TrackingResponse
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -125,6 +130,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling TrackingApi->get_tracking_details: %s\n" % e)
 ```
+
 
 ### Parameters
 

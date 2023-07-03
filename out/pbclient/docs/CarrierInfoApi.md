@@ -21,12 +21,14 @@ This operation locates Post Offices and other facilities for a given carrier. Yo
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.carrier_facility_request import CarrierFacilityRequest
+from pbclient.models.carrier_facility_response import CarrierFacilityResponse
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -55,6 +57,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CarrierInfoApi->get_carrier_facilities: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -95,12 +98,15 @@ This operation retrieves a carrier's license agreement. The operation is used in
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.carrier import Carrier
+from pbclient.models.get_carrier_license_agreement200_response import GetCarrierLicenseAgreement200Response
+from pbclient.models.iso_country_code import ISOCountryCode
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -130,6 +136,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CarrierInfoApi->get_carrier_license_agreement: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -171,12 +178,15 @@ This operation retrieves the rules governing the carrier's services, including t
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.carrier import Carrier
+from pbclient.models.carrier_rule import CarrierRule
+from pbclient.models.iso_country_code import ISOCountryCode
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -211,6 +221,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CarrierInfoApi->get_carrier_service_rules: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -255,12 +266,14 @@ This operation returns a list of supported destination countries to which the ca
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.carrier import Carrier
+from pbclient.models.iso_country_code import ISOCountryCode
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -290,6 +303,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CarrierInfoApi->get_carrier_supported_destination: %s\n" % e)
 ```
+
 
 ### Parameters
 

@@ -14,6 +14,8 @@
 
 
 import re  # noqa: F401
+import io
+import warnings
 
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
@@ -27,6 +29,7 @@ from pbclient.models.schedule_pickup import SchedulePickup
 from pbclient.models.schedule_pickup_response import SchedulePickupResponse
 
 from pbclient.api_client import ApiClient
+from pbclient.api_response import ApiResponse
 from pbclient.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
@@ -64,10 +67,6 @@ class PickupApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -78,10 +77,12 @@ class PickupApi(object):
         :rtype: CancelPickup200Response
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the cancel_pickup_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.cancel_pickup_with_http_info(x_pb_transaction_id, pickup_id, x_pb_unified_error_structure, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def cancel_pickup_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="A unique identifier for the transaction, up to 25 characters")], pickup_id : Annotated[StrictStr, Field(..., description="A unique identifier for the transaction, up to 25 characters")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def cancel_pickup_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="A unique identifier for the transaction, up to 25 characters")], pickup_id : Annotated[StrictStr, Field(..., description="A unique identifier for the transaction, up to 25 characters")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Cancel Pickup  # noqa: E501
 
         This operation schedules a USPS package pickup from a residential or commercial location and provides a pickup confirmation number.  # noqa: E501
@@ -99,13 +100,14 @@ class PickupApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -220,10 +222,6 @@ class PickupApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -234,10 +232,12 @@ class PickupApi(object):
         :rtype: SchedulePickupResponse
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the get_pickupschedule_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.get_pickupschedule_with_http_info(x_pb_transaction_id, schedule_pickup, x_pb_unified_error_structure, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_pickupschedule_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="A unique identifier for the transaction, up to 25 characters")], schedule_pickup : Annotated[SchedulePickup, Field(..., description="Schedule Pickup request.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def get_pickupschedule_with_http_info(self, x_pb_transaction_id : Annotated[StrictStr, Field(..., description="A unique identifier for the transaction, up to 25 characters")], schedule_pickup : Annotated[SchedulePickup, Field(..., description="Schedule Pickup request.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Address validation  # noqa: E501
 
         This operation schedules a USPS package pickup from a residential or commercial location and provides a pickup confirmation number.  # noqa: E501
@@ -255,13 +255,14 @@ class PickupApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -326,7 +327,7 @@ class PickupApi(object):
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['schedule_pickup']:
+        if _params['schedule_pickup'] is not None:
             _body_params = _params['schedule_pickup']
 
         # set the HTTP header `Accept`

@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -37,6 +36,7 @@ class CarrierFacilityResponseCarrierFacilitySuggestionsInner(BaseModel):
     __properties = ["address", "carrierFacilityAttributes", "facilityHours", "facilityParking"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -84,7 +84,7 @@ class CarrierFacilityResponseCarrierFacilitySuggestionsInner(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return CarrierFacilityResponseCarrierFacilitySuggestionsInner.parse_obj(obj)
 
         _obj = CarrierFacilityResponseCarrierFacilitySuggestionsInner.parse_obj({

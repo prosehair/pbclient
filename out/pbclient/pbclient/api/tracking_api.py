@@ -14,6 +14,8 @@
 
 
 import re  # noqa: F401
+import io
+import warnings
 
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
@@ -28,6 +30,7 @@ from pbclient.models.carrier import Carrier
 from pbclient.models.tracking_response import TrackingResponse
 
 from pbclient.api_client import ApiClient
+from pbclient.api_response import ApiResponse
 from pbclient.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
@@ -62,10 +65,6 @@ class TrackingApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -76,10 +75,12 @@ class TrackingApi(object):
         :rtype: AddTrackingEvents200Response
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the add_tracking_events_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.add_tracking_events_with_http_info(add_tracking_events, x_pb_unified_error_structure, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def add_tracking_events_with_http_info(self, add_tracking_events : Annotated[AddTrackingEvents, Field(..., description="add track event")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def add_tracking_events_with_http_info(self, add_tracking_events : Annotated[AddTrackingEvents, Field(..., description="add track event")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """getTrackingDetails  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -94,13 +95,14 @@ class TrackingApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -161,7 +163,7 @@ class TrackingApi(object):
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['add_tracking_events']:
+        if _params['add_tracking_events'] is not None:
             _body_params = _params['add_tracking_events']
 
         # set the HTTP header `Accept`
@@ -219,10 +221,6 @@ class TrackingApi(object):
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -233,10 +231,12 @@ class TrackingApi(object):
         :rtype: TrackingResponse
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the get_tracking_details_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.get_tracking_details_with_http_info(tracking_number, package_identifier_type, x_pb_unified_error_structure, carrier, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_tracking_details_with_http_info(self, tracking_number : Annotated[StrictStr, Field(..., description="The tracking number for the shipment.")], package_identifier_type : Annotated[StrictStr, Field(..., description="packageIdentifierType")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="carrier")] = None, **kwargs):  # noqa: E501
+    def get_tracking_details_with_http_info(self, tracking_number : Annotated[StrictStr, Field(..., description="The tracking number for the shipment.")], package_identifier_type : Annotated[StrictStr, Field(..., description="packageIdentifierType")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="carrier")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """getTrackingDetails  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -255,13 +255,14 @@ class TrackingApi(object):
         :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -321,7 +322,7 @@ class TrackingApi(object):
             _query_params.append(('packageIdentifierType', _params['package_identifier_type']))
 
         if _params.get('carrier') is not None:  # noqa: E501
-            _query_params.append(('carrier', _params['carrier']))
+            _query_params.append(('carrier', _params['carrier'].value))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

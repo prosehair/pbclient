@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -41,6 +40,7 @@ class PageRealTransactionDetailReport(BaseModel):
     __properties = ["content", "first", "last", "number", "numberOfElements", "size", "totalElements", "totalPages", "searchCriteria"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -81,7 +81,7 @@ class PageRealTransactionDetailReport(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return PageRealTransactionDetailReport.parse_obj(obj)
 
         _obj = PageRealTransactionDetailReport.parse_obj({

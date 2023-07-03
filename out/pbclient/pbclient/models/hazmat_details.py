@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -43,6 +42,7 @@ class HazmatDetails(BaseModel):
     __properties = ["batteryDetails", "commodityType", "containerCount", "containerDetails", "emergencyContactNumber", "hazmatDocumentType", "identicalContainers", "offeror", "packagingOption", "signatory"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -86,7 +86,7 @@ class HazmatDetails(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return HazmatDetails.parse_obj(obj)
 
         _obj = HazmatDetails.parse_obj({

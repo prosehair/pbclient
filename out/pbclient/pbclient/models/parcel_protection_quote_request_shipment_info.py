@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -31,7 +30,7 @@ class ParcelProtectionQuoteRequestShipmentInfo(BaseModel):
     """
     ParcelProtectionQuoteRequestShipmentInfo
     """
-    carrier: Carrier = ...
+    carrier: Carrier = Field(...)
     service_id: StrictStr = Field(..., alias="serviceId")
     insurance_coverage_value: StrictInt = Field(..., alias="insuranceCoverageValue")
     insurance_coverage_value_currency: StrictStr = Field(..., alias="insuranceCoverageValueCurrency")
@@ -41,6 +40,7 @@ class ParcelProtectionQuoteRequestShipmentInfo(BaseModel):
     __properties = ["carrier", "serviceId", "insuranceCoverageValue", "insuranceCoverageValueCurrency", "parcelInfo", "shipperInfo", "consigneeInfo"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -80,7 +80,7 @@ class ParcelProtectionQuoteRequestShipmentInfo(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return ParcelProtectionQuoteRequestShipmentInfo.parse_obj(obj)
 
         _obj = ParcelProtectionQuoteRequestShipmentInfo.parse_obj({

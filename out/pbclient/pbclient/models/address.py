@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -45,22 +44,27 @@ class Address(BaseModel):
     __properties = ["addressLines", "carrierRoute", "cityTown", "company", "countryCode", "deliveryPoint", "email", "name", "phone", "postalCode", "residential", "stateProvince", "status", "taxId", "taxIdType"]
 
     @validator('status')
-    def status_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('PARSED', 'VALIDATED_CHANGED', 'VALIDATED_AND_NOT_CHANGED', 'NOT_CHANGED'):
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('PARSED', 'VALIDATED_CHANGED', 'VALIDATED_AND_NOT_CHANGED', 'NOT_CHANGED'):
             raise ValueError("must be one of enum values ('PARSED', 'VALIDATED_CHANGED', 'VALIDATED_AND_NOT_CHANGED', 'NOT_CHANGED')")
-        return v
+        return value
 
     @validator('tax_id_type')
-    def tax_id_type_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('EIN', 'GST', 'VAT', 'RFC', 'EORI'):
+    def tax_id_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('EIN', 'GST', 'VAT', 'RFC', 'EORI'):
             raise ValueError("must be one of enum values ('EIN', 'GST', 'VAT', 'RFC', 'EORI')")
-        return v
+        return value
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -91,7 +95,7 @@ class Address(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return Address.parse_obj(obj)
 
         _obj = Address.parse_obj({

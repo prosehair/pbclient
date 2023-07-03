@@ -14,6 +14,8 @@
 
 
 import re  # noqa: F401
+import io
+import warnings
 
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
@@ -25,6 +27,7 @@ from typing import Optional
 from pbclient.models.o_auth_token import OAuthToken
 
 from pbclient.api_client import ApiClient
+from pbclient.api_response import ApiResponse
 from pbclient.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
@@ -62,10 +65,6 @@ class AuthenticationApi(object):
         :type grant_type: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -76,10 +75,12 @@ class AuthenticationApi(object):
         :rtype: OAuthToken
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the oauth_token_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.oauth_token_with_http_info(authorization, content_type, grant_type, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def oauth_token_with_http_info(self, authorization : Annotated[StrictStr, Field(..., description="Use Basic authentication to pass the Base64-encoded value of your developer account’s API key and secret. Encode the key and secret in the following format. Be sure to include the colon between the key and secret: <API_key>:<API_secret> Pass the encoded value using Basic authentication: Basic <encoded-value>")], content_type : Annotated[Optional[StrictStr], Field(description="This mentions the content type getting passed in body of request.")] = None, grant_type : Optional[StrictStr] = None, **kwargs):  # noqa: E501
+    def oauth_token_with_http_info(self, authorization : Annotated[StrictStr, Field(..., description="Use Basic authentication to pass the Base64-encoded value of your developer account’s API key and secret. Encode the key and secret in the following format. Be sure to include the colon between the key and secret: <API_key>:<API_secret> Pass the encoded value using Basic authentication: Basic <encoded-value>")], content_type : Annotated[Optional[StrictStr], Field(description="This mentions the content type getting passed in body of request.")] = None, grant_type : Optional[StrictStr] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """OAuth Authentication  # noqa: E501
 
         This API call generates the OAuth token based on the Base64-encoded value of the API key and secret associated with your PB Shipping APIs developer account. The token expires after 10 hours, after which you must create a new one.  # noqa: E501
@@ -97,13 +98,14 @@ class AuthenticationApi(object):
         :type grant_type: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of

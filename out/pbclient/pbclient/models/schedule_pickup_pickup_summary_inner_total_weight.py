@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -28,10 +27,11 @@ class SchedulePickupPickupSummaryInnerTotalWeight(BaseModel):
     SchedulePickupPickupSummaryInnerTotalWeight
     """
     unit_of_measurement: StrictStr = Field(..., alias="unitOfMeasurement")
-    weight: StrictStr = ...
+    weight: StrictStr = Field(...)
     __properties = ["unitOfMeasurement", "weight"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -62,7 +62,7 @@ class SchedulePickupPickupSummaryInnerTotalWeight(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return SchedulePickupPickupSummaryInnerTotalWeight.parse_obj(obj)
 
         _obj = SchedulePickupPickupSummaryInnerTotalWeight.parse_obj({

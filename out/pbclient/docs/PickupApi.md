@@ -19,12 +19,13 @@ This operation schedules a USPS package pickup from a residential or commercial 
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.cancel_pickup200_response import CancelPickup200Response
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -54,6 +55,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PickupApi->cancel_pickup: %s\n" % e)
 ```
+
 
 ### Parameters
 
@@ -94,12 +96,14 @@ This operation schedules a USPS package pickup from a residential or commercial 
 
 * OAuth Authentication (oAuth2ClientCredentials):
 ```python
-from __future__ import print_function
 import time
 import os
 import pbclient
+from pbclient.models.schedule_pickup import SchedulePickup
+from pbclient.models.schedule_pickup_response import SchedulePickupResponse
 from pbclient.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to https://api-sandbox.pitneybowes.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = pbclient.Configuration(
@@ -129,6 +133,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling PickupApi->get_pickupschedule: %s\n" % e)
 ```
+
 
 ### Parameters
 

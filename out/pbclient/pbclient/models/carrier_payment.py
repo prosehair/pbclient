@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -29,24 +28,27 @@ class CarrierPayment(BaseModel):
     """
     account_number: Optional[StrictStr] = Field(None, alias="accountNumber")
     country_code: Optional[StrictStr] = Field(None, alias="countryCode")
-    party: StrictStr = ...
+    party: StrictStr = Field(...)
     postal_code: Optional[StrictStr] = Field(None, alias="postalCode")
     type_of_charge: StrictStr = Field(..., alias="typeOfCharge")
     __properties = ["accountNumber", "countryCode", "party", "postalCode", "typeOfCharge"]
 
     @validator('party')
-    def party_validate_enum(cls, v):
-        if v not in ('BILL_RECEIVER', 'BILL_SENDER', 'BILL_THIRD_PARTY', 'BILL_RECEIVER_CONTRACT'):
+    def party_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('BILL_RECEIVER', 'BILL_SENDER', 'BILL_THIRD_PARTY', 'BILL_RECEIVER_CONTRACT'):
             raise ValueError("must be one of enum values ('BILL_RECEIVER', 'BILL_SENDER', 'BILL_THIRD_PARTY', 'BILL_RECEIVER_CONTRACT')")
-        return v
+        return value
 
     @validator('type_of_charge')
-    def type_of_charge_validate_enum(cls, v):
-        if v not in ('TRANSPORTATION_CHARGES', 'DUTIES_AND_TAXES', 'ALL_CHARGES'):
+    def type_of_charge_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in ('TRANSPORTATION_CHARGES', 'DUTIES_AND_TAXES', 'ALL_CHARGES'):
             raise ValueError("must be one of enum values ('TRANSPORTATION_CHARGES', 'DUTIES_AND_TAXES', 'ALL_CHARGES')")
-        return v
+        return value
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -77,7 +79,7 @@ class CarrierPayment(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return CarrierPayment.parse_obj(obj)
 
         _obj = CarrierPayment.parse_obj({

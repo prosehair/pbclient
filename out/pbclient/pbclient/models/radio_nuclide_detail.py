@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -36,6 +35,7 @@ class RadioNuclideDetail(BaseModel):
     __properties = ["chemicalForm", "expectedPackageReportableQuantity", "physicalForm", "radioNuclide", "radioNuclideActivityUOM", "radioNuclideActivityValue"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -66,7 +66,7 @@ class RadioNuclideDetail(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return RadioNuclideDetail.parse_obj(obj)
 
         _obj = RadioNuclideDetail.parse_obj({

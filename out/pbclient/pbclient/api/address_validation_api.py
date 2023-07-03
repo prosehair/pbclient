@@ -14,6 +14,8 @@
 
 
 import re  # noqa: F401
+import io
+import warnings
 
 from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
@@ -27,6 +29,7 @@ from pbclient.models.address_suggestion_response import AddressSuggestionRespons
 from pbclient.models.address_verify_suggest import AddressVerifySuggest
 
 from pbclient.api_client import ApiClient
+from pbclient.api_response import ApiResponse
 from pbclient.exceptions import (  # noqa: F401
     ApiTypeError,
     ApiValueError
@@ -64,10 +67,6 @@ class AddressValidationApi(object):
         :type minimal_address_validation: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -78,10 +77,12 @@ class AddressValidationApi(object):
         :rtype: Address
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the verify_address_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.verify_address_with_http_info(address, x_pb_unified_error_structure, minimal_address_validation, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def verify_address_with_http_info(self, address : Annotated[Address, Field(..., description="Address object that needs to be validated.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, minimal_address_validation : Annotated[Optional[StrictBool], Field(description="When set to true, the complete address (delivery line and last line) is validated but only the last line (city, state, and postal code) would be changed by the validation check.")] = None, **kwargs):  # noqa: E501
+    def verify_address_with_http_info(self, address : Annotated[Address, Field(..., description="Address object that needs to be validated.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, minimal_address_validation : Annotated[Optional[StrictBool], Field(description="When set to true, the complete address (delivery line and last line) is validated but only the last line (city, state, and postal code) would be changed by the validation check.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Address validation  # noqa: E501
 
         Address validation verifies and cleanses postal addresses within the United States to help ensure packages are rated accurately and shipments arrive at their final destinations on time.  # noqa: E501
@@ -99,13 +100,14 @@ class AddressValidationApi(object):
         :type minimal_address_validation: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -170,7 +172,7 @@ class AddressValidationApi(object):
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['address']:
+        if _params['address'] is not None:
             _body_params = _params['address']
 
         # set the HTTP header `Accept`
@@ -228,10 +230,6 @@ class AddressValidationApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
-        :type _preload_content: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -242,10 +240,12 @@ class AddressValidationApi(object):
         :rtype: AddressSuggestionResponse
         """
         kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            raise ValueError("Error! Please call the verify_and_suggest_address_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data")
         return self.verify_and_suggest_address_with_http_info(return_suggestions, address_verify_suggest, x_pb_unified_error_structure, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def verify_and_suggest_address_with_http_info(self, return_suggestions : Annotated[StrictStr, Field(..., description="To return suggested addresses, set this to true.")], address_verify_suggest : Annotated[AddressVerifySuggest, Field(..., description="Address object that needs to be validated.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def verify_and_suggest_address_with_http_info(self, return_suggestions : Annotated[StrictStr, Field(..., description="To return suggested addresses, set this to true.")], address_verify_suggest : Annotated[AddressVerifySuggest, Field(..., description="Address object that needs to be validated.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Address Suggestion  # noqa: E501
 
         This operation returns suggested addresses. Use this if the [Address Validation API](https://shipping.pitneybowes.com/api/post-address-verify.html) call has returned an error.  # noqa: E501
@@ -263,13 +263,14 @@ class AddressValidationApi(object):
         :type x_pb_unified_error_structure: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
-        :param _return_http_data_only: response data without head status code
-                                       and headers
-        :type _return_http_data_only: bool, optional
-        :param _preload_content: if False, the urllib3.HTTPResponse object will
-                                 be returned without reading/decoding response
-                                 data. Default is True.
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the 
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
         :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -334,7 +335,7 @@ class AddressValidationApi(object):
         _files = {}
         # process the body parameter
         _body_params = None
-        if _params['address_verify_suggest']:
+        if _params['address_verify_suggest'] is not None:
             _body_params = _params['address_verify_suggest']
 
         # set the HTTP header `Accept`

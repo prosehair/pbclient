@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -34,14 +33,17 @@ class RadioActiveParcelDimension(BaseModel):
     __properties = ["UOM", "height", "length", "width"]
 
     @validator('uom')
-    def uom_validate_enum(cls, v):
-        if v is None:
-            return v
-        if v not in ('CM', 'IN'):
+    def uom_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('CM', 'IN'):
             raise ValueError("must be one of enum values ('CM', 'IN')")
-        return v
+        return value
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -72,7 +74,7 @@ class RadioActiveParcelDimension(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return RadioActiveParcelDimension.parse_obj(obj)
 
         _obj = RadioActiveParcelDimension.parse_obj({

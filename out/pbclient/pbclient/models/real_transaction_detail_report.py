@@ -14,7 +14,6 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import pprint
 import re  # noqa: F401
 import json
@@ -81,6 +80,7 @@ class RealTransactionDetailReport(BaseModel):
     __properties = ["adjustmentReason", "creditCardFee", "customMessage1", "customMessage2", "description", "destinationAddress", "destinationCountry", "destinationZip", "developerId", "developerName", "developerPostagePaymentAccountBalance", "developerPostagePaymentMethod", "developerRateAmount", "developerRatePlan", "dimensionalWeightOz", "externalId", "internationalCountryPriceGroup", "labelFee", "mailClass", "merchantId", "merchantName", "merchantPostageAccountPaymentMethod", "merchantRate", "merchantRatePlan", "meterNumber", "originZip", "originationAddress", "packageHeightInInches", "packageLengthInInches", "packageType", "packageTypeIndicator", "packageWidthInInches", "parcelTrackingNumber", "postageDepositAmount", "printStatus", "references", "refundDenialReason", "refundRequestor", "refundStatus", "shipmentId", "shipperPostagePaymentAccountBalance", "specialServices", "status", "transactionDateTime", "transactionId", "transactionType", "valueOfGoods", "weightInOunces", "zone"]
 
     class Config:
+        """Pydantic configuration"""
         allow_population_by_field_name = True
         validate_assignment = True
 
@@ -125,7 +125,7 @@ class RealTransactionDetailReport(BaseModel):
         if obj is None:
             return None
 
-        if type(obj) is not dict:
+        if not isinstance(obj, dict):
             return RealTransactionDetailReport.parse_obj(obj)
 
         _obj = RealTransactionDetailReport.parse_obj({
