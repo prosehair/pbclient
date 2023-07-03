@@ -1319,7 +1319,7 @@ paths:
         - name: carrier
           in: query
           description: carrier
-          required: true
+          required: false
           schema:
             $ref: '#/components/schemas/Carrier'
       responses:

@@ -200,23 +200,23 @@ class TrackingApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_tracking_details(self, tracking_number : Annotated[StrictStr, Field(..., description="The tracking number for the shipment.")], package_identifier_type : Annotated[StrictStr, Field(..., description="packageIdentifierType")], carrier : Annotated[Carrier, Field(..., description="carrier")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> TrackingResponse:  # noqa: E501
+    def get_tracking_details(self, tracking_number : Annotated[StrictStr, Field(..., description="The tracking number for the shipment.")], package_identifier_type : Annotated[StrictStr, Field(..., description="packageIdentifierType")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="carrier")] = None, **kwargs) -> TrackingResponse:  # noqa: E501
         """getTrackingDetails  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_tracking_details(tracking_number, package_identifier_type, carrier, x_pb_unified_error_structure, async_req=True)
+        >>> thread = api.get_tracking_details(tracking_number, package_identifier_type, x_pb_unified_error_structure, carrier, async_req=True)
         >>> result = thread.get()
 
         :param tracking_number: The tracking number for the shipment. (required)
         :type tracking_number: str
         :param package_identifier_type: packageIdentifierType (required)
         :type package_identifier_type: str
-        :param carrier: carrier (required)
-        :type carrier: Carrier
         :param x_pb_unified_error_structure: Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.
         :type x_pb_unified_error_structure: bool
+        :param carrier: carrier
+        :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the urllib3.HTTPResponse object will
@@ -233,26 +233,26 @@ class TrackingApi(object):
         :rtype: TrackingResponse
         """
         kwargs['_return_http_data_only'] = True
-        return self.get_tracking_details_with_http_info(tracking_number, package_identifier_type, carrier, x_pb_unified_error_structure, **kwargs)  # noqa: E501
+        return self.get_tracking_details_with_http_info(tracking_number, package_identifier_type, x_pb_unified_error_structure, carrier, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_tracking_details_with_http_info(self, tracking_number : Annotated[StrictStr, Field(..., description="The tracking number for the shipment.")], package_identifier_type : Annotated[StrictStr, Field(..., description="packageIdentifierType")], carrier : Annotated[Carrier, Field(..., description="carrier")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs):  # noqa: E501
+    def get_tracking_details_with_http_info(self, tracking_number : Annotated[StrictStr, Field(..., description="The tracking number for the shipment.")], package_identifier_type : Annotated[StrictStr, Field(..., description="packageIdentifierType")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, carrier : Annotated[Optional[Carrier], Field(description="carrier")] = None, **kwargs):  # noqa: E501
         """getTrackingDetails  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.get_tracking_details_with_http_info(tracking_number, package_identifier_type, carrier, x_pb_unified_error_structure, async_req=True)
+        >>> thread = api.get_tracking_details_with_http_info(tracking_number, package_identifier_type, x_pb_unified_error_structure, carrier, async_req=True)
         >>> result = thread.get()
 
         :param tracking_number: The tracking number for the shipment. (required)
         :type tracking_number: str
         :param package_identifier_type: packageIdentifierType (required)
         :type package_identifier_type: str
-        :param carrier: carrier (required)
-        :type carrier: Carrier
         :param x_pb_unified_error_structure: Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.
         :type x_pb_unified_error_structure: bool
+        :param carrier: carrier
+        :type carrier: Carrier
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _return_http_data_only: response data without head status code
@@ -282,8 +282,8 @@ class TrackingApi(object):
         _all_params = [
             'tracking_number',
             'package_identifier_type',
-            'carrier',
-            'x_pb_unified_error_structure'
+            'x_pb_unified_error_structure',
+            'carrier'
         ]
         _all_params.extend(
             [

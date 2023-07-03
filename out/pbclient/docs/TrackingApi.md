@@ -81,7 +81,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_tracking_details**
-> TrackingResponse get_tracking_details(tracking_number, package_identifier_type, carrier, x_pb_unified_error_structure=x_pb_unified_error_structure)
+> TrackingResponse get_tracking_details(tracking_number, package_identifier_type, x_pb_unified_error_structure=x_pb_unified_error_structure, carrier=carrier)
 
 getTrackingDetails
 
@@ -114,12 +114,12 @@ with pbclient.ApiClient(configuration) as api_client:
     api_instance = pbclient.TrackingApi(api_client)
     tracking_number = 'tracking_number_example' # str | The tracking number for the shipment.
     package_identifier_type = 'TrackingNumber' # str | packageIdentifierType (default to 'TrackingNumber')
-    carrier = pbclient.Carrier() # Carrier | carrier
     x_pb_unified_error_structure = True # bool | Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs. (optional) (default to True)
+    carrier = pbclient.Carrier() # Carrier | carrier (optional)
 
     try:
         # getTrackingDetails
-        api_response = api_instance.get_tracking_details(tracking_number, package_identifier_type, carrier, x_pb_unified_error_structure=x_pb_unified_error_structure)
+        api_response = api_instance.get_tracking_details(tracking_number, package_identifier_type, x_pb_unified_error_structure=x_pb_unified_error_structure, carrier=carrier)
         print("The response of TrackingApi->get_tracking_details:\n")
         pprint(api_response)
     except Exception as e:
@@ -132,8 +132,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tracking_number** | **str**| The tracking number for the shipment. | 
  **package_identifier_type** | **str**| packageIdentifierType | [default to &#39;TrackingNumber&#39;]
- **carrier** | [**Carrier**](.md)| carrier | 
  **x_pb_unified_error_structure** | **bool**| Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs. | [optional] [default to True]
+ **carrier** | [**Carrier**](.md)| carrier | [optional] 
 
 ### Return type
 
