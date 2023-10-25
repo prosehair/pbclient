@@ -8,6 +8,9 @@ generate:  ## Generate python library from the OpenAPI specification
 	docker run --rm -v $(PWD):/local openapitools/openapi-generator-cli generate -i /local/ShippingAPI_OAS.yaml -g python -o /local/out/pbclient --package-name pbclient
 	docker run --rm -v $(PWD):/local openapitools/openapi-generator-cli chown -R $(UID):$(GID) /local/out/pbclient
 
+validate:
+	docker run --rm -v $(PWD):/local openapitools/openapi-generator-cli validate -i /local/ShippingAPI_OAS.yaml
+
 help:  ## Show this help.
 	@grep -E "^[^._][a-zA-Z_-]*:" Makefile | awk -F '[:#]' '{print $$1, ":", $$NF}' | sort | column -t -s:
 
