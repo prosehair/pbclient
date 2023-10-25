@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **quantity** | **int** |  | 
 **unit_price** | **float** |  | 
 **unit_weight** | [**ParcelWeight**](ParcelWeight.md) |  | [optional] 
-**url** | **str** |  | 
+**url** | **str** |  | [optional] 
 
 ## Example
 

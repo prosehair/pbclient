@@ -39,7 +39,7 @@ class CustomsItem(BaseModel):
     quantity: StrictInt = Field(...)
     unit_price: Union[StrictFloat, StrictInt] = Field(..., alias="unitPrice")
     unit_weight: Optional[ParcelWeight] = Field(None, alias="unitWeight")
-    url: StrictStr = Field(...)
+    url: Optional[StrictStr] = None
     __properties = ["description", "hazmat", "hSTariffCode", "hSTariffCodeCountry", "itemDimension", "itemId", "manufacturer", "originCountryCode", "quantity", "unitPrice", "unitWeight", "url"]
 
     class Config:

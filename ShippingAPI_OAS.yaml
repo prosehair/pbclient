@@ -3426,7 +3426,6 @@ components:
         - itemId
         - quantity
         - unitPrice
-        - url
       properties:
         description:
           type: string
