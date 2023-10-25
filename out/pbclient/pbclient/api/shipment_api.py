@@ -416,6 +416,7 @@ class ShipmentApi(object):
         _auth_settings = ['oAuth2ClientCredentials']  # noqa: E501
 
         _response_types_map = {
+            '200': "Shipment",
             '201': "Shipment",
         }
 

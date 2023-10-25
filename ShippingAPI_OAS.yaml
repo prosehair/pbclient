@@ -665,6 +665,12 @@ paths:
                 - name: SHIPPING_LABEL_RECEIPT
                   value: NO_OPTIONS
       responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
         '201':
           description: OK
           content:
