@@ -81,6 +81,7 @@ from pbclient.models.error import Error
 from pbclient.models.errors import Errors
 from pbclient.models.event_object import EventObject
 from pbclient.models.get_carrier_license_agreement200_response import GetCarrierLicenseAgreement200Response
+from pbclient.models.get_carrier_supported_destination200_response_inner import GetCarrierSupportedDestination200ResponseInner
 from pbclient.models.hazmat_details import HazmatDetails
 from pbclient.models.iso_country_code import ISOCountryCode
 from pbclient.models.infectious_substance_contact import InfectiousSubstanceContact

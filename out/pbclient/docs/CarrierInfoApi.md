@@ -261,7 +261,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_carrier_supported_destination**
-> List[object] get_carrier_supported_destination(carrier, origin_country_code, x_pb_unified_error_structure=x_pb_unified_error_structure)
+> List[GetCarrierSupportedDestination200ResponseInner] get_carrier_supported_destination(carrier, origin_country_code, x_pb_unified_error_structure=x_pb_unified_error_structure)
 
 This operation returns a list of supported destination countries to which the carrier offers international shipping services.
 
@@ -273,8 +273,8 @@ import time
 import os
 import pbclient
 from pbclient.models.carrier import Carrier
+from pbclient.models.get_carrier_supported_destination200_response_inner import GetCarrierSupportedDestination200ResponseInner
 from pbclient.models.iso_country_code import ISOCountryCode
-from pbclient.models.list[object] import List[object]
 from pbclient.rest import ApiException
 from pprint import pprint
 
@@ -320,7 +320,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**List[object]**
+[**List[GetCarrierSupportedDestination200ResponseInner]**](GetCarrierSupportedDestination200ResponseInner.md)
 
 ### Authorization
 

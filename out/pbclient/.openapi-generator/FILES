@@ -74,6 +74,7 @@ docs/Error.md
 docs/Errors.md
 docs/EventObject.md
 docs/GetCarrierLicenseAgreement200Response.md
+docs/GetCarrierSupportedDestination200ResponseInner.md
 docs/HazmatDetails.md
 docs/ISOCountryCode.md
 docs/InfectiousSubstanceContact.md
@@ -234,6 +235,7 @@ pbclient/models/error.py
 pbclient/models/errors.py
 pbclient/models/event_object.py
 pbclient/models/get_carrier_license_agreement200_response.py
+pbclient/models/get_carrier_supported_destination200_response_inner.py
 pbclient/models/hazmat_details.py
 pbclient/models/infectious_substance_contact.py
 pbclient/models/iso_country_code.py

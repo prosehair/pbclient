@@ -24,15 +24,15 @@ from datetime import datetime
 
 from pydantic import Field, StrictBool, StrictStr
 
-from typing import Optional
+from typing import List, Optional
 
 from pbclient.models.carrier import Carrier
 from pbclient.models.carrier_facility_request import CarrierFacilityRequest
 from pbclient.models.carrier_facility_response import CarrierFacilityResponse
 from pbclient.models.carrier_rule import CarrierRule
 from pbclient.models.get_carrier_license_agreement200_response import GetCarrierLicenseAgreement200Response
+from pbclient.models.get_carrier_supported_destination200_response_inner import GetCarrierSupportedDestination200ResponseInner
 from pbclient.models.iso_country_code import ISOCountryCode
-from pbclient.models.list[object] import List[object]
 
 from pbclient.api_client import ApiClient
 from pbclient.api_response import ApiResponse
@@ -562,7 +562,7 @@ class CarrierInfoApi(object):
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_carrier_supported_destination(self, carrier : Annotated[Carrier, Field(..., description="The carrier name. Currently this must be set to: USPS")], origin_country_code : Annotated[ISOCountryCode, Field(..., description="The two-character ISO country code for the country where the shipment originates.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> List[object]:  # noqa: E501
+    def get_carrier_supported_destination(self, carrier : Annotated[Carrier, Field(..., description="The carrier name. Currently this must be set to: USPS")], origin_country_code : Annotated[ISOCountryCode, Field(..., description="The two-character ISO country code for the country where the shipment originates.")], x_pb_unified_error_structure : Annotated[Optional[StrictBool], Field(description="Set this to true to use the standard [error object](https://shipping.pitneybowes.com/reference/error-object.html#standard-error-object) if an error occurs.")] = None, **kwargs) -> List[GetCarrierSupportedDestination200ResponseInner]:  # noqa: E501
         """This operation returns a list of supported destination countries to which the carrier offers international shipping services.  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -586,7 +586,7 @@ class CarrierInfoApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: List[object]
+        :rtype: List[GetCarrierSupportedDestination200ResponseInner]
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
@@ -631,7 +631,7 @@ class CarrierInfoApi(object):
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(List[object], status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(List[GetCarrierSupportedDestination200ResponseInner], status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -694,7 +694,7 @@ class CarrierInfoApi(object):
         _auth_settings = ['oAuth2ClientCredentials']  # noqa: E501
 
         _response_types_map = {
-            '200': "List[object]",
+            '200': "List[GetCarrierSupportedDestination200ResponseInner]",
         }
 
         return self.api_client.call_api(

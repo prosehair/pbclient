@@ -190,6 +190,7 @@ Class | Method | HTTP request | Description
  - [Errors](docs/Errors.md)
  - [EventObject](docs/EventObject.md)
  - [GetCarrierLicenseAgreement200Response](docs/GetCarrierLicenseAgreement200Response.md)
+ - [GetCarrierSupportedDestination200ResponseInner](docs/GetCarrierSupportedDestination200ResponseInner.md)
  - [HazmatDetails](docs/HazmatDetails.md)
  - [ISOCountryCode](docs/ISOCountryCode.md)
  - [InfectiousSubstanceContact](docs/InfectiousSubstanceContact.md)

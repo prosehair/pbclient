@@ -373,11 +373,11 @@ paths:
                 type: array
                 items:
                   type: object
-                properties:
-                  countryCode:
-                    type: string
-                  countryName:
-                    type: string
+                  properties:
+                    countryCode:
+                      type: string
+                    countryName:
+                      type: string
               example:
                 - countryCode: AC
                   countryName: Ascension
