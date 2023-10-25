@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_shipment_label**
-> Shipment create_shipment_label(x_pb_transaction_id, shipment, x_pb_unified_error_structure=x_pb_unified_error_structure, x_pb_integrator_carrier_id=x_pb_integrator_carrier_id, x_pb_shipper_rate_plan=x_pb_shipper_rate_plan, x_pb_shipment_group_id=x_pb_shipment_group_id, x_pb_shipper_carrier_account_id=x_pb_shipper_carrier_account_id, include_delivery_commitment=include_delivery_commitment)
+> Shipment create_shipment_label(x_pb_transaction_id, shipment, x_pb_unified_error_structure=x_pb_unified_error_structure, x_pb_integrator_carrier_id=x_pb_integrator_carrier_id, x_pb_shipper_rate_plan=x_pb_shipper_rate_plan, x_pb_shipment_group_id=x_pb_shipment_group_id, x_pb_shipper_carrier_account_id=x_pb_shipper_carrier_account_id, include_delivery_commitment=include_delivery_commitment, carrier=carrier)
 
 This operation creates a shipment and purchases a shipment label.
 
@@ -138,10 +138,11 @@ with pbclient.ApiClient(configuration) as api_client:
     x_pb_shipment_group_id = 'x_pb_shipment_group_id_example' # str |  **[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**.The job number that represents the agreement between the merchant and PB Presort. This was provided by Pitney Bowes during [merchant onboarding for PB Presort](https://shipping.pitneybowes.com/carriers/pb-presort.html). (optional)
     x_pb_shipper_carrier_account_id = 'x_pb_shipper_carrier_account_id_example' # str | **[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**. The merchant's Mailer ID (MID), as provided by Pitney Bowes during merchant onboarding for PB Presort. (optional)
     include_delivery_commitment = 'include_delivery_commitment_example' # str | If set to true, returns estimated transit times in days. Only for USPS Create Shipment. See also [Pitney Bowes Delivery Guarantee](https://shipping.pitneybowes.com/faqs/delivery-guarantee.html) [Do all USPS services return transit times?](https://shipping.pitneybowes.com/faqs/shipments.html#transit-times-faq) (optional)
+    carrier = 'carrier_example' # str | Cross-Border only. Required for PB Cross-Border. Set this to PBI. (optional)
 
     try:
         # This operation creates a shipment and purchases a shipment label.
-        api_response = api_instance.create_shipment_label(x_pb_transaction_id, shipment, x_pb_unified_error_structure=x_pb_unified_error_structure, x_pb_integrator_carrier_id=x_pb_integrator_carrier_id, x_pb_shipper_rate_plan=x_pb_shipper_rate_plan, x_pb_shipment_group_id=x_pb_shipment_group_id, x_pb_shipper_carrier_account_id=x_pb_shipper_carrier_account_id, include_delivery_commitment=include_delivery_commitment)
+        api_response = api_instance.create_shipment_label(x_pb_transaction_id, shipment, x_pb_unified_error_structure=x_pb_unified_error_structure, x_pb_integrator_carrier_id=x_pb_integrator_carrier_id, x_pb_shipper_rate_plan=x_pb_shipper_rate_plan, x_pb_shipment_group_id=x_pb_shipment_group_id, x_pb_shipper_carrier_account_id=x_pb_shipper_carrier_account_id, include_delivery_commitment=include_delivery_commitment, carrier=carrier)
         print("The response of ShipmentApi->create_shipment_label:\n")
         pprint(api_response)
     except Exception as e:
@@ -162,6 +163,7 @@ Name | Type | Description  | Notes
  **x_pb_shipment_group_id** | **str**|  **[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**.The job number that represents the agreement between the merchant and PB Presort. This was provided by Pitney Bowes during [merchant onboarding for PB Presort](https://shipping.pitneybowes.com/carriers/pb-presort.html). | [optional] 
  **x_pb_shipper_carrier_account_id** | **str**| **[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**. The merchant&#39;s Mailer ID (MID), as provided by Pitney Bowes during merchant onboarding for PB Presort. | [optional] 
  **include_delivery_commitment** | **str**| If set to true, returns estimated transit times in days. Only for USPS Create Shipment. See also [Pitney Bowes Delivery Guarantee](https://shipping.pitneybowes.com/faqs/delivery-guarantee.html) [Do all USPS services return transit times?](https://shipping.pitneybowes.com/faqs/shipments.html#transit-times-faq) | [optional] 
+ **carrier** | **str**| Cross-Border only. Required for PB Cross-Border. Set this to PBI. | [optional] 
 
 ### Return type
 

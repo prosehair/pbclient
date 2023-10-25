@@ -267,6 +267,7 @@ class ShipmentApi:
         x_pb_shipment_group_id: Annotated[Optional[StrictStr], Field(description=" **[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**.The job number that represents the agreement between the merchant and PB Presort. This was provided by Pitney Bowes during [merchant onboarding for PB Presort](https://shipping.pitneybowes.com/carriers/pb-presort.html).")] = None,
         x_pb_shipper_carrier_account_id: Annotated[Optional[StrictStr], Field(description="**[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**. The merchant's Mailer ID (MID), as provided by Pitney Bowes during merchant onboarding for PB Presort.")] = None,
         include_delivery_commitment: Annotated[Optional[StrictStr], Field(description="If set to true, returns estimated transit times in days. Only for USPS Create Shipment. See also [Pitney Bowes Delivery Guarantee](https://shipping.pitneybowes.com/faqs/delivery-guarantee.html) [Do all USPS services return transit times?](https://shipping.pitneybowes.com/faqs/shipments.html#transit-times-faq)")] = None,
+        carrier: Annotated[Optional[StrictStr], Field(description="Cross-Border only. Required for PB Cross-Border. Set this to PBI.")] = None,
         **kwargs,
     ) -> Shipment:
         """This operation creates a shipment and purchases a shipment label.  # noqa: E501
@@ -275,7 +276,7 @@ class ShipmentApi:
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_shipment_label(x_pb_transaction_id, shipment, x_pb_unified_error_structure, x_pb_integrator_carrier_id, x_pb_shipper_rate_plan, x_pb_shipment_group_id, x_pb_shipper_carrier_account_id, include_delivery_commitment, async_req=True)
+        >>> thread = api.create_shipment_label(x_pb_transaction_id, shipment, x_pb_unified_error_structure, x_pb_integrator_carrier_id, x_pb_shipper_rate_plan, x_pb_shipment_group_id, x_pb_shipper_carrier_account_id, include_delivery_commitment, carrier, async_req=True)
         >>> result = thread.get()
 
         :param x_pb_transaction_id: Required. A unique identifier for the transaction, up to 25 characters. (required)
@@ -294,6 +295,8 @@ class ShipmentApi:
         :type x_pb_shipper_carrier_account_id: str
         :param include_delivery_commitment: If set to true, returns estimated transit times in days. Only for USPS Create Shipment. See also [Pitney Bowes Delivery Guarantee](https://shipping.pitneybowes.com/faqs/delivery-guarantee.html) [Do all USPS services return transit times?](https://shipping.pitneybowes.com/faqs/shipments.html#transit-times-faq)
         :type include_delivery_commitment: str
+        :param carrier: Cross-Border only. Required for PB Cross-Border. Set this to PBI.
+        :type carrier: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -319,6 +322,7 @@ class ShipmentApi:
             x_pb_shipment_group_id,
             x_pb_shipper_carrier_account_id,
             include_delivery_commitment,
+            carrier,
             **kwargs,
         )
 
@@ -333,6 +337,7 @@ class ShipmentApi:
         x_pb_shipment_group_id: Annotated[Optional[StrictStr], Field(description=" **[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**.The job number that represents the agreement between the merchant and PB Presort. This was provided by Pitney Bowes during [merchant onboarding for PB Presort](https://shipping.pitneybowes.com/carriers/pb-presort.html).")] = None,
         x_pb_shipper_carrier_account_id: Annotated[Optional[StrictStr], Field(description="**[Required parameter for PBPresort service](https://shipping.pitneybowes.com/api/post-shipments-presort.html)**. The merchant's Mailer ID (MID), as provided by Pitney Bowes during merchant onboarding for PB Presort.")] = None,
         include_delivery_commitment: Annotated[Optional[StrictStr], Field(description="If set to true, returns estimated transit times in days. Only for USPS Create Shipment. See also [Pitney Bowes Delivery Guarantee](https://shipping.pitneybowes.com/faqs/delivery-guarantee.html) [Do all USPS services return transit times?](https://shipping.pitneybowes.com/faqs/shipments.html#transit-times-faq)")] = None,
+        carrier: Annotated[Optional[StrictStr], Field(description="Cross-Border only. Required for PB Cross-Border. Set this to PBI.")] = None,
         **kwargs,
     ) -> ApiResponse:
         """This operation creates a shipment and purchases a shipment label.  # noqa: E501
@@ -341,7 +346,7 @@ class ShipmentApi:
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.create_shipment_label_with_http_info(x_pb_transaction_id, shipment, x_pb_unified_error_structure, x_pb_integrator_carrier_id, x_pb_shipper_rate_plan, x_pb_shipment_group_id, x_pb_shipper_carrier_account_id, include_delivery_commitment, async_req=True)
+        >>> thread = api.create_shipment_label_with_http_info(x_pb_transaction_id, shipment, x_pb_unified_error_structure, x_pb_integrator_carrier_id, x_pb_shipper_rate_plan, x_pb_shipment_group_id, x_pb_shipper_carrier_account_id, include_delivery_commitment, carrier, async_req=True)
         >>> result = thread.get()
 
         :param x_pb_transaction_id: Required. A unique identifier for the transaction, up to 25 characters. (required)
@@ -360,6 +365,8 @@ class ShipmentApi:
         :type x_pb_shipper_carrier_account_id: str
         :param include_delivery_commitment: If set to true, returns estimated transit times in days. Only for USPS Create Shipment. See also [Pitney Bowes Delivery Guarantee](https://shipping.pitneybowes.com/faqs/delivery-guarantee.html) [Do all USPS services return transit times?](https://shipping.pitneybowes.com/faqs/shipments.html#transit-times-faq)
         :type include_delivery_commitment: str
+        :param carrier: Cross-Border only. Required for PB Cross-Border. Set this to PBI.
+        :type carrier: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -395,7 +402,8 @@ class ShipmentApi:
             'x_pb_shipper_rate_plan',
             'x_pb_shipment_group_id',
             'x_pb_shipper_carrier_account_id',
-            'include_delivery_commitment'
+            'include_delivery_commitment',
+            'carrier'
         ]
         _all_params.extend(
             [
@@ -428,6 +436,9 @@ class ShipmentApi:
         _query_params: List[Tuple[str, str]] = []
         if _params.get('include_delivery_commitment') is not None:  # noqa: E501
             _query_params.append(('includeDeliveryCommitment', _params['include_delivery_commitment']))
+
+        if _params.get('carrier') is not None:  # noqa: E501
+            _query_params.append(('carrier', _params['carrier']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))

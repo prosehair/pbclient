@@ -589,6 +589,12 @@ paths:
           required: false
           schema:
             type: string
+        - in: query
+          name: carrier
+          schema:
+            type: string
+          required: false
+          description: Cross-Border only. Required for PB Cross-Border. Set this to PBI.
       requestBody:
         description: request
         required: true
