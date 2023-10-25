@@ -22,14 +22,13 @@ import json
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
-class SearchCriteria(BaseModel):
+class GetCarrierSupportedDestination200ResponseInner(BaseModel):
     """
-    SearchCriteria
+    GetCarrierSupportedDestination200ResponseInner
     """
-    developer_id: Optional[StrictStr] = Field(None, alias="developerId")
-    from_date: Optional[StrictStr] = Field(None, alias="fromDate")
-    to_date: Optional[StrictStr] = Field(None, alias="toDate")
-    __properties = ["developerId", "fromDate", "toDate"]
+    country_code: Optional[StrictStr] = Field(None, alias="countryCode")
+    country_name: Optional[StrictStr] = Field(None, alias="countryName")
+    __properties = ["countryCode", "countryName"]
 
     class Config:
         """Pydantic configuration"""
@@ -45,8 +44,8 @@ class SearchCriteria(BaseModel):
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> SearchCriteria:
-        """Create an instance of SearchCriteria from a JSON string"""
+    def from_json(cls, json_str: str) -> GetCarrierSupportedDestination200ResponseInner:
+        """Create an instance of GetCarrierSupportedDestination200ResponseInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self):
@@ -58,18 +57,17 @@ class SearchCriteria(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> SearchCriteria:
-        """Create an instance of SearchCriteria from a dict"""
+    def from_dict(cls, obj: dict) -> GetCarrierSupportedDestination200ResponseInner:
+        """Create an instance of GetCarrierSupportedDestination200ResponseInner from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return SearchCriteria.parse_obj(obj)
+            return GetCarrierSupportedDestination200ResponseInner.parse_obj(obj)
 
-        _obj = SearchCriteria.parse_obj({
-            "developer_id": obj.get("developerId"),
-            "from_date": obj.get("fromDate"),
-            "to_date": obj.get("toDate")
+        _obj = GetCarrierSupportedDestination200ResponseInner.parse_obj({
+            "country_code": obj.get("countryCode"),
+            "country_name": obj.get("countryName")
         })
         return _obj
 
