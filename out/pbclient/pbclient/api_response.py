@@ -18,7 +18,7 @@ class ApiResponse:
                  status_code=None,
                  headers=None,
                  data=None,
-                 raw_data=None) -> None:
+                 raw_data=None):
         self.status_code = status_code
         self.headers = headers
         self.data = data
