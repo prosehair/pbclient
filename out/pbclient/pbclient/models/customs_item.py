@@ -19,10 +19,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional, Union
-from pydantic import BaseModel, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import List, Optional, Union
+from pydantic import BaseModel, StrictFloat, StrictInt, StrictStr
 from pydantic import Field
-from pbclient.models.address import Address
+from pbclient.models.parcel_dimension import ParcelDimension
 from pbclient.models.parcel_weight import ParcelWeight
 from typing import Dict, Any
 try:
@@ -35,49 +35,18 @@ class CustomsItem(BaseModel):
     CustomsItem
     """
     description: StrictStr
+    hazmat: Optional[List[StrictStr]] = None
     h_s_tariff_code: Optional[StrictStr] = Field(default=None, alias="hSTariffCode")
-    net_cost_method: Optional[StrictStr] = Field(default=None, alias="netCostMethod")
-    origin_country_code: StrictStr = Field(alias="originCountryCode")
-    origin_state_province: Optional[StrictStr] = Field(default=None, alias="originStateProvince")
-    preference_criterion: Optional[StrictStr] = Field(default=None, alias="preferenceCriterion")
-    producer_address: Optional[Address] = Field(default=None, alias="producerAddress")
-    producer_determination: Optional[StrictStr] = Field(default=None, alias="producerDetermination")
-    producer_id: Optional[StrictStr] = Field(default=None, alias="producerId")
+    h_s_tariff_code_country: Optional[StrictStr] = Field(default=None, alias="hSTariffCodeCountry")
+    item_dimension: Optional[ParcelDimension] = Field(default=None, alias="itemDimension")
+    item_id: StrictStr = Field(alias="itemId")
+    manufacturer: Optional[StrictStr] = None
+    origin_country_code: Optional[StrictStr] = Field(default=None, alias="originCountryCode")
     quantity: StrictInt
-    quantity_uom: Optional[StrictStr] = Field(default=None, alias="quantityUOM")
     unit_price: Union[StrictFloat, StrictInt] = Field(alias="unitPrice")
-    unit_weight: ParcelWeight = Field(alias="unitWeight")
-    __properties: ClassVar[List[str]] = ["description", "hSTariffCode", "netCostMethod", "originCountryCode", "originStateProvince", "preferenceCriterion", "producerAddress", "producerDetermination", "producerId", "quantity", "quantityUOM", "unitPrice", "unitWeight"]
-
-    @field_validator('net_cost_method')
-    def net_cost_method_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in ('NO_NET_COST', 'NET_COST'):
-            raise ValueError("must be one of enum values ('NO_NET_COST', 'NET_COST')")
-        return value
-
-    @field_validator('preference_criterion')
-    def preference_criterion_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in ('A', 'B', 'C', 'D', 'E', 'F'):
-            raise ValueError("must be one of enum values ('A', 'B', 'C', 'D', 'E', 'F')")
-        return value
-
-    @field_validator('producer_determination')
-    def producer_determination_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in ('NO_1', 'NO_2', 'NO_3', 'PD_YES'):
-            raise ValueError("must be one of enum values ('NO_1', 'NO_2', 'NO_3', 'PD_YES')")
-        return value
+    unit_weight: Optional[ParcelWeight] = Field(default=None, alias="unitWeight")
+    url: StrictStr
+    __properties: ClassVar[List[str]] = ["description", "hazmat", "hSTariffCode", "hSTariffCodeCountry", "itemDimension", "itemId", "manufacturer", "originCountryCode", "quantity", "unitPrice", "unitWeight", "url"]
 
     model_config = {
         "populate_by_name": True,
@@ -115,9 +84,9 @@ class CustomsItem(BaseModel):
             },
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of producer_address
-        if self.producer_address:
-            _dict['producerAddress'] = self.producer_address.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of item_dimension
+        if self.item_dimension:
+            _dict['itemDimension'] = self.item_dimension.to_dict()
         # override the default output from pydantic by calling `to_dict()` of unit_weight
         if self.unit_weight:
             _dict['unitWeight'] = self.unit_weight.to_dict()
@@ -134,18 +103,17 @@ class CustomsItem(BaseModel):
 
         _obj = cls.model_validate({
             "description": obj.get("description"),
+            "hazmat": obj.get("hazmat"),
             "hSTariffCode": obj.get("hSTariffCode"),
-            "netCostMethod": obj.get("netCostMethod"),
+            "hSTariffCodeCountry": obj.get("hSTariffCodeCountry"),
+            "itemDimension": ParcelDimension.from_dict(obj.get("itemDimension")) if obj.get("itemDimension") is not None else None,
+            "itemId": obj.get("itemId"),
+            "manufacturer": obj.get("manufacturer"),
             "originCountryCode": obj.get("originCountryCode"),
-            "originStateProvince": obj.get("originStateProvince"),
-            "preferenceCriterion": obj.get("preferenceCriterion"),
-            "producerAddress": Address.from_dict(obj.get("producerAddress")) if obj.get("producerAddress") is not None else None,
-            "producerDetermination": obj.get("producerDetermination"),
-            "producerId": obj.get("producerId"),
             "quantity": obj.get("quantity"),
-            "quantityUOM": obj.get("quantityUOM"),
             "unitPrice": obj.get("unitPrice"),
-            "unitWeight": ParcelWeight.from_dict(obj.get("unitWeight")) if obj.get("unitWeight") is not None else None
+            "unitWeight": ParcelWeight.from_dict(obj.get("unitWeight")) if obj.get("unitWeight") is not None else None,
+            "url": obj.get("url")
         })
         return _obj
 

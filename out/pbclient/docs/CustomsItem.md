@@ -5,18 +5,17 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **description** | **str** |  | 
+**hazmat** | **List[str]** |  | [optional] 
 **h_s_tariff_code** | **str** |  | [optional] 
-**net_cost_method** | **str** |  | [optional] 
-**origin_country_code** | **str** |  | 
-**origin_state_province** | **str** |  | [optional] 
-**preference_criterion** | **str** |  | [optional] 
-**producer_address** | [**Address**](Address.md) |  | [optional] 
-**producer_determination** | **str** |  | [optional] 
-**producer_id** | **str** |  | [optional] 
+**h_s_tariff_code_country** | **str** |  | [optional] 
+**item_dimension** | [**ParcelDimension**](ParcelDimension.md) |  | [optional] 
+**item_id** | **str** |  | 
+**manufacturer** | **str** |  | [optional] 
+**origin_country_code** | **str** |  | [optional] 
 **quantity** | **int** |  | 
-**quantity_uom** | **str** |  | [optional] 
 **unit_price** | **float** |  | 
-**unit_weight** | [**ParcelWeight**](ParcelWeight.md) |  | 
+**unit_weight** | [**ParcelWeight**](ParcelWeight.md) |  | [optional] 
+**url** | **str** |  | 
 
 ## Example
 

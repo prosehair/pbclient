@@ -3417,53 +3417,37 @@ components:
       type: object
       required:
         - description
-        - originCountryCode
+        - itemId
         - quantity
         - unitPrice
-        - unitWeight
+        - url
       properties:
         description:
           type: string
+        hazmat:
+          type: array
+          items:
+            type: string
         hSTariffCode:
           type: string
-        netCostMethod:
+        hSTariffCodeCountry:
           type: string
-          enum:
-            - NO_NET_COST
-            - NET_COST
+        itemDimension:
+          $ref: '#/components/schemas/ParcelDimension'
+        itemId:
+          type: string
+        manufacturer:
+          type: string
         originCountryCode:
-          type: string
-        originStateProvince:
-          type: string
-        preferenceCriterion:
-          type: string
-          enum:
-            - A
-            - B
-            - C
-            - D
-            - E
-            - F
-        producerAddress:
-          $ref: '#/components/schemas/Address'
-        producerDetermination:
-          type: string
-          enum:
-            - NO_1
-            - NO_2
-            - NO_3
-            - PD_YES
-        producerId:
           type: string
         quantity:
           type: integer
-          format: int32
-        quantityUOM:
-          type: string
         unitPrice:
           type: number
         unitWeight:
           $ref: '#/components/schemas/ParcelWeight'
+        url:
+          type: string
       title: CustomsItem
     AdditionalAddress:
       type: object
