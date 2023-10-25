@@ -57,6 +57,7 @@ with pbclient.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -133,6 +134,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CrossBorderQuotesApi->predicted_hs_code: %s\n" % e)
 ```
+
 
 
 ### Parameters

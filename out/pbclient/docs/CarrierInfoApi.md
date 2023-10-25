@@ -59,6 +59,7 @@ with pbclient.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -136,6 +137,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CarrierInfoApi->get_carrier_license_agreement: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -223,6 +225,7 @@ with pbclient.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -271,6 +274,7 @@ import os
 import pbclient
 from pbclient.models.carrier import Carrier
 from pbclient.models.iso_country_code import ISOCountryCode
+from pbclient.models.list[object] import List[object]
 from pbclient.rest import ApiException
 from pprint import pprint
 
@@ -303,6 +307,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling CarrierInfoApi->get_carrier_supported_destination: %s\n" % e)
 ```
+
 
 
 ### Parameters

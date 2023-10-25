@@ -61,6 +61,7 @@ with pbclient.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -141,6 +142,7 @@ with pbclient.ApiClient(configuration) as api_client:
 ```
 
 
+
 ### Parameters
 
 Name | Type | Description  | Notes
@@ -218,6 +220,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ParcelProtectionApi->get_parcel_protection_quote: %s\n" % e)
 ```
+
 
 
 ### Parameters
@@ -305,6 +308,7 @@ with pbclient.ApiClient(configuration) as api_client:
     except Exception as e:
         print("Exception when calling ParcelProtectionApi->get_parcel_protection_reports: %s\n" % e)
 ```
+
 
 
 ### Parameters
