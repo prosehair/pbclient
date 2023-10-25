@@ -33,7 +33,7 @@ class CustomsInfo(BaseModel):
     certificate_number: Optional[StrictStr] = Field(None, alias="certificateNumber")
     comments: Optional[StrictStr] = None
     currency_code: StrictStr = Field(..., alias="currencyCode", description="ISO-4217")
-    customs_declared_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="customsDeclaredValue")
+    customs_declared_value: Optional[StrictStr] = Field(None, alias="customsDeclaredValue")
     declaration_statement: Optional[StrictStr] = Field(None, alias="declarationStatement")
     freight_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="freightCharge")
     from_customs_reference: Optional[StrictStr] = Field(None, alias="fromCustomsReference")

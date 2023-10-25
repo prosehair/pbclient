@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **certificate_number** | **str** |  | [optional] 
 **comments** | **str** |  | [optional] 
 **currency_code** | **str** | ISO-4217 | 
-**customs_declared_value** | **float** |  | [optional] 
+**customs_declared_value** | **str** |  | [optional] 
 **declaration_statement** | **str** |  | [optional] 
 **freight_charge** | **float** |  | [optional] 
 **from_customs_reference** | **str** |  | [optional] 
