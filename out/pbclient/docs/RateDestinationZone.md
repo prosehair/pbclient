@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 
@@ -15,7 +16,7 @@ json = "{}"
 # create an instance of RateDestinationZone from a JSON string
 rate_destination_zone_instance = RateDestinationZone.from_json(json)
 # print the JSON string representation of the object
-print RateDestinationZone.to_json()
+print(RateDestinationZone.to_json())
 
 # convert the object into a dict
 rate_destination_zone_dict = rate_destination_zone_instance.to_dict()

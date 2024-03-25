@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **service_id** | [**Services**](Services.md) |  | [optional] 
@@ -19,7 +20,7 @@ json = "{}"
 # create an instance of CarrierRule from a JSON string
 carrier_rule_instance = CarrierRule.from_json(json)
 # print the JSON string representation of the object
-print CarrierRule.to_json()
+print(CarrierRule.to_json())
 
 # convert the object into a dict
 carrier_rule_dict = carrier_rule_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of Parameter from a JSON string
 parameter_instance = Parameter.from_json(json)
 # print the JSON string representation of the object
-print Parameter.to_json()
+print(Parameter.to_json())
 
 # convert the object into a dict
 parameter_dict = parameter_instance.to_dict()

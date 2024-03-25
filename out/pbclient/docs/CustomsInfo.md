@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **eelpfc** | **str** |  | [optional] 
@@ -42,7 +43,7 @@ json = "{}"
 # create an instance of CustomsInfo from a JSON string
 customs_info_instance = CustomsInfo.from_json(json)
 # print the JSON string representation of the object
-print CustomsInfo.to_json()
+print(CustomsInfo.to_json())
 
 # convert the object into a dict
 customs_info_dict = customs_info_instance.to_dict()

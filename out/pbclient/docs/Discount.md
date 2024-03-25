@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **discount_amount** | **float** |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of Discount from a JSON string
 discount_instance = Discount.from_json(json)
 # print the JSON string representation of the object
-print Discount.to_json()
+print(Discount.to_json())
 
 # convert the object into a dict
 discount_dict = discount_instance.to_dict()

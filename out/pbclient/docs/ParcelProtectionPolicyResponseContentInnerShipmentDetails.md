@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **shipment_date** | **str** |  | [optional] 
@@ -26,7 +27,7 @@ json = "{}"
 # create an instance of ParcelProtectionPolicyResponseContentInnerShipmentDetails from a JSON string
 parcel_protection_policy_response_content_inner_shipment_details_instance = ParcelProtectionPolicyResponseContentInnerShipmentDetails.from_json(json)
 # print the JSON string representation of the object
-print ParcelProtectionPolicyResponseContentInnerShipmentDetails.to_json()
+print(ParcelProtectionPolicyResponseContentInnerShipmentDetails.to_json())
 
 # convert the object into a dict
 parcel_protection_policy_response_content_inner_shipment_details_dict = parcel_protection_policy_response_content_inner_shipment_details_instance.to_dict()

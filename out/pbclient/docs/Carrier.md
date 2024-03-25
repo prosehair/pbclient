@@ -3,6 +3,7 @@
 USPS - US Postal Service | PBPRESORT - Pitney Powes Presort Services |   NEWGISTICS - Newgistics. 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

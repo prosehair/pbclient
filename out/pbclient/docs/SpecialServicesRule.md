@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **special_service_id** | [**SpecialServiceCodes**](SpecialServiceCodes.md) |  | [optional] 
@@ -23,7 +24,7 @@ json = "{}"
 # create an instance of SpecialServicesRule from a JSON string
 special_services_rule_instance = SpecialServicesRule.from_json(json)
 # print the JSON string representation of the object
-print SpecialServicesRule.to_json()
+print(SpecialServicesRule.to_json())
 
 # convert the object into a dict
 special_services_rule_dict = special_services_rule_instance.to_dict()

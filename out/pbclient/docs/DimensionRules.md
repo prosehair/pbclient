@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **required** | **bool** |  | [optional] 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of DimensionRules from a JSON string
 dimension_rules_instance = DimensionRules.from_json(json)
 # print the JSON string representation of the object
-print DimensionRules.to_json()
+print(DimensionRules.to_json())
 
 # convert the object into a dict
 dimension_rules_dict = dimension_rules_instance.to_dict()

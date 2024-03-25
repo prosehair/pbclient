@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **carrier** | [**Carrier**](Carrier.md) |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of AddTrackingEvents from a JSON string
 add_tracking_events_instance = AddTrackingEvents.from_json(json)
 # print the JSON string representation of the object
-print AddTrackingEvents.to_json()
+print(AddTrackingEvents.to_json())
 
 # convert the object into a dict
 add_tracking_events_dict = add_tracking_events_instance.to_dict()

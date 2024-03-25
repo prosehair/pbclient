@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of AddTrackingEvents200Response from a JSON string
 add_tracking_events200_response_instance = AddTrackingEvents200Response.from_json(json)
 # print the JSON string representation of the object
-print AddTrackingEvents200Response.to_json()
+print(AddTrackingEvents200Response.to_json())
 
 # convert the object into a dict
 add_tracking_events200_response_dict = add_tracking_events200_response_instance.to_dict()

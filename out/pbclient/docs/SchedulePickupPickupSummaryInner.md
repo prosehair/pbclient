@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **service_id** | **str** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of SchedulePickupPickupSummaryInner from a JSON string
 schedule_pickup_pickup_summary_inner_instance = SchedulePickupPickupSummaryInner.from_json(json)
 # print the JSON string representation of the object
-print SchedulePickupPickupSummaryInner.to_json()
+print(SchedulePickupPickupSummaryInner.to_json())
 
 # convert the object into a dict
 schedule_pickup_pickup_summary_inner_dict = schedule_pickup_pickup_summary_inner_instance.to_dict()

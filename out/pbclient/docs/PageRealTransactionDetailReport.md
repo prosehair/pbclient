@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **content** | [**List[RealTransactionDetailReport]**](RealTransactionDetailReport.md) |  | [optional] 
@@ -24,7 +25,7 @@ json = "{}"
 # create an instance of PageRealTransactionDetailReport from a JSON string
 page_real_transaction_detail_report_instance = PageRealTransactionDetailReport.from_json(json)
 # print the JSON string representation of the object
-print PageRealTransactionDetailReport.to_json()
+print(PageRealTransactionDetailReport.to_json())
 
 # convert the object into a dict
 page_real_transaction_detail_report_dict = page_real_transaction_detail_report_instance.to_dict()

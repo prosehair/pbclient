@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **company_name** | **str** |  | [optional] 
@@ -20,7 +21,7 @@ json = "{}"
 # create an instance of InfectiousSubstanceContact from a JSON string
 infectious_substance_contact_instance = InfectiousSubstanceContact.from_json(json)
 # print the JSON string representation of the object
-print InfectiousSubstanceContact.to_json()
+print(InfectiousSubstanceContact.to_json())
 
 # convert the object into a dict
 infectious_substance_contact_dict = infectious_substance_contact_instance.to_dict()

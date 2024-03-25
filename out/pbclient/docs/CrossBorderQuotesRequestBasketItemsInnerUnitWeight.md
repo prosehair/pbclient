@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **weight** | **int** |  | 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of CrossBorderQuotesRequestBasketItemsInnerUnitWeight from a JSON string
 cross_border_quotes_request_basket_items_inner_unit_weight_instance = CrossBorderQuotesRequestBasketItemsInnerUnitWeight.from_json(json)
 # print the JSON string representation of the object
-print CrossBorderQuotesRequestBasketItemsInnerUnitWeight.to_json()
+print(CrossBorderQuotesRequestBasketItemsInnerUnitWeight.to_json())
 
 # convert the object into a dict
 cross_border_quotes_request_basket_items_inner_unit_weight_dict = cross_border_quotes_request_basket_items_inner_unit_weight_instance.to_dict()

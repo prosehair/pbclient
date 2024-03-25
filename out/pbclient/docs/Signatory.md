@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of Signatory from a JSON string
 signatory_instance = Signatory.from_json(json)
 # print the JSON string representation of the object
-print Signatory.to_json()
+print(Signatory.to_json())
 
 # convert the object into a dict
 signatory_dict = signatory_instance.to_dict()

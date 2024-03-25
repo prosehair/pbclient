@@ -18,9 +18,8 @@ This operation schedules a USPS package pickup from a residential or commercial 
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.cancel_pickup200_response import CancelPickup200Response
 from pbclient.rest import ApiException
@@ -60,6 +59,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **x_pb_transaction_id** | **str**| A unique identifier for the transaction, up to 25 characters | 
@@ -80,6 +80,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
@@ -96,9 +97,8 @@ This operation schedules a USPS package pickup from a residential or commercial 
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.schedule_pickup import SchedulePickup
 from pbclient.models.schedule_pickup_response import SchedulePickupResponse
@@ -139,6 +139,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **x_pb_transaction_id** | **str**| A unique identifier for the transaction, up to 25 characters | 
@@ -159,6 +160,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of VoidParcelProtectionResponse from a JSON string
 void_parcel_protection_response_instance = VoidParcelProtectionResponse.from_json(json)
 # print the JSON string representation of the object
-print VoidParcelProtectionResponse.to_json()
+print(VoidParcelProtectionResponse.to_json())
 
 # convert the object into a dict
 void_parcel_protection_response_dict = void_parcel_protection_response_instance.to_dict()

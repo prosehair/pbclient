@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **country_code** | **str** |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of GetCarrierSupportedDestination200ResponseInner from a JSON string
 get_carrier_supported_destination200_response_inner_instance = GetCarrierSupportedDestination200ResponseInner.from_json(json)
 # print the JSON string representation of the object
-print GetCarrierSupportedDestination200ResponseInner.to_json()
+print(GetCarrierSupportedDestination200ResponseInner.to_json())
 
 # convert the object into a dict
 get_carrier_supported_destination200_response_inner_dict = get_carrier_supported_destination200_response_inner_instance.to_dict()

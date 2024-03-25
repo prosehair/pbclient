@@ -16,9 +16,8 @@ This API call generates the OAuth token based on the Base64-encoded value of the
 
 ### Example
 
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.o_auth_token import OAuthToken
 from pbclient.rest import ApiException
@@ -52,6 +51,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **authorization** | **str**| Use Basic authentication to pass the Base64-encoded value of your developer account’s API key and secret. Encode the key and secret in the following format. Be sure to include the colon between the key and secret: &lt;API_key&gt;:&lt;API_secret&gt; Pass the encoded value using Basic authentication: Basic &lt;encoded-value&gt; | 
@@ -72,6 +72,7 @@ No authorization required
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |

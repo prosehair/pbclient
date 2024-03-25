@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **parcel_protection_account_id** | **str** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of ParcelProtectionCreateRequest from a JSON string
 parcel_protection_create_request_instance = ParcelProtectionCreateRequest.from_json(json)
 # print the JSON string representation of the object
-print ParcelProtectionCreateRequest.to_json()
+print(ParcelProtectionCreateRequest.to_json())
 
 # convert the object into a dict
 parcel_protection_create_request_dict = parcel_protection_create_request_instance.to_dict()

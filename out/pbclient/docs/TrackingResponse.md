@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **package_count** | **int** |  | [optional] 
@@ -42,7 +43,7 @@ json = "{}"
 # create an instance of TrackingResponse from a JSON string
 tracking_response_instance = TrackingResponse.from_json(json)
 # print the JSON string representation of the object
-print TrackingResponse.to_json()
+print(TrackingResponse.to_json())
 
 # convert the object into a dict
 tracking_response_dict = tracking_response_instance.to_dict()
