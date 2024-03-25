@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **adjustment_reason** | **str** |  | [optional] 
@@ -64,7 +65,7 @@ json = "{}"
 # create an instance of RealTransactionDetailReport from a JSON string
 real_transaction_detail_report_instance = RealTransactionDetailReport.from_json(json)
 # print the JSON string representation of the object
-print RealTransactionDetailReport.to_json()
+print(RealTransactionDetailReport.to_json())
 
 # convert the object into a dict
 real_transaction_detail_report_dict = real_transaction_detail_report_instance.to_dict()

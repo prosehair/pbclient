@@ -20,9 +20,8 @@ This API lets merchants request Pitney Bowes [Parcel Protection](https://shippin
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.void_parcel_protection_request import VoidParcelProtectionRequest
 from pbclient.models.void_parcel_protection_response import VoidParcelProtectionResponse
@@ -64,6 +63,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **x_pb_transaction_id** | **str**| Required. A unique identifier for the transaction, up to 25 characters. | 
@@ -85,6 +85,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
@@ -102,9 +103,8 @@ This API lets merchants request Pitney Bowes [Parcel Protection](https://shippin
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.parcel_protection_create_request import ParcelProtectionCreateRequest
 from pbclient.models.parcel_protection_create_response import ParcelProtectionCreateResponse
@@ -145,6 +145,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **x_pb_transaction_id** | **str**| Required. A unique identifier for the transaction, up to 25 characters. | 
@@ -165,6 +166,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
@@ -182,9 +184,8 @@ This API provides a quote for covering a shipment through Pitney Bowes [Parcel P
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.parcel_protection_quote_request import ParcelProtectionQuoteRequest
 from pbclient.models.parcel_protection_quote_response import ParcelProtectionQuoteResponse
@@ -225,6 +226,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **x_pb_transaction_id** | **str**| Required. A unique identifier for the transaction, up to 25 characters. | 
@@ -245,6 +247,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
@@ -262,9 +265,8 @@ This operation retrieves the policy status and other information on the Parcel P
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.parcel_protection_policy_response import ParcelProtectionPolicyResponse
 from pbclient.rest import ApiException
@@ -313,6 +315,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **x_pb_transaction_id** | **str**| Required. A unique identifier for the transaction, up to 25 characters. | 
@@ -342,6 +345,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |

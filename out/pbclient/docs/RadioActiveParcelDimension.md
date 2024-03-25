@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uom** | **str** | unit of measurement | [optional] 
@@ -19,7 +20,7 @@ json = "{}"
 # create an instance of RadioActiveParcelDimension from a JSON string
 radio_active_parcel_dimension_instance = RadioActiveParcelDimension.from_json(json)
 # print the JSON string representation of the object
-print RadioActiveParcelDimension.to_json()
+print(RadioActiveParcelDimension.to_json())
 
 # convert the object into a dict
 radio_active_parcel_dimension_dict = radio_active_parcel_dimension_instance.to_dict()

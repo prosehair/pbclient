@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address** | [**Address**](Address.md) |  | [optional] 
@@ -22,7 +23,7 @@ json = "{}"
 # create an instance of ParcelProtectionCreateRequestShipmentInfoConsigneeInfo from a JSON string
 parcel_protection_create_request_shipment_info_consignee_info_instance = ParcelProtectionCreateRequestShipmentInfoConsigneeInfo.from_json(json)
 # print the JSON string representation of the object
-print ParcelProtectionCreateRequestShipmentInfoConsigneeInfo.to_json()
+print(ParcelProtectionCreateRequestShipmentInfoConsigneeInfo.to_json())
 
 # convert the object into a dict
 parcel_protection_create_request_shipment_info_consignee_info_dict = parcel_protection_create_request_shipment_info_consignee_info_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **errors** | [**List[Error]**](Error.md) |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of Errors from a JSON string
 errors_instance = Errors.from_json(json)
 # print the JSON string representation of the object
-print Errors.to_json()
+print(Errors.to_json())
 
 # convert the object into a dict
 errors_dict = errors_instance.to_dict()

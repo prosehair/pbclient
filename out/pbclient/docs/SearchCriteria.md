@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **developer_id** | **str** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of SearchCriteria from a JSON string
 search_criteria_instance = SearchCriteria.from_json(json)
 # print the JSON string representation of the object
-print SearchCriteria.to_json()
+print(SearchCriteria.to_json())
 
 # convert the object into a dict
 search_criteria_dict = search_criteria_instance.to_dict()

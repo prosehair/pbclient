@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **line_price** | **float** |  | [optional] 
@@ -22,7 +23,7 @@ json = "{}"
 # create an instance of CrossBorderQuotesResponseQuoteInnerQuoteLinesInnerLineRates from a JSON string
 cross_border_quotes_response_quote_inner_quote_lines_inner_line_rates_instance = CrossBorderQuotesResponseQuoteInnerQuoteLinesInnerLineRates.from_json(json)
 # print the JSON string representation of the object
-print CrossBorderQuotesResponseQuoteInnerQuoteLinesInnerLineRates.to_json()
+print(CrossBorderQuotesResponseQuoteInnerQuoteLinesInnerLineRates.to_json())
 
 # convert the object into a dict
 cross_border_quotes_response_quote_inner_quote_lines_inner_line_rates_dict = cross_border_quotes_response_quote_inner_quote_lines_inner_line_rates_instance.to_dict()

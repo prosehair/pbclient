@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **display_name** | **str** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of DocTabItem from a JSON string
 doc_tab_item_instance = DocTabItem.from_json(json)
 # print the JSON string representation of the object
-print DocTabItem.to_json()
+print(DocTabItem.to_json())
 
 # convert the object into a dict
 doc_tab_item_dict = doc_tab_item_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **cargo_air_craft** | **bool** |  | [optional] 
@@ -31,7 +32,7 @@ json = "{}"
 # create an instance of CommodityInfo from a JSON string
 commodity_info_instance = CommodityInfo.from_json(json)
 # print the JSON string representation of the object
-print CommodityInfo.to_json()
+print(CommodityInfo.to_json())
 
 # convert the object into a dict
 commodity_info_dict = commodity_info_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **additional_addresses** | [**List[AdditionalAddress]**](AdditionalAddress.md) |  | [optional] 
@@ -31,7 +32,7 @@ json = "{}"
 # create an instance of Shipment from a JSON string
 shipment_instance = Shipment.from_json(json)
 # print the JSON string representation of the object
-print Shipment.to_json()
+print(Shipment.to_json())
 
 # convert the object into a dict
 shipment_dict = shipment_instance.to_dict()

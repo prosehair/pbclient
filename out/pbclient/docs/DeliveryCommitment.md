@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **additional_details** | **str** |  | [optional] 
@@ -20,7 +21,7 @@ json = "{}"
 # create an instance of DeliveryCommitment from a JSON string
 delivery_commitment_instance = DeliveryCommitment.from_json(json)
 # print the JSON string representation of the object
-print DeliveryCommitment.to_json()
+print(DeliveryCommitment.to_json())
 
 # convert the object into a dict
 delivery_commitment_dict = delivery_commitment_instance.to_dict()

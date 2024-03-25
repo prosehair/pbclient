@@ -18,9 +18,8 @@ Address validation verifies and cleanses postal addresses within the United Stat
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.address import Address
 from pbclient.rest import ApiException
@@ -60,6 +59,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **address** | [**Address**](Address.md)| Address object that needs to be validated. | 
@@ -80,6 +80,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |
@@ -97,9 +98,8 @@ This operation returns suggested addresses. Use this if the [Address Validation 
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.address_suggestion_response import AddressSuggestionResponse
 from pbclient.models.address_verify_suggest import AddressVerifySuggest
@@ -140,6 +140,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **return_suggestions** | **str**| To return suggested addresses, set this to true. | [default to &#39;true&#39;]
@@ -160,6 +161,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |

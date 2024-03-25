@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **locale** | **str** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of CrossBorderQuotesRequestBasketItemsInnerCategoriesInnerDescriptionsInner from a JSON string
 cross_border_quotes_request_basket_items_inner_categories_inner_descriptions_inner_instance = CrossBorderQuotesRequestBasketItemsInnerCategoriesInnerDescriptionsInner.from_json(json)
 # print the JSON string representation of the object
-print CrossBorderQuotesRequestBasketItemsInnerCategoriesInnerDescriptionsInner.to_json()
+print(CrossBorderQuotesRequestBasketItemsInnerCategoriesInnerDescriptionsInner.to_json())
 
 # convert the object into a dict
 cross_border_quotes_request_basket_items_inner_categories_inner_descriptions_inner_dict = cross_border_quotes_request_basket_items_inner_categories_inner_descriptions_inner_instance.to_dict()

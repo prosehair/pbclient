@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **closes_at** | **str** |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of CarrierFacilityResponseCarrierFacilitySuggestionsInnerFacilityHoursInnerFacilityTimingsInner from a JSON string
 carrier_facility_response_carrier_facility_suggestions_inner_facility_hours_inner_facility_timings_inner_instance = CarrierFacilityResponseCarrierFacilitySuggestionsInnerFacilityHoursInnerFacilityTimingsInner.from_json(json)
 # print the JSON string representation of the object
-print CarrierFacilityResponseCarrierFacilitySuggestionsInnerFacilityHoursInnerFacilityTimingsInner.to_json()
+print(CarrierFacilityResponseCarrierFacilitySuggestionsInnerFacilityHoursInnerFacilityTimingsInner.to_json())
 
 # convert the object into a dict
 carrier_facility_response_carrier_facility_suggestions_inner_facility_hours_inner_facility_timings_inner_dict = carrier_facility_response_carrier_facility_suggestions_inner_facility_hours_inner_facility_timings_inner_instance.to_dict()

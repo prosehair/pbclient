@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **license_text** | **str** |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of GetCarrierLicenseAgreement200Response from a JSON string
 get_carrier_license_agreement200_response_instance = GetCarrierLicenseAgreement200Response.from_json(json)
 # print the JSON string representation of the object
-print GetCarrierLicenseAgreement200Response.to_json()
+print(GetCarrierLicenseAgreement200Response.to_json())
 
 # convert the object into a dict
 get_carrier_license_agreement200_response_dict = get_carrier_license_agreement200_response_instance.to_dict()

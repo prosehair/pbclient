@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | [optional] 
@@ -23,7 +24,7 @@ json = "{}"
 # create an instance of ServicesParameterRule from a JSON string
 services_parameter_rule_instance = ServicesParameterRule.from_json(json)
 # print the JSON string representation of the object
-print ServicesParameterRule.to_json()
+print(ServicesParameterRule.to_json())
 
 # convert the object into a dict
 services_parameter_rule_dict = services_parameter_rule_instance.to_dict()

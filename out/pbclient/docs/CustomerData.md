@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **label_details** | [**List[Parameter]**](Parameter.md) |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of CustomerData from a JSON string
 customer_data_instance = CustomerData.from_json(json)
 # print the JSON string representation of the object
-print CustomerData.to_json()
+print(CustomerData.to_json())
 
 # convert the object into a dict
 customer_data_dict = customer_data_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **base_premium** | **float** |  | 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of ParcelProtectionQuoteResponseParcelProtectionFeesBreakup from a JSON string
 parcel_protection_quote_response_parcel_protection_fees_breakup_instance = ParcelProtectionQuoteResponseParcelProtectionFeesBreakup.from_json(json)
 # print the JSON string representation of the object
-print ParcelProtectionQuoteResponseParcelProtectionFeesBreakup.to_json()
+print(ParcelProtectionQuoteResponseParcelProtectionFeesBreakup.to_json())
 
 # convert the object into a dict
 parcel_protection_quote_response_parcel_protection_fees_breakup_dict = parcel_protection_quote_response_parcel_protection_fees_breakup_instance.to_dict()

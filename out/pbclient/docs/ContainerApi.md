@@ -17,9 +17,8 @@ This operation prints a label for the shipment of containerized parcels destined
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.container_manifest_response import ContainerManifestResponse
 from pbclient.models.manifest import Manifest
@@ -60,6 +59,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **x_pb_transaction_id** | **str**| Required. A unique identifier for the transaction, up to 25 characters. | 
@@ -80,6 +80,7 @@ Name | Type | Description  | Notes
  - **Accept**: text/plain
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** |  |  -  |
