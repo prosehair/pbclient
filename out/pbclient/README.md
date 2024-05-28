@@ -177,6 +177,7 @@ Class | Method | HTTP request | Description
  - [CustomerData](docs/CustomerData.md)
  - [Customs](docs/Customs.md)
  - [CustomsInfo](docs/CustomsInfo.md)
+ - [CustomsInfoCustomsDeclaredValue](docs/CustomsInfoCustomsDeclaredValue.md)
  - [CustomsItem](docs/CustomsItem.md)
  - [DeliveryCommitment](docs/DeliveryCommitment.md)
  - [DimensionRules](docs/DimensionRules.md)

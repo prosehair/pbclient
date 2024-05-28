@@ -22,6 +22,7 @@ import json
 from typing import Optional, Union
 from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, validator
 from pbclient.models.address import Address
+from pbclient.models.customs_info_customs_declared_value import CustomsInfoCustomsDeclaredValue
 
 class CustomsInfo(BaseModel):
     """
@@ -33,7 +34,7 @@ class CustomsInfo(BaseModel):
     certificate_number: Optional[StrictStr] = Field(None, alias="certificateNumber")
     comments: Optional[StrictStr] = None
     currency_code: StrictStr = Field(..., alias="currencyCode", description="ISO-4217")
-    customs_declared_value: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="customsDeclaredValue")
+    customs_declared_value: Optional[CustomsInfoCustomsDeclaredValue] = Field(None, alias="customsDeclaredValue")
     declaration_statement: Optional[StrictStr] = Field(None, alias="declarationStatement")
     freight_charge: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="freightCharge")
     from_customs_reference: Optional[StrictStr] = Field(None, alias="fromCustomsReference")
@@ -120,6 +121,9 @@ class CustomsInfo(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of customs_declared_value
+        if self.customs_declared_value:
+            _dict['customsDeclaredValue'] = self.customs_declared_value.to_dict()
         # override the default output from pydantic by calling `to_dict()` of signature_contact
         if self.signature_contact:
             _dict['signatureContact'] = self.signature_contact.to_dict()
@@ -141,7 +145,7 @@ class CustomsInfo(BaseModel):
             "certificate_number": obj.get("certificateNumber"),
             "comments": obj.get("comments"),
             "currency_code": obj.get("currencyCode"),
-            "customs_declared_value": obj.get("customsDeclaredValue"),
+            "customs_declared_value": CustomsInfoCustomsDeclaredValue.from_dict(obj.get("customsDeclaredValue")) if obj.get("customsDeclaredValue") is not None else None,
             "declaration_statement": obj.get("declarationStatement"),
             "freight_charge": obj.get("freightCharge"),
             "from_customs_reference": obj.get("fromCustomsReference"),

@@ -96,6 +96,7 @@ from pbclient.models.cross_border_quotes_response_quote_inner_total_rates import
 from pbclient.models.customer_data import CustomerData
 from pbclient.models.customs import Customs
 from pbclient.models.customs_info import CustomsInfo
+from pbclient.models.customs_info_customs_declared_value import CustomsInfoCustomsDeclaredValue
 from pbclient.models.customs_item import CustomsItem
 from pbclient.models.delivery_commitment import DeliveryCommitment
 from pbclient.models.dimension_rules import DimensionRules

@@ -3350,7 +3350,9 @@ components:
           type: string
           description: ISO-4217
         customsDeclaredValue:
-          type: number
+          oneOf:
+            - type: number
+            - type: string
         declarationStatement:
           type: string
         freightCharge:

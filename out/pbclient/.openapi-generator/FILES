@@ -61,6 +61,7 @@ docs/CrossBorderQuotesResponseQuoteInnerTotalRates.md
 docs/CustomerData.md
 docs/Customs.md
 docs/CustomsInfo.md
+docs/CustomsInfoCustomsDeclaredValue.md
 docs/CustomsItem.md
 docs/DeliveryCommitment.md
 docs/DimensionRules.md
@@ -222,6 +223,7 @@ pbclient/models/cross_border_quotes_response_quote_inner_total_rates.py
 pbclient/models/customer_data.py
 pbclient/models/customs.py
 pbclient/models/customs_info.py
+pbclient/models/customs_info_customs_declared_value.py
 pbclient/models/customs_item.py
 pbclient/models/delivery_commitment.py
 pbclient/models/dimension_rules.py
@@ -311,4 +313,5 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
+test/test_customs_info_customs_declared_value.py
 tox.ini
