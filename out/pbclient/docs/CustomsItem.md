@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **h_s_tariff_code** | **str** |  | [optional] 
 **h_s_tariff_code_country** | **str** |  | [optional] 
 **item_dimension** | [**ParcelDimension**](ParcelDimension.md) |  | [optional] 
-**item_id** | **str** |  | 
+**item_id** | **str** |  | [optional] 
 **manufacturer** | **str** |  | [optional] 
 **origin_country_code** | **str** |  | [optional] 
 **quantity** | **int** |  | 

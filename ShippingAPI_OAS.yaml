@@ -3423,7 +3423,6 @@ components:
       type: object
       required:
         - description
-        - itemId
         - quantity
         - unitPrice
       properties:

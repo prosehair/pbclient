@@ -33,7 +33,7 @@ class CustomsItem(BaseModel):
     h_s_tariff_code: Optional[StrictStr] = Field(None, alias="hSTariffCode")
     h_s_tariff_code_country: Optional[StrictStr] = Field(None, alias="hSTariffCodeCountry")
     item_dimension: Optional[ParcelDimension] = Field(None, alias="itemDimension")
-    item_id: StrictStr = Field(..., alias="itemId")
+    item_id: Optional[StrictStr] = Field(None, alias="itemId")
     manufacturer: Optional[StrictStr] = None
     origin_country_code: Optional[StrictStr] = Field(None, alias="originCountryCode")
     quantity: StrictInt = Field(...)
