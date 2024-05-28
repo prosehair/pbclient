@@ -313,5 +313,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_customs_info_customs_declared_value.py
 tox.ini
