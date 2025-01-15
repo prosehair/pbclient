@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **customs_info** | [**CustomsInfo**](CustomsInfo.md) |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of Customs from a JSON string
 customs_instance = Customs.from_json(json)
 # print the JSON string representation of the object
-print Customs.to_json()
+print(Customs.to_json())
 
 # convert the object into a dict
 customs_dict = customs_instance.to_dict()

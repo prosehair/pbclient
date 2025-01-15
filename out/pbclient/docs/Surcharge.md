@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **fee** | **float** |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of Surcharge from a JSON string
 surcharge_instance = Surcharge.from_json(json)
 # print the JSON string representation of the object
-print Surcharge.to_json()
+print(Surcharge.to_json())
 
 # convert the object into a dict
 surcharge_dict = surcharge_instance.to_dict()

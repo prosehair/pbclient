@@ -18,9 +18,8 @@ This operation provides an estimate of the duties, taxes, and transportation cos
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.cross_border_quotes_request import CrossBorderQuotesRequest
 from pbclient.models.cross_border_quotes_response import CrossBorderQuotesResponse
@@ -60,6 +59,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **cross_border_quotes_request** | [**CrossBorderQuotesRequest**](CrossBorderQuotesRequest.md)|  | 
@@ -79,6 +79,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
@@ -96,9 +97,8 @@ This operation predicts the HS Code for a parcel being shipped internationally a
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.manifest import Manifest
 from pbclient.models.parcel_protection_policy_response import ParcelProtectionPolicyResponse
@@ -139,6 +139,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **x_pb_transaction_id** | **str**| Required. A unique identifier for the transaction, up to 25 characters. | 
@@ -159,6 +160,7 @@ Name | Type | Description  | Notes
  - **Accept**: text/plain
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** |  |  -  |

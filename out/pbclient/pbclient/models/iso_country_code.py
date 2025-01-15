@@ -13,13 +13,10 @@
 """  # noqa: E501
 
 
+from __future__ import annotations
 import json
-import pprint
-import re  # noqa: F401
-from aenum import Enum, no_arg
-
-
-
+from enum import Enum
+from typing_extensions import Self
 
 
 class ISOCountryCode(str, Enum):
@@ -281,8 +278,8 @@ class ISOCountryCode(str, Enum):
     ZW = 'ZW'
 
     @classmethod
-    def from_json(cls, json_str: str) -> ISOCountryCode:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of ISOCountryCode from a JSON string"""
-        return ISOCountryCode(json.loads(json_str))
+        return cls(json.loads(json_str))
 
 

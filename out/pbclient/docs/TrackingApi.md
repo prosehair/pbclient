@@ -16,9 +16,8 @@ getTrackingDetails
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.add_tracking_events import AddTrackingEvents
 from pbclient.models.add_tracking_events200_response import AddTrackingEvents200Response
@@ -58,6 +57,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **add_tracking_events** | [**AddTrackingEvents**](AddTrackingEvents.md)| add track event | 
@@ -77,6 +77,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Error |  -  |
@@ -92,9 +93,8 @@ getTrackingDetails
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.carrier import Carrier
 from pbclient.models.tracking_response import TrackingResponse
@@ -136,6 +136,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tracking_number** | **str**| The tracking number for the shipment. | 
@@ -157,6 +158,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |

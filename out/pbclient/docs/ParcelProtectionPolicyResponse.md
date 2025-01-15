@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **content** | [**List[ParcelProtectionPolicyResponseContentInner]**](ParcelProtectionPolicyResponseContentInner.md) |  | [optional] 
@@ -24,7 +25,7 @@ json = "{}"
 # create an instance of ParcelProtectionPolicyResponse from a JSON string
 parcel_protection_policy_response_instance = ParcelProtectionPolicyResponse.from_json(json)
 # print the JSON string representation of the object
-print ParcelProtectionPolicyResponse.to_json()
+print(ParcelProtectionPolicyResponse.to_json())
 
 # convert the object into a dict
 parcel_protection_policy_response_dict = parcel_protection_policy_response_instance.to_dict()

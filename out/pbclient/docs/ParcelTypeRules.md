@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **parcel_type** | [**ParcelType**](ParcelType.md) |  | [optional] 
@@ -24,7 +25,7 @@ json = "{}"
 # create an instance of ParcelTypeRules from a JSON string
 parcel_type_rules_instance = ParcelTypeRules.from_json(json)
 # print the JSON string representation of the object
-print ParcelTypeRules.to_json()
+print(ParcelTypeRules.to_json())
 
 # convert the object into a dict
 parcel_type_rules_dict = parcel_type_rules_instance.to_dict()

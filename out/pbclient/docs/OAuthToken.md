@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **access_token** | **str** |  | [optional] 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of OAuthToken from a JSON string
 o_auth_token_instance = OAuthToken.from_json(json)
 # print the JSON string representation of the object
-print OAuthToken.to_json()
+print(OAuthToken.to_json())
 
 # convert the object into a dict
 o_auth_token_dict = o_auth_token_instance.to_dict()

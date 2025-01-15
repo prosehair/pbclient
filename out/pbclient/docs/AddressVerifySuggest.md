@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address** | [**Address**](Address.md) |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of AddressVerifySuggest from a JSON string
 address_verify_suggest_instance = AddressVerifySuggest.from_json(json)
 # print the JSON string representation of the object
-print AddressVerifySuggest.to_json()
+print(AddressVerifySuggest.to_json())
 
 # convert the object into a dict
 address_verify_suggest_dict = address_verify_suggest_instance.to_dict()

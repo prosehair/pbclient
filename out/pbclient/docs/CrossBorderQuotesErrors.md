@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **quote** | [**List[CrossBorderQuotesErrorsQuoteInner]**](CrossBorderQuotesErrorsQuoteInner.md) |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of CrossBorderQuotesErrors from a JSON string
 cross_border_quotes_errors_instance = CrossBorderQuotesErrors.from_json(json)
 # print the JSON string representation of the object
-print CrossBorderQuotesErrors.to_json()
+print(CrossBorderQuotesErrors.to_json())
 
 # convert the object into a dict
 cross_border_quotes_errors_dict = cross_border_quotes_errors_instance.to_dict()

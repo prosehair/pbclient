@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **shipper_id** | **str** |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of VoidParcelProtectionRequest from a JSON string
 void_parcel_protection_request_instance = VoidParcelProtectionRequest.from_json(json)
 # print the JSON string representation of the object
-print VoidParcelProtectionRequest.to_json()
+print(VoidParcelProtectionRequest.to_json())
 
 # convert the object into a dict
 void_parcel_protection_request_dict = void_parcel_protection_request_instance.to_dict()

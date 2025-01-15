@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **account_number** | **str** |  | [optional] 
@@ -20,7 +21,7 @@ json = "{}"
 # create an instance of CarrierPayment from a JSON string
 carrier_payment_instance = CarrierPayment.from_json(json)
 # print the JSON string representation of the object
-print CarrierPayment.to_json()
+print(CarrierPayment.to_json())
 
 # convert the object into a dict
 carrier_payment_dict = carrier_payment_instance.to_dict()

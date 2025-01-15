@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **quote_currency** | **str** | The currency to return the quote in. Use three uppercase letters, per the ISO currency code (ISO 4217). For example- USD, CAD, or EUR | 
@@ -22,7 +23,7 @@ json = "{}"
 # create an instance of CrossBorderQuotesRequest from a JSON string
 cross_border_quotes_request_instance = CrossBorderQuotesRequest.from_json(json)
 # print the JSON string representation of the object
-print CrossBorderQuotesRequest.to_json()
+print(CrossBorderQuotesRequest.to_json())
 
 # convert the object into a dict
 cross_border_quotes_request_dict = cross_border_quotes_request_instance.to_dict()

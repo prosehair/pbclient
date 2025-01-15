@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **length** | **int** |  | [optional] 
@@ -19,7 +20,7 @@ json = "{}"
 # create an instance of DimensionRulesMaxParcelDimensions from a JSON string
 dimension_rules_max_parcel_dimensions_instance = DimensionRulesMaxParcelDimensions.from_json(json)
 # print the JSON string representation of the object
-print DimensionRulesMaxParcelDimensions.to_json()
+print(DimensionRulesMaxParcelDimensions.to_json())
 
 # convert the object into a dict
 dimension_rules_max_parcel_dimensions_dict = dimension_rules_max_parcel_dimensions_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **battery_material** | **str** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of BatteryDetails from a JSON string
 battery_details_instance = BatteryDetails.from_json(json)
 # print the JSON string representation of the object
-print BatteryDetails.to_json()
+print(BatteryDetails.to_json())
 
 # convert the object into a dict
 battery_details_dict = battery_details_instance.to_dict()

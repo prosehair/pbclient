@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **contents** | **str** | base64 | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of DocumentPage from a JSON string
 document_page_instance = DocumentPage.from_json(json)
 # print the JSON string representation of the object
-print DocumentPage.to_json()
+print(DocumentPage.to_json())
 
 # convert the object into a dict
 document_page_dict = document_page_instance.to_dict()

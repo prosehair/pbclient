@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **carrier** | [**Carrier**](Carrier.md) |  | 
@@ -24,7 +25,7 @@ json = "{}"
 # create an instance of Manifest from a JSON string
 manifest_instance = Manifest.from_json(json)
 # print the JSON string representation of the object
-print Manifest.to_json()
+print(Manifest.to_json())
 
 # convert the object into a dict
 manifest_dict = manifest_instance.to_dict()

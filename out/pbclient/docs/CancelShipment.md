@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **cancel_initiator** | **str** |  | [optional] 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of CancelShipment from a JSON string
 cancel_shipment_instance = CancelShipment.from_json(json)
 # print the JSON string representation of the object
-print CancelShipment.to_json()
+print(CancelShipment.to_json())
 
 # convert the object into a dict
 cancel_shipment_dict = cancel_shipment_instance.to_dict()

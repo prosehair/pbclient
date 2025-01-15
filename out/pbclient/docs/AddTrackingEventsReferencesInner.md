@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **reference_type** | **str** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of AddTrackingEventsReferencesInner from a JSON string
 add_tracking_events_references_inner_instance = AddTrackingEventsReferencesInner.from_json(json)
 # print the JSON string representation of the object
-print AddTrackingEventsReferencesInner.to_json()
+print(AddTrackingEventsReferencesInner.to_json())
 
 # convert the object into a dict
 add_tracking_events_references_inner_dict = add_tracking_events_references_inner_instance.to_dict()

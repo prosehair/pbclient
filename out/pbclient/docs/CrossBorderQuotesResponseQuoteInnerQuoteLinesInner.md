@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **line_id** | **str** |  | [optional] 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of CrossBorderQuotesResponseQuoteInnerQuoteLinesInner from a JSON string
 cross_border_quotes_response_quote_inner_quote_lines_inner_instance = CrossBorderQuotesResponseQuoteInnerQuoteLinesInner.from_json(json)
 # print the JSON string representation of the object
-print CrossBorderQuotesResponseQuoteInnerQuoteLinesInner.to_json()
+print(CrossBorderQuotesResponseQuoteInnerQuoteLinesInner.to_json())
 
 # convert the object into a dict
 cross_border_quotes_response_quote_inner_quote_lines_inner_dict = cross_border_quotes_response_quote_inner_quote_lines_inner_instance.to_dict()

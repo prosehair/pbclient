@@ -14,15 +14,13 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
 import json
 import pprint
-import re  # noqa: F401
-
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional, Union
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, ValidationError, validator
-from typing import Union, Any, List, TYPE_CHECKING
 from pydantic import StrictStr, Field
+from typing import Union, List, Set, Optional, Dict
+from typing_extensions import Literal, Self
 
 CUSTOMSINFOCUSTOMSDECLAREDVALUE_ONE_OF_SCHEMAS = ["float", "str"]
 
@@ -34,16 +32,16 @@ class CustomsInfoCustomsDeclaredValue(BaseModel):
     oneof_schema_1_validator: Optional[Union[StrictFloat, StrictInt]] = None
     # data type: str
     oneof_schema_2_validator: Optional[StrictStr] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[float, str]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(CUSTOMSINFOCUSTOMSDECLAREDVALUE_ONE_OF_SCHEMAS, const=True)
+    actual_instance: Optional[Union[float, str]] = None
+    one_of_schemas: Set[str] = { "float", "str" }
 
-    class Config:
-        validate_assignment = True
+    model_config = ConfigDict(
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
-    def __init__(self, *args, **kwargs):
+
+    def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
                 raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
@@ -53,9 +51,9 @@ class CustomsInfoCustomsDeclaredValue(BaseModel):
         else:
             super().__init__(**kwargs)
 
-    @validator('actual_instance')
+    @field_validator('actual_instance')
     def actual_instance_must_validate_oneof(cls, v):
-        instance = CustomsInfoCustomsDeclaredValue.construct()
+        instance = CustomsInfoCustomsDeclaredValue.model_construct()
         error_messages = []
         match = 0
         # validate data type: float
@@ -80,13 +78,13 @@ class CustomsInfoCustomsDeclaredValue(BaseModel):
             return v
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CustomsInfoCustomsDeclaredValue:
+    def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
         return cls.from_json(json.dumps(obj))
 
     @classmethod
-    def from_json(cls, json_str: str) -> CustomsInfoCustomsDeclaredValue:
+    def from_json(cls, json_str: str) -> Self:
         """Returns the object represented by the json string"""
-        instance = CustomsInfoCustomsDeclaredValue.construct()
+        instance = cls.model_construct()
         error_messages = []
         match = 0
 
@@ -123,19 +121,17 @@ class CustomsInfoCustomsDeclaredValue(BaseModel):
         if self.actual_instance is None:
             return "null"
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
+        if hasattr(self.actual_instance, "to_json") and callable(self.actual_instance.to_json):
             return self.actual_instance.to_json()
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], float, str]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
+        if hasattr(self.actual_instance, "to_dict") and callable(self.actual_instance.to_dict):
             return self.actual_instance.to_dict()
         else:
             # primitive type
@@ -143,6 +139,6 @@ class CustomsInfoCustomsDeclaredValue(BaseModel):
 
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        return pprint.pformat(self.model_dump())
 
 

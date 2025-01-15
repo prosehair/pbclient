@@ -3,6 +3,7 @@
 * TRACKABLE - Item is trackable by default. * NON_TRACKABLE - Item is not trackable. * REQUIRES_TRACKABLE_SPECIAL_SERVICE - Item is trackable if special service is requested. 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

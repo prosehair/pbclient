@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **fee** | **float** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of SpecialService from a JSON string
 special_service_instance = SpecialService.from_json(json)
 # print the JSON string representation of the object
-print SpecialService.to_json()
+print(SpecialService.to_json())
 
 # convert the object into a dict
 special_service_dict = special_service_instance.to_dict()

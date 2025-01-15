@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **required** | **bool** |  | [optional] 
@@ -19,7 +20,7 @@ json = "{}"
 # create an instance of WeightRules from a JSON string
 weight_rules_instance = WeightRules.from_json(json)
 # print the JSON string representation of the object
-print WeightRules.to_json()
+print(WeightRules.to_json())
 
 # convert the object into a dict
 weight_rules_dict = weight_rules_instance.to_dict()

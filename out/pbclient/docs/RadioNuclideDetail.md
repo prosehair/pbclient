@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **chemical_form** | **str** |  | [optional] 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of RadioNuclideDetail from a JSON string
 radio_nuclide_detail_instance = RadioNuclideDetail.from_json(json)
 # print the JSON string representation of the object
-print RadioNuclideDetail.to_json()
+print(RadioNuclideDetail.to_json())
 
 # convert the object into a dict
 radio_nuclide_detail_dict = radio_nuclide_detail_instance.to_dict()
