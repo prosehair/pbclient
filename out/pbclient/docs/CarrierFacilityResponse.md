@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address** | [**Address**](Address.md) |  | [optional] 
@@ -19,7 +20,7 @@ json = "{}"
 # create an instance of CarrierFacilityResponse from a JSON string
 carrier_facility_response_instance = CarrierFacilityResponse.from_json(json)
 # print the JSON string representation of the object
-print CarrierFacilityResponse.to_json()
+print(CarrierFacilityResponse.to_json())
 
 # convert the object into a dict
 carrier_facility_response_dict = carrier_facility_response_instance.to_dict()

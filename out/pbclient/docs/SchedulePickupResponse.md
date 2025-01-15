@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **pickup_address** | [**Address**](Address.md) |  | [optional] 
@@ -24,7 +25,7 @@ json = "{}"
 # create an instance of SchedulePickupResponse from a JSON string
 schedule_pickup_response_instance = SchedulePickupResponse.from_json(json)
 # print the JSON string representation of the object
-print SchedulePickupResponse.to_json()
+print(SchedulePickupResponse.to_json())
 
 # convert the object into a dict
 schedule_pickup_response_dict = schedule_pickup_response_instance.to_dict()

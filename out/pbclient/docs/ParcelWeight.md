@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **weight** | **float** |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of ParcelWeight from a JSON string
 parcel_weight_instance = ParcelWeight.from_json(json)
 # print the JSON string representation of the object
-print ParcelWeight.to_json()
+print(ParcelWeight.to_json())
 
 # convert the object into a dict
 parcel_weight_dict = parcel_weight_instance.to_dict()

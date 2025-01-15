@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **length** | **float** |  | [optional] 
@@ -20,7 +21,7 @@ json = "{}"
 # create an instance of ParcelDimension from a JSON string
 parcel_dimension_instance = ParcelDimension.from_json(json)
 # print the JSON string representation of the object
-print ParcelDimension.to_json()
+print(ParcelDimension.to_json())
 
 # convert the object into a dict
 parcel_dimension_dict = parcel_dimension_instance.to_dict()

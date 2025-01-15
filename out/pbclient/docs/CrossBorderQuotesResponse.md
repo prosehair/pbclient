@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **quote** | [**List[CrossBorderQuotesResponseQuoteInner]**](CrossBorderQuotesResponseQuoteInner.md) |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of CrossBorderQuotesResponse from a JSON string
 cross_border_quotes_response_instance = CrossBorderQuotesResponse.from_json(json)
 # print the JSON string representation of the object
-print CrossBorderQuotesResponse.to_json()
+print(CrossBorderQuotesResponse.to_json())
 
 # convert the object into a dict
 cross_border_quotes_response_dict = cross_border_quotes_response_instance.to_dict()

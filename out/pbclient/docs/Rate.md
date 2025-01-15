@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **alternate_base_charge** | **float** |  | [optional] 
@@ -33,7 +34,7 @@ json = "{}"
 # create an instance of Rate from a JSON string
 rate_instance = Rate.from_json(json)
 # print the JSON string representation of the object
-print Rate.to_json()
+print(Rate.to_json())
 
 # convert the object into a dict
 rate_dict = rate_instance.to_dict()

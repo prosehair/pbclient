@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 
@@ -15,7 +16,7 @@ json = "{}"
 # create an instance of CustomsInfoCustomsDeclaredValue from a JSON string
 customs_info_customs_declared_value_instance = CustomsInfoCustomsDeclaredValue.from_json(json)
 # print the JSON string representation of the object
-print CustomsInfoCustomsDeclaredValue.to_json()
+print(CustomsInfoCustomsDeclaredValue.to_json())
 
 # convert the object into a dict
 customs_info_customs_declared_value_dict = customs_info_customs_declared_value_instance.to_dict()

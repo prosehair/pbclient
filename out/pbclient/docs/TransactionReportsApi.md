@@ -15,9 +15,8 @@ This operation retrieves all transactions for a specified period of time.
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.page_real_transaction_detail_report import PageRealTransactionDetailReport
 from pbclient.rest import ApiException
@@ -67,6 +66,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **developer_id** | **str**| developerId | 
@@ -97,6 +97,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |

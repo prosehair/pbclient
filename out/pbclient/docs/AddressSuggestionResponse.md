@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address** | [**Address**](Address.md) |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of AddressSuggestionResponse from a JSON string
 address_suggestion_response_instance = AddressSuggestionResponse.from_json(json)
 # print the JSON string representation of the object
-print AddressSuggestionResponse.to_json()
+print(AddressSuggestionResponse.to_json())
 
 # convert the object into a dict
 address_suggestion_response_dict = address_suggestion_response_instance.to_dict()

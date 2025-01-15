@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **category_path** | **str** |  | 
@@ -19,7 +20,7 @@ json = "{}"
 # create an instance of ParcelProtectionQuoteRequestShipmentInfoParcelInfoCommodityListInner from a JSON string
 parcel_protection_quote_request_shipment_info_parcel_info_commodity_list_inner_instance = ParcelProtectionQuoteRequestShipmentInfoParcelInfoCommodityListInner.from_json(json)
 # print the JSON string representation of the object
-print ParcelProtectionQuoteRequestShipmentInfoParcelInfoCommodityListInner.to_json()
+print(ParcelProtectionQuoteRequestShipmentInfoParcelInfoCommodityListInner.to_json())
 
 # convert the object into a dict
 parcel_protection_quote_request_shipment_info_parcel_info_commodity_list_inner_dict = parcel_protection_quote_request_shipment_info_parcel_info_commodity_list_inner_instance.to_dict()

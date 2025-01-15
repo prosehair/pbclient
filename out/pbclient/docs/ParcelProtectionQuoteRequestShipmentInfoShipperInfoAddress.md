@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address_lines** | **List[str]** |  | 
@@ -20,7 +21,7 @@ json = "{}"
 # create an instance of ParcelProtectionQuoteRequestShipmentInfoShipperInfoAddress from a JSON string
 parcel_protection_quote_request_shipment_info_shipper_info_address_instance = ParcelProtectionQuoteRequestShipmentInfoShipperInfoAddress.from_json(json)
 # print the JSON string representation of the object
-print ParcelProtectionQuoteRequestShipmentInfoShipperInfoAddress.to_json()
+print(ParcelProtectionQuoteRequestShipmentInfoShipperInfoAddress.to_json())
 
 # convert the object into a dict
 parcel_protection_quote_request_shipment_info_shipper_info_address_dict = parcel_protection_quote_request_shipment_info_shipper_info_address_instance.to_dict()

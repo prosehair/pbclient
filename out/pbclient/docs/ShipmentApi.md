@@ -18,9 +18,8 @@ cancelShipment
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.cancel_shipment import CancelShipment
 from pbclient.models.carrier import Carrier
@@ -64,6 +63,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **x_pb_transaction_id** | **str**| Required. A unique identifier for the transaction, up to 25 characters. | 
@@ -87,6 +87,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
@@ -105,9 +106,8 @@ The API returns the label as either a Base64 string or a link to a PDF. For more
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.shipment import Shipment
 from pbclient.rest import ApiException
@@ -153,6 +153,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **x_pb_transaction_id** | **str**| Required. A unique identifier for the transaction, up to 25 characters. | 
@@ -179,6 +180,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
@@ -195,9 +197,8 @@ reprintShipment
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.carrier import Carrier
 from pbclient.models.shipment import Shipment
@@ -238,6 +239,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **shipment_id** | **str**| Required. The shipment ID that was issued when shipment label was generated. | 
@@ -258,6 +260,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
@@ -273,9 +276,8 @@ retryShipment
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.carrier import Carrier
 from pbclient.models.shipment import Shipment
@@ -316,6 +318,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **original_transaction_id** | **str**|  | 
@@ -336,6 +339,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |

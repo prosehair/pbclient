@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **description** | **str** |  | 
@@ -27,7 +28,7 @@ json = "{}"
 # create an instance of CustomsItem from a JSON string
 customs_item_instance = CustomsItem.from_json(json)
 # print the JSON string representation of the object
-print CustomsItem.to_json()
+print(CustomsItem.to_json())
 
 # convert the object into a dict
 customs_item_dict = customs_item_instance.to_dict()

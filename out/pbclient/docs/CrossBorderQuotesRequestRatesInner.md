@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **carrier** | [**Carrier**](Carrier.md) |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of CrossBorderQuotesRequestRatesInner from a JSON string
 cross_border_quotes_request_rates_inner_instance = CrossBorderQuotesRequestRatesInner.from_json(json)
 # print the JSON string representation of the object
-print CrossBorderQuotesRequestRatesInner.to_json()
+print(CrossBorderQuotesRequestRatesInner.to_json())
 
 # convert the object into a dict
 cross_border_quotes_request_rates_inner_dict = cross_border_quotes_request_rates_inner_instance.to_dict()

@@ -20,9 +20,8 @@ This operation locates Post Offices and other facilities for a given carrier. Yo
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.carrier_facility_request import CarrierFacilityRequest
 from pbclient.models.carrier_facility_response import CarrierFacilityResponse
@@ -62,6 +61,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **carrier_facility_request** | [**CarrierFacilityRequest**](CarrierFacilityRequest.md)|  | 
@@ -81,6 +81,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
@@ -98,9 +99,8 @@ This operation retrieves a carrier's license agreement. The operation is used in
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.carrier import Carrier
 from pbclient.models.get_carrier_license_agreement200_response import GetCarrierLicenseAgreement200Response
@@ -142,6 +142,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **carrier** | [**Carrier**](.md)| The carrier name. Currently this must be set to: UPS | 
@@ -162,6 +163,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |
@@ -179,9 +181,8 @@ This operation retrieves the rules governing the carrier's services, including t
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.carrier import Carrier
 from pbclient.models.carrier_rule import CarrierRule
@@ -228,6 +229,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **carrier** | [**Carrier**](.md)| The carrier name. **Currently this must be set to: USPS**  | 
@@ -253,6 +255,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |
@@ -268,9 +271,8 @@ This operation returns a list of supported destination countries to which the ca
 ### Example
 
 * OAuth Authentication (oAuth2ClientCredentials):
+
 ```python
-import time
-import os
 import pbclient
 from pbclient.models.carrier import Carrier
 from pbclient.models.get_carrier_supported_destination200_response_inner import GetCarrierSupportedDestination200ResponseInner
@@ -312,6 +314,7 @@ with pbclient.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **carrier** | [**Carrier**](.md)| The carrier name. Currently this must be set to: USPS | 
@@ -332,6 +335,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | successful operation |  -  |

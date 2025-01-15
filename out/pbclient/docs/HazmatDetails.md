@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **battery_details** | [**BatteryDetails**](BatteryDetails.md) |  | [optional] 
@@ -25,7 +26,7 @@ json = "{}"
 # create an instance of HazmatDetails from a JSON string
 hazmat_details_instance = HazmatDetails.from_json(json)
 # print the JSON string representation of the object
-print HazmatDetails.to_json()
+print(HazmatDetails.to_json())
 
 # convert the object into a dict
 hazmat_details_dict = hazmat_details_instance.to_dict()

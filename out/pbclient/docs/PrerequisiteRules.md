@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **special_service_codes** | [**SpecialServiceCodes**](SpecialServiceCodes.md) |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of PrerequisiteRules from a JSON string
 prerequisite_rules_instance = PrerequisiteRules.from_json(json)
 # print the JSON string representation of the object
-print PrerequisiteRules.to_json()
+print(PrerequisiteRules.to_json())
 
 # convert the object into a dict
 prerequisite_rules_dict = prerequisite_rules_instance.to_dict()

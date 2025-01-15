@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **success** | **str** |  | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of CancelPickup200Response from a JSON string
 cancel_pickup200_response_instance = CancelPickup200Response.from_json(json)
 # print the JSON string representation of the object
-print CancelPickup200Response.to_json()
+print(CancelPickup200Response.to_json())
 
 # convert the object into a dict
 cancel_pickup200_response_dict = cancel_pickup200_response_instance.to_dict()

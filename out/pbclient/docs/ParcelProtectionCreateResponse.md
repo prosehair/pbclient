@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **transaction_id** | **str** |  | [optional] 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of ParcelProtectionCreateResponse from a JSON string
 parcel_protection_create_response_instance = ParcelProtectionCreateResponse.from_json(json)
 # print the JSON string representation of the object
-print ParcelProtectionCreateResponse.to_json()
+print(ParcelProtectionCreateResponse.to_json())
 
 # convert the object into a dict
 parcel_protection_create_response_dict = parcel_protection_create_response_instance.to_dict()
